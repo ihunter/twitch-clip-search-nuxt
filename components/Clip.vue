@@ -9,7 +9,7 @@
       </div>
     </v-img>
 
-    <div class="d-flex">
+    <div class="d-flex mt-2">
       <div class="mr-2">
         <img
           src="https://static-cdn.jtvnw.net/ttv-boxart/./Viva%20Pi%C3%B1ata:%20Trouble%20in%20Paradise-52x72.jpg"
@@ -18,8 +18,8 @@
       </div>
 
       <div>
-        <div>Jerma goes insane</div>
-        <div>
+        <div class="clip-title">Jerma goes insane</div>
+        <div class="clip-meta-info">
           <div>Jerma985</div>
           <div>Clipped by lil_skipp3</div>
         </div>
@@ -47,6 +47,15 @@ export default {}
 
 .time-ago {
   right: 0;
+}
+
+.clip-title {
+  font-size: 1.2rem;
+}
+
+.clip-meta-info {
+  font-size: 0.8rem;
+  color: #c3c3c3;
 }
 
 .test {
