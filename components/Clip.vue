@@ -49,42 +49,48 @@ export default {}
   right: 0;
 }
 
-.test:hover {
+.test {
   overflow: visible;
-  transform: translate(0.5rem, -0.5rem);
-  transition: .1s;
+  transition: 300ms transform;
 }
 
-.test::before,
-.test::after {
+.test:hover {
+  transform: translate(5px, -5px);
+}
+
+.test::before {
   content: '';
   position: absolute;
-  background-color: blue;
+  background-color: #9147ff;
   width: 0;
-  height: 0;
-}
-
-.test:hover::before,
-.test:hover::after {
-  content: '';
-  position: absolute;
-  background-color: blue;
-  transition: 0.1s;
+  height: calc(100% + 1px);
+  top: 0;
+  left: 0;
+  transform: skewY(-45deg);
+  transition: 300ms width, 300ms top, 300ms left;
 }
 
 .test:hover::before {
-  width: 100%;
-  height: 0.5rem;
-  left: -0.25rem;
-  bottom: 0;
-  transform: translatey(100%) skewx(-45deg)
+  width: 5px;
+  top: 3px;
+  left: -5px;
 }
 
-.test:hover::after {
-  width: 0.5rem;
-  height: calc(100% + 0.1rem);
+.test::after {
+  content: '';
+  position: absolute;
+  background-color: #9147ff;
+  width: 100%;
+  height: 0;
+  bottom: 0;
   left: 0;
-  transform: translatex(-100%) skewy(-45deg);
-  top: 0.25rem;
+  transition: 300ms height, 300ms bottom, 300ms left;
+  transform: skewX(-45deg);
+}
+
+ .test:hover::after {
+  height: 5px;
+  bottom: -5px;
+  left: -2px;
 }
 </style>
