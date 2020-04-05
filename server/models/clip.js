@@ -71,4 +71,4 @@ clipSchema.virtual('game', {
   justOne: true
 })
 
-module.exports = mongoose.model('Clip', clipSchema)
+module.exports.Clip = mongoose.model('Clip', clipSchema)

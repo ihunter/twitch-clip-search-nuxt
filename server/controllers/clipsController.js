@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { Clip } = require('../models/clip')
+const { Clip } = require('../models')
 
 exports.get = async (req, res) => {
   try {
@@ -55,19 +55,19 @@ exports.get = async (req, res) => {
 
     switch (sort) {
       case '1':
-        order = { 'view_count': -1 }
+        order = { view_count: -1 }
         break
       case '2':
-        order = { 'created_at': 1 }
+        order = { created_at: 1 }
         break
       case '3':
-        order = { 'created_at': -1 }
+        order = { created_at: -1 }
         break
       case '4':
-        title ? order = { score: { $meta: 'textScore' } } : order = { 'view_count': -1 }
+        title ? order = { score: { $meta: 'textScore' } } : order = { view_count: -1 }
         break
       default:
-        order = { 'view_count': -1 }
+        order = { view_count: -1 }
     }
 
     const limit = 12

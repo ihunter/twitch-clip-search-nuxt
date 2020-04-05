@@ -22,12 +22,6 @@ async function start () {
     await builder.build()
   }
 
-  // Routes
-  app.use('/api', require('./routes'))
-
-  // Give nuxt middleware to express
-  app.use(nuxt.render)
-
   // Mongoose
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
@@ -39,6 +33,12 @@ async function start () {
   } catch (error) {
     consola.error(error)
   }
+
+  // Routes
+  app.use('/api', require('./routes'))
+
+  // Give nuxt middleware to express
+  app.use(nuxt.render)
 
   // Listen the server
   app.listen(port, host)
