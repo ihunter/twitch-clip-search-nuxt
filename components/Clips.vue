@@ -11,21 +11,20 @@
 </template>
 
 <script>
-import Clip from '@/components/Clip'
-
 import { mapActions } from 'vuex'
+import Clip from '@/components/Clip'
 
 export default {
   components: {
     Clip
   },
+  async fetch () {
+    await this.fetchClips()
+  },
   methods: {
     ...mapActions({
       fetchClips: 'clips/fetchClips'
     })
-  },
-  async fetch () {
-    await this.fetchClips()
   }
 }
 </script>
