@@ -3,6 +3,11 @@ const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const mongoose = require('mongoose')
+const graphqlHTTP = require('express-graphql')
+
+const graphqlSchema = require('./graphql/schema')
+const graphqlResolvers = require('./graphql/resolvers')
+
 const app = express()
 
 // Import and Set Nuxt.js options
@@ -33,6 +38,13 @@ async function start () {
   } catch (error) {
     consola.error(error)
   }
+
+  // GraphQL
+  app.use('/graphql', graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: graphqlResolvers,
+    graphiql: true
+  }))
 
   // Routes
   app.use('/api', require('./routes'))

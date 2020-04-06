@@ -45,13 +45,23 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    // Doc: https://github.com/nuxt-community/apollo-module
+    '@nuxtjs/apollo'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: process.env.API_URL
+  },
+  apollo: {
+    clientConfigs: {
+      default: {
+        httpEndpoint: process.env.BASE_URL
+      }
+    }
   },
   /*
   ** vuetify module configuration

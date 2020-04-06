@@ -13,7 +13,7 @@ export const mutations = {
 export const actions = {
   async fetchClips ({ commit }) {
     try {
-      const clips = await this.$axios.get('http://localhost:3000/api/v1/clips')
+      const clips = await this.$axios.get('clips')
 
       commit('setClips', clips.data)
     } catch (error) {
