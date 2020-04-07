@@ -5,14 +5,14 @@ const { Nuxt, Builder } = require('nuxt')
 const mongoose = require('mongoose')
 const graphqlHTTP = require('express-graphql')
 
-const graphqlSchema = require('./graphql/schema')
-const graphqlResolvers = require('./graphql/resolvers')
-
 const app = express()
 
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
+
+const graphqlSchema = require('./graphql/schema')
+const graphqlResolvers = require('./graphql/resolvers')
 
 async function start () {
   // Init Nuxt.js

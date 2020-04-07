@@ -21,8 +21,12 @@ module.exports = buildSchema(`
     count: Int!
   }
 
+  input ClipInput {
+    title: String
+  }
+
   type RootQuery {
-    clips: Clips!
+    clips(clipInput: ClipInput): Clips!
   }
 
   schema {
