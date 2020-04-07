@@ -1,3 +1,4 @@
+const moment = require('moment')
 const { Clip } = require('../../models')
 
 module.exports = {
@@ -6,6 +7,34 @@ module.exports = {
 
     if (clipInput.title) {
       query.$text = { $search: clipInput.title }
+    }
+
+    // Match creator name
+    if (clipInput.creator) {
+      query.creator_name = { $regex: new RegExp(clipInput.creator, 'i') }
+    }
+
+    if (clipInput.game) {
+      query.game_id = clipInput.game
+    }
+
+    if (clipInput.broadcaster) {
+      query.broadcaster_id = clipInput.broadcaster
+    }
+
+    if (clipInput.startDate && clipInput.endDate) {
+      query.created_at = {
+        $lt: moment.utc(clipInput.endDate).endOf('day').toISOString(),
+        $gt: moment.utc(clipInput.startDate).startOf('day').toISOString()
+      }
+    } else if (clipInput.startDate) {
+      query.created_at = {
+        $gt: moment.utc(clipInput.startDate).startOf('day').toISOString()
+      }
+    } else if (clipInput.endDate) {
+      query.created_at = {
+        $lt: moment.utc(clipInput.endDate).endOf('day').toISOString()
+      }
     }
 
     // Determine order based on query

@@ -22,7 +22,14 @@ module.exports = buildSchema(`
   }
 
   input ClipInput {
-    title: String
+    title: String,
+    creator: String,
+    broadcaster: String
+    game: String
+    startDate: String
+    endDate: String
+    sort: String
+    page: String
   }
 
   type RootQuery {
