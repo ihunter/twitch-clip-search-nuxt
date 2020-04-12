@@ -1,3 +1,4 @@
+require('dotenv').config()
 const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
@@ -54,12 +55,13 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: process.env.API_URL
+    baseURL: process.env.API_URL,
+    browserBaseURL: process.env.API_URL
   },
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: process.env.BASE_URL
+        httpEndpoint: `${process.env.BASE_URL}/graphql`
       }
     }
   },

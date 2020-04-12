@@ -3,7 +3,7 @@
 
   <v-app>
     <v-app-bar app>
-      <!-- -->
+      <!--  -->
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
@@ -22,5 +22,6 @@
 </template>
 
 <script>
-export default {}
+export default {
+}
 </script>

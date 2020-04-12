@@ -2,7 +2,7 @@ const moment = require('moment')
 const { Clip } = require('../../models')
 
 module.exports = {
-  async clips ({ clipInput }) {
+  async clipData ({ clipInput }) {
     const query = {}
 
     if (clipInput.title) {
@@ -57,11 +57,14 @@ module.exports = {
         order = { view_count: -1 }
     }
 
-    const limit = 12
+    const limit = clipInput.limit > 0 ? clipInput.limit : 12
+    const page = clipInput.page > 0 ? clipInput.page : 1
+    const skip = (page - 1) * limit
     const count = await Clip.find(query).countDocuments()
     const clips = await Clip.find(query)
-      .limit(limit)
       .sort(order)
+      .skip(skip)
+      .limit(limit)
       .populate('game')
       .populate('broadcaster')
 

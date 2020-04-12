@@ -10,6 +10,7 @@ module.exports = buildSchema(`
     creator_name: String!
     video_id: String!
     game_id: String!
+    game: Game
     title: String!
     view_count: Int!
     created_at: String!
@@ -21,6 +22,14 @@ module.exports = buildSchema(`
     count: Int!
   }
 
+  type Game {
+    _id: ID!
+    id: String!
+    name: String!
+    box_art_url: String!
+    clip: Clip
+  }
+
   input ClipInput {
     title: String,
     creator: String,
@@ -29,11 +38,12 @@ module.exports = buildSchema(`
     startDate: String
     endDate: String
     sort: String
-    page: String
+    page: Int
+    limit: Int
   }
 
   type RootQuery {
-    clips(clipInput: ClipInput): Clips!
+    clipData(clipInput: ClipInput): Clips!
   }
 
   schema {

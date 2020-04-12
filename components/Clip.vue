@@ -1,27 +1,48 @@
 <template>
   <v-card tag="article">
-    <v-img class="test" src="https://cdn.vuetifyjs.com/images/cards/docks.jpg">
+    <v-skeleton-loader
+      v-if="thumbnailLoading"
+      type="image"
+    />
+    <v-img
+      :src="thumbnailUrl"
+      class="hover-effect"
+      @load="thumbnailLoading = false"
+    >
       <div class="clip-info view-count">
-        111 views
+        {{ viewCount }} views
       </div>
       <div class="clip-info time-ago">
-        3 days ago
+        {{ createdAtTimeAgo }}
       </div>
     </v-img>
 
     <div class="d-flex mt-2">
       <div class="mr-2">
-        <img
-          src="https://static-cdn.jtvnw.net/ttv-boxart/./Viva%20Pi%C3%B1ata:%20Trouble%20in%20Paradise-52x72.jpg"
+        <v-skeleton-loader
+          v-if="gameBoxArtLoading"
+          tile
+          width="52"
+          height="72"
+          type="image"
+        />
+        <v-img
+          :src="sizedGameBoxArtUrl"
           class="d-block"
-        >
+          @load="gameBoxArtLoading = false"
+        />
       </div>
 
-      <div>
-        <div class="clip-title">Jerma goes insane</div>
+      <div class="clip-meta-container">
+        <div
+          :title="title"
+          class="clip-title text-truncate"
+        >
+          {{ title }}
+        </div>
         <div class="clip-meta-info">
-          <div>Jerma985</div>
-          <div>Clipped by lil_skipp3</div>
+          <div>{{ broadcasterName }}</div>
+          <div>Clipped by {{ creatorName }} on {{ createdAtCalendar }}</div>
         </div>
       </div>
     </div>
@@ -29,7 +50,59 @@
 </template>
 
 <script>
-export default {}
+import moment from 'moment'
+
+export default {
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    broadcasterName: {
+      type: String,
+      required: true
+    },
+    creatorName: {
+      type: String,
+      required: true
+    },
+    viewCount: {
+      type: Number,
+      required: true
+    },
+    createdAt: {
+      type: String,
+      required: true
+    },
+    game: {
+      type: Object,
+      default: null
+    },
+    thumbnailUrl: {
+      type: String,
+      default: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'
+    }
+  },
+  data () {
+    return {
+      thumbnailLoading: true,
+      gameBoxArtLoading: true
+    }
+  },
+  computed: {
+    createdAtTimeAgo () {
+      return moment(+this.createdAt).fromNow()
+    },
+    createdAtCalendar () {
+      return moment(+this.createdAt).calendar()
+    },
+    sizedGameBoxArtUrl () {
+      return this.game ? this.game.box_art_url.replace(/{width}x{height}/, '52x72') : 'https://static-cdn.jtvnw.net/ttv-static/404_boxart-52x72.jpg'
+    }
+  },
+  methods: {
+  }
+}
 </script>
 
 <style>
@@ -53,21 +126,25 @@ export default {}
   font-size: 1.2rem;
 }
 
+.clip-meta-container {
+  overflow: hidden;
+}
+
 .clip-meta-info {
   font-size: 0.8rem;
   color: #c3c3c3;
 }
 
-.test {
+.hover-effect {
   overflow: visible;
   transition: 300ms transform;
 }
 
-.test:hover {
+.hover-effect:hover {
   transform: translate(5px, -5px);
 }
 
-.test::before {
+.hover-effect::before {
   content: '';
   position: absolute;
   background-color: #9147ff;
@@ -79,13 +156,13 @@ export default {}
   transition: 300ms width, 300ms top, 300ms left;
 }
 
-.test:hover::before {
+.hover-effect:hover::before {
   width: 5px;
   top: 3px;
   left: -5px;
 }
 
-.test::after {
+.hover-effect::after {
   content: '';
   position: absolute;
   background-color: #9147ff;
@@ -97,7 +174,7 @@ export default {}
   transform: skewX(-45deg);
 }
 
- .test:hover::after {
+ .hover-effect:hover::after {
   height: 5px;
   bottom: -5px;
   left: -2px;
