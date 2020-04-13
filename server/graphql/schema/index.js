@@ -1,6 +1,18 @@
 const { buildSchema } = require('graphql')
 
 module.exports = buildSchema(`
+  type Broadcaster {
+    id: String!
+    login: String!
+    display_name: String!
+    type: String!
+    broadcaster_type: String!
+    description: String!
+    profile_image_url: String!
+    offline_image_url: String!
+    view_count: Int!
+  }
+
   type Clip {
     _id: ID!
     url: String!
@@ -45,6 +57,7 @@ module.exports = buildSchema(`
   type RootQuery {
     allClips(query: ClipInput): Clips!
     allGames(broadcasterID: String): [Game]!
+    allBroadcasters: [Broadcaster]!
   }
 
   schema {

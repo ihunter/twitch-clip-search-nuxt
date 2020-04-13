@@ -1,5 +1,5 @@
 const moment = require('moment')
-const { Clip, Game } = require('../../models')
+const { Broadcaster, Clip, Game } = require('../../models')
 
 module.exports = {
   async allClips ({ query }) {
@@ -78,5 +78,8 @@ module.exports = {
     }
 
     return await Game.find()
+  },
+  async allBroadcasters () {
+    return await Broadcaster.find()
   }
 }

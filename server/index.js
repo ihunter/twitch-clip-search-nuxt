@@ -46,9 +46,6 @@ async function start () {
     graphiql: true
   }))
 
-  // Routes
-  app.use('/api', require('./routes'))
-
   // Give nuxt middleware to express
   app.use(nuxt.render)
 
