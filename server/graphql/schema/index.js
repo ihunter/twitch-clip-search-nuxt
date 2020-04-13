@@ -43,7 +43,8 @@ module.exports = buildSchema(`
   }
 
   type RootQuery {
-    clipData(clipInput: ClipInput): Clips!
+    allClips(query: ClipInput): Clips!
+    allGames(broadcasterID: String): [Game]!
   }
 
   schema {

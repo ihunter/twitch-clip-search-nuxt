@@ -1,46 +1,46 @@
 const moment = require('moment')
-const { Clip } = require('../../models')
+const { Clip, Game } = require('../../models')
 
 module.exports = {
-  async clipData ({ clipInput }) {
-    const query = {}
+  async allClips ({ query }) {
+    const mongoQuery = {}
 
-    if (clipInput.title) {
-      query.$text = { $search: clipInput.title }
+    if (query.title) {
+      mongoQuery.$text = { $search: query.title }
     }
 
     // Match creator name
-    if (clipInput.creator) {
-      query.creator_name = { $regex: new RegExp(clipInput.creator, 'i') }
+    if (query.creator) {
+      mongoQuery.creator_name = { $regex: new RegExp(query.creator, 'i') }
     }
 
-    if (clipInput.game) {
-      query.game_id = clipInput.game
+    if (query.game) {
+      mongoQuery.game_id = query.game
     }
 
-    if (clipInput.broadcaster) {
-      query.broadcaster_id = clipInput.broadcaster
+    if (query.broadcaster) {
+      mongoQuery.broadcaster_id = query.broadcaster
     }
 
-    if (clipInput.startDate && clipInput.endDate) {
-      query.created_at = {
-        $lt: moment.utc(clipInput.endDate).endOf('day').toISOString(),
-        $gt: moment.utc(clipInput.startDate).startOf('day').toISOString()
+    if (query.startDate && query.endDate) {
+      mongoQuery.created_at = {
+        $lt: moment.utc(query.endDate).endOf('day').toISOString(),
+        $gt: moment.utc(query.startDate).startOf('day').toISOString()
       }
-    } else if (clipInput.startDate) {
-      query.created_at = {
-        $gt: moment.utc(clipInput.startDate).startOf('day').toISOString()
+    } else if (query.startDate) {
+      mongoQuery.created_at = {
+        $gt: moment.utc(query.startDate).startOf('day').toISOString()
       }
-    } else if (clipInput.endDate) {
-      query.created_at = {
-        $lt: moment.utc(clipInput.endDate).endOf('day').toISOString()
+    } else if (query.endDate) {
+      mongoQuery.created_at = {
+        $lt: moment.utc(query.endDate).endOf('day').toISOString()
       }
     }
 
     // Determine order based on query
     let order
 
-    switch (clipInput.sort) {
+    switch (query.sort) {
       case '1':
         order = { view_count: -1 }
         break
@@ -51,17 +51,17 @@ module.exports = {
         order = { created_at: -1 }
         break
       case '4':
-        clipInput.title ? order = { score: { $meta: 'textScore' } } : order = { view_count: -1 }
+        mongoQuery.title ? order = { score: { $meta: 'textScore' } } : order = { view_count: -1 }
         break
       default:
         order = { view_count: -1 }
     }
 
-    const limit = clipInput.limit > 0 ? clipInput.limit : 12
-    const page = clipInput.page > 0 ? clipInput.page : 1
+    const limit = query.limit > 0 ? query.limit : 12
+    const page = query.page > 0 ? query.page : 1
     const skip = (page - 1) * limit
-    const count = await Clip.find(query).countDocuments()
-    const clips = await Clip.find(query)
+    const count = await Clip.find(mongoQuery).countDocuments()
+    const clips = await Clip.find(mongoQuery)
       .sort(order)
       .skip(skip)
       .limit(limit)
@@ -69,5 +69,14 @@ module.exports = {
       .populate('broadcaster')
 
     return { clips, count }
+  },
+  async allGames ({ broadcasterID }) {
+    if (broadcasterID) {
+      // Find all unique game IDs for a broadcaster
+      const gameIDs = await Clip.find({ broadcaster_id: broadcasterID }).distinct('game_id')
+      return await Game.find({ id: { $in: gameIDs } })
+    }
+
+    return await Game.find()
   }
 }

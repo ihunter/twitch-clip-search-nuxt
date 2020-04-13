@@ -3,12 +3,21 @@
 
   <v-app>
     <v-app-bar app>
-      <!--  -->
+      <v-spacer class="hidden-md-and-down" />
+
+      <v-toolbar-title class="hidden-sm-and-down mr-3">
+        Twitch Clip Search
+      </v-toolbar-title>
+
+      <Search />
+
+      <SearchFilters />
+
+      <v-spacer class="hidden-md-and-down" />
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
     <v-content>
-      <!-- Provides the application the proper gutter -->
       <v-container>
         <!-- If using vue-router -->
         <nuxt />
@@ -22,6 +31,13 @@
 </template>
 
 <script>
+import Search from '~/components/Search'
+import SearchFilters from '~/components/SearchFilters'
+
 export default {
+  components: {
+    Search,
+    SearchFilters
+  }
 }
 </script>

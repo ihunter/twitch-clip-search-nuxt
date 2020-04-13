@@ -1,29 +1,36 @@
 <template>
-  <Clips :clips="clipData.clips" />
+  <div>
+    <ClipsLoader v-if="$apollo.loading" />
+    <Clips v-else :clips="allClips.clips" />
+  </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import Clips from '@/components/Clips'
+import ClipsLoader from '@/components/ClipsLoader'
+
 export default {
   components: {
-    Clips
-  },
-  asyncData ({ query }) {
-    const limit = +query.limit
-    return { limit }
-  },
-  data () {
-    return {
-      clipData: {
-        clips: 12
-      }
-    }
+    Clips,
+    ClipsLoader
   },
   apollo: {
-    clipData: {
-      query: gql`query getClips($limit: Int) {
-        clipData(clipInput:{ limit: $limit }) {
+    allClips: {
+      query: gql`query allClips(
+        $title: String
+        $game: String
+        $startDate: String
+        $endDate: String
+        $limit: Int
+      ) {
+        allClips(query:{
+          title: $title
+          game: $game
+          startDate: $startDate
+          endDate: $endDate
+          limit: $limit
+        }) {
           clips {
             title
             broadcaster_name
@@ -40,7 +47,11 @@ export default {
       }`,
       variables () {
         return {
-          limit: this.limit
+          title: this.$route.query.title,
+          game: this.$route.query.game,
+          startDate: this.$route.query.startDate,
+          endDate: this.$route.query.endDate,
+          limit: +this.$route.query.limit
         }
       }
     }
