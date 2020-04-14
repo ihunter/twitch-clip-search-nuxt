@@ -43,7 +43,7 @@ async function start () {
   app.use('/graphql', graphqlHTTP({
     schema: graphqlSchema,
     rootValue: graphqlResolvers,
-    graphiql: true
+    graphiql: process.env.NODE_ENV !== 'production'
   }))
 
   // Give nuxt middleware to express
