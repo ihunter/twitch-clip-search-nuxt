@@ -60,7 +60,7 @@ module.exports = {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: `${process.env.BASE_URL}/graphql`
+        httpEndpoint: 'graphql'
       }
     }
   },
