@@ -3,6 +3,7 @@
     <ClipsLoader v-if="$apollo.loading" />
     <Clips v-else :clips="allClips.clips" />
     <ClipPagination v-if="!$apollo.loading" :count="allClips.count" />
+    <ScrollToTopFab />
   </div>
 </template>
 
@@ -11,12 +12,14 @@ import gql from 'graphql-tag'
 import Clips from '~/components/Clips'
 import ClipsLoader from '~/components/ClipsLoader'
 import ClipPagination from '~/components/ClipPagination'
+import ScrollToTopFab from '~/components/ScrollToTopFab'
 
 export default {
   components: {
     Clips,
     ClipsLoader,
-    ClipPagination
+    ClipPagination,
+    ScrollToTopFab
   },
   apollo: {
     allClips: {
