@@ -13,7 +13,6 @@ import ClipsLoader from '~/components/ClipsLoader'
 import ClipPagination from '~/components/ClipPagination'
 
 export default {
-  scrollToTop: true,
   components: {
     Clips,
     ClipsLoader,
