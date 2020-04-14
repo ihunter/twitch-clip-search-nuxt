@@ -13,6 +13,7 @@ import ClipsLoader from '~/components/ClipsLoader'
 import ClipPagination from '~/components/ClipPagination'
 
 export default {
+  scrollToTop: true,
   components: {
     Clips,
     ClipsLoader,
@@ -47,6 +48,7 @@ export default {
             view_count
             created_at
             game {
+              name
               box_art_url
             }
             thumbnail_url

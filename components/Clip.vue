@@ -2,9 +2,10 @@
   <v-card tag="article">
     <a :href="url" target="_blank">
       <v-img
+        min-height="200"
         :src="thumbnailUrl"
-        lazy-src="https://picsum.photos/id/11/10/6"
-        class="hover-effect"
+
+        class="hover-effect grey darken-1"
       >
         <div class="clip-info view-count">
           {{ viewCount }} views
@@ -25,6 +26,7 @@
           type="image"
         />
         <v-img
+          :title="gameName"
           :src="sizedGameBoxArtUrl"
           class="d-block"
           @load="gameBoxArtLoading = false"
@@ -99,6 +101,9 @@ export default {
     },
     sizedGameBoxArtUrl () {
       return this.game ? this.game.box_art_url.replace(/{width}x{height}/, '52x72') : 'https://static-cdn.jtvnw.net/ttv-static/404_boxart-52x72.jpg'
+    },
+    gameName () {
+      return this.game ? this.game.name : ''
     }
   },
   methods: {

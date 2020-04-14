@@ -6,6 +6,8 @@
     item-text="name"
     item-value="id"
     clearable
+    :loading="$apollo.loading"
+    :disabled="$apollo.loading"
     @change="updateQuery({ game })"
     @click:clear="updateQuery({ game: undefined })"
   />
