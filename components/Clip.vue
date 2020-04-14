@@ -1,14 +1,10 @@
 <template>
   <v-card tag="article">
-    <v-skeleton-loader
-      v-if="thumbnailLoading"
-      type="image"
-    />
     <a :href="url" target="_blank">
       <v-img
         :src="thumbnailUrl"
+        lazy-src="https://picsum.photos/id/11/10/6"
         class="hover-effect"
-        @load="thumbnailLoading = false"
       >
         <div class="clip-info view-count">
           {{ viewCount }} views
@@ -83,11 +79,14 @@ export default {
     thumbnailUrl: {
       type: String,
       default: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'
+    },
+    url: {
+      type: String,
+      required: true
     }
   },
   data () {
     return {
-      thumbnailLoading: true,
       gameBoxArtLoading: true
     }
   },

@@ -2,7 +2,7 @@
   <div>
     <ClipsLoader v-if="$apollo.loading" />
     <Clips v-else :clips="allClips.clips" />
-    <ClipPagination :count="allClips.count" />
+    <ClipPagination v-if="!$apollo.loading" :count="allClips.count" />
   </div>
 </template>
 
@@ -50,6 +50,7 @@ export default {
               box_art_url
             }
             thumbnail_url
+            url
           },
           count
         }

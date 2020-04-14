@@ -16,6 +16,7 @@
         :created-at="clip.created_at"
         :game="clip.game"
         :thumbnail-url="clip.thumbnail_url"
+        :url="clip.url"
       />
     </v-col>
   </v-row>

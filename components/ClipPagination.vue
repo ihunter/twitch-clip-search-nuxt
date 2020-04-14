@@ -1,6 +1,5 @@
 <template>
   <v-pagination
-    v-if="!$apollo.loading"
     v-model="page"
     :length="paginationLength"
     total-visible="10"

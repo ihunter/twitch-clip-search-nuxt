@@ -3,10 +3,14 @@
     <v-col
       v-for="loader in 12"
       :key="loader"
-      cols="4"
+      cols="12"
+      sm="6"
+      md="4"
+      lg="4"
     >
       <v-skeleton-loader
-        type="card"
+        tile
+        type="image, list-item-avatar-three-line"
       />
     </v-col>
   </v-row>
