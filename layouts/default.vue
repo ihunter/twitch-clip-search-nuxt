@@ -2,7 +2,7 @@
   <!-- App.vue -->
 
   <v-app>
-    <v-app-bar app>
+    <v-app-bar app color="primary">
       <v-spacer class="hidden-md-and-down" />
 
       <v-toolbar-title class="hidden-sm-and-down mr-3">

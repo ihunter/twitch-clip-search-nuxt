@@ -1,5 +1,5 @@
 require('dotenv').config()
-const colors = require('vuetify/es5/util/colors').default
+// const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
   mode: 'universal',
@@ -7,12 +7,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    title: 'Twitch Clip Search',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: 'Search for twitch clips by title, clip creator, and game' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -73,15 +72,12 @@ module.exports = {
     customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: true,
+      options: {
+        customProperties: true
+      },
       themes: {
         dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
+          primary: '#9146FF2'
         }
       }
     }

@@ -4,18 +4,20 @@
       v-if="thumbnailLoading"
       type="image"
     />
-    <v-img
-      :src="thumbnailUrl"
-      class="hover-effect"
-      @load="thumbnailLoading = false"
-    >
-      <div class="clip-info view-count">
-        {{ viewCount }} views
-      </div>
-      <div class="clip-info time-ago">
-        {{ createdAtTimeAgo }}
-      </div>
-    </v-img>
+    <a :href="url" target="_blank">
+      <v-img
+        :src="thumbnailUrl"
+        class="hover-effect"
+        @load="thumbnailLoading = false"
+      >
+        <div class="clip-info view-count">
+          {{ viewCount }} views
+        </div>
+        <div class="clip-info time-ago">
+          {{ createdAtTimeAgo }}
+        </div>
+      </v-img>
+    </a>
 
     <div class="d-flex mt-2">
       <div class="mr-2">
@@ -108,6 +110,7 @@ export default {
 <style>
 .clip-info {
   position: absolute;
+  color: white;
   background-color: rgba(0, 0, 0, 0.6);
   padding: 0 0.5rem;
   margin: 0.5rem;
@@ -147,7 +150,7 @@ export default {
 .hover-effect::before {
   content: '';
   position: absolute;
-  background-color: #9147ff;
+  background-color: var(--v-primary-base);;
   width: 0;
   height: calc(100% + 1px);
   top: 0;
@@ -165,7 +168,7 @@ export default {
 .hover-effect::after {
   content: '';
   position: absolute;
-  background-color: #9147ff;
+  background-color: var(--v-primary-base);;
   width: 100%;
   height: 0;
   bottom: 0;

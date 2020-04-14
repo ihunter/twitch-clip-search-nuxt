@@ -3,7 +3,10 @@
     <v-col
       v-for="clip in clips"
       :key="clip.id"
-      cols="4"
+      cols="12"
+      sm="6"
+      md="4"
+      lg="4"
     >
       <Clip
         :title="clip.title"
