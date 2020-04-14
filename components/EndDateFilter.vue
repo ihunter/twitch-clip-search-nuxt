@@ -15,21 +15,24 @@
         clearable
         readonly
         v-on="on"
-        @click:clear="endDateChanged(undefined)"
+        @click:clear="updateQuery({ endDate: undefined })"
       />
     </template>
     <v-date-picker
       v-model="endDate"
       :max="currentDate"
       :min="endDateMin"
-      @change="endDateChanged"
+      @change="updateQuery({ endDate })"
       @input="endDateMenu = false"
     />
   </v-menu>
 </template>
 
 <script>
+import queryMixin from '~/mixins/queryMixin'
+
 export default {
+  mixins: [queryMixin],
   data () {
     return {
       endDateMenu: false,
@@ -42,12 +45,6 @@ export default {
   computed: {
     endDateMin () {
       return this.startDate ? this.startDate : this.oldestDate
-    }
-  },
-  methods: {
-    endDateChanged (endDate) {
-      const query = { ...this.$route.query, endDate }
-      this.$router.push({ path: '/', query })
     }
   }
 }

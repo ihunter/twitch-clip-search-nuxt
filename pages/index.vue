@@ -2,18 +2,21 @@
   <div>
     <ClipsLoader v-if="$apollo.loading" />
     <Clips v-else :clips="allClips.clips" />
+    <ClipPagination :count="allClips.count" />
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import Clips from '@/components/Clips'
-import ClipsLoader from '@/components/ClipsLoader'
+import Clips from '~/components/Clips'
+import ClipsLoader from '~/components/ClipsLoader'
+import ClipPagination from '~/components/ClipPagination'
 
 export default {
   components: {
     Clips,
-    ClipsLoader
+    ClipsLoader,
+    ClipPagination
   },
   apollo: {
     allClips: {
@@ -24,6 +27,7 @@ export default {
         $startDate: String
         $endDate: String
         $limit: Int
+        $page: Int
       ) {
         allClips(query:{
           title: $title
@@ -32,6 +36,7 @@ export default {
           startDate: $startDate
           endDate: $endDate
           limit: $limit
+          page: $page
         }) {
           clips {
             title
@@ -54,7 +59,8 @@ export default {
           broadcaster: this.$route.query.broadcaster,
           startDate: this.$route.query.startDate,
           endDate: this.$route.query.endDate,
-          limit: +this.$route.query.limit
+          limit: +this.$route.query.limit,
+          page: +this.$route.query.page
         }
       }
     }

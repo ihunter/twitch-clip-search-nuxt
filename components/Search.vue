@@ -8,21 +8,19 @@
     hide-details
     prepend-inner-icon="mdi-magnify"
     label="Search"
-    @keydown.enter="search"
+    @keydown.enter="updateQuery({ title })"
+    @click:clear="updateQuery({ title: undefined })"
   />
 </template>
 
 <script>
+import queryMixin from '~/mixins/queryMixin'
+
 export default {
+  mixins: [queryMixin],
   data () {
     return {
       title: this.$route.query.title
-    }
-  },
-  methods: {
-    search () {
-      const query = { ...this.$route.query, title: this.title }
-      this.$router.push({ path: '/', query })
     }
   }
 }

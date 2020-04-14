@@ -6,15 +6,18 @@
     item-text="name"
     item-value="id"
     clearable
-    @change="gameChanged"
-    @click:clear="gameChanged(undefined)"
+    @change="updateQuery({ game })"
+    @click:clear="updateQuery({ game: undefined })"
   />
 </template>
 
 <script>
 import gql from 'graphql-tag'
 
+import queryMixin from '~/mixins/queryMixin'
+
 export default {
+  mixins: [queryMixin],
   data () {
     return {
       game: this.$route.query.game
@@ -33,12 +36,6 @@ export default {
           broadcaster: this.$route.query.broadcaster
         }
       }
-    }
-  },
-  methods: {
-    gameChanged (game) {
-      const query = { ...this.$route.query, game }
-      this.$router.push({ path: '/', query })
     }
   }
 }

@@ -6,15 +6,17 @@
     item-text="display_name"
     item-value="id"
     clearable
-    @change="broadcasterChanged"
-    @click:clear="broadcasterChanged(undefined)"
+    @change="updateQuery({ broadcaster })"
+    @click:clear="updateQuery({ broadcaster: undefined})"
   />
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import queryMixin from '~/mixins/queryMixin'
 
 export default {
+  mixins: [queryMixin],
   data () {
     return {
       broadcaster: this.$route.query.broadcaster
@@ -28,12 +30,6 @@ export default {
           display_name
         }
       }`
-    }
-  },
-  methods: {
-    broadcasterChanged (broadcaster) {
-      const query = { ...this.$route.query, broadcaster }
-      this.$router.push({ path: '/', query })
     }
   }
 }
