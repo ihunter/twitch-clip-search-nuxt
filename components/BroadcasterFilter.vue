@@ -6,6 +6,8 @@
     item-text="display_name"
     item-value="id"
     clearable
+    :loading="$apollo.loading"
+    :disabled="$apollo.loading"
     @change="updateQuery({ broadcaster })"
     @click:clear="updateQuery({ broadcaster: undefined})"
   />
