@@ -28,6 +28,7 @@ export default {
         $endDate: String
         $limit: Int
         $page: Int
+        $sort: Int
       ) {
         allClips(query:{
           title: $title
@@ -37,6 +38,7 @@ export default {
           endDate: $endDate
           limit: $limit
           page: $page
+          sort: $sort
         }) {
           clips {
             title
@@ -60,7 +62,8 @@ export default {
           startDate: this.$route.query.startDate,
           endDate: this.$route.query.endDate,
           limit: +this.$route.query.limit,
-          page: +this.$route.query.page
+          page: +this.$route.query.page,
+          sort: +this.$route.query.sort
         }
       }
     }

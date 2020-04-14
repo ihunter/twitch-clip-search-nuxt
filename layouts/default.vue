@@ -13,6 +13,8 @@
 
       <SearchFilters />
 
+      <SearchSort />
+
       <v-spacer class="hidden-md-and-down" />
     </v-app-bar>
 
@@ -33,11 +35,13 @@
 <script>
 import Search from '~/components/Search'
 import SearchFilters from '~/components/SearchFilters'
+import SearchSort from '~/components/SearchSort'
 
 export default {
   components: {
     Search,
-    SearchFilters
+    SearchFilters,
+    SearchSort
   }
 }
 </script>

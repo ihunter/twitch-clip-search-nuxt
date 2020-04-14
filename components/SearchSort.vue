@@ -14,7 +14,7 @@
       <v-list-item
         v-for="(type, i) in sortTypes"
         :key="i"
-        @click="updateQuery({ sort: type })"
+        @click="updateQuery({ sort: type.value })"
       >
         <v-list-item-title>{{ type.title }}</v-list-item-title>
       </v-list-item>

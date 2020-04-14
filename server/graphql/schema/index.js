@@ -49,7 +49,7 @@ module.exports = buildSchema(`
     game: String
     startDate: String
     endDate: String
-    sort: String
+    sort: Int
     page: Int
     limit: Int
   }

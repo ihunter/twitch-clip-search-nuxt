@@ -41,16 +41,16 @@ module.exports = {
     let order
 
     switch (query.sort) {
-      case '1':
+      case 1:
         order = { view_count: -1 }
         break
-      case '2':
+      case 2:
         order = { created_at: 1 }
         break
-      case '3':
+      case 3:
         order = { created_at: -1 }
         break
-      case '4':
+      case 4:
         mongoQuery.title ? order = { score: { $meta: 'textScore' } } : order = { view_count: -1 }
         break
       default:
