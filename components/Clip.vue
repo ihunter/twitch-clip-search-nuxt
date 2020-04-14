@@ -41,8 +41,18 @@
           {{ title }}
         </div>
         <div class="clip-meta-info">
-          <div>{{ broadcasterName }}</div>
-          <div>Clipped by {{ creatorName }} on {{ createdAtCalendar }}</div>
+          <div
+            :title="broadcasterName"
+            class="text-truncate"
+          >
+            {{ broadcasterName }}
+          </div>
+          <div
+            :title="clippedByInfo"
+            class="text-truncate"
+          >
+            {{ clippedByInfo }}
+          </div>
         </div>
       </div>
     </div>
@@ -104,6 +114,9 @@ export default {
     },
     gameName () {
       return this.game ? this.game.name : ''
+    },
+    clippedByInfo () {
+      return `Clipped by ${this.creatorName} on ${this.createdAtCalendar}`
     }
   },
   methods: {
