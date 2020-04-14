@@ -11,7 +11,7 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Search for twitch clips by title, clip creator, and game' }
+      { hid: 'description', name: 'description', content: 'Search for twitch clips by title, broadcaster, game, and date' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
