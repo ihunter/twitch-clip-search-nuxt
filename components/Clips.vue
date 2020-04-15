@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row v-if="clips.length > 0">
     <v-col
       v-for="clip in clips"
       :key="clip.id"
@@ -19,6 +19,12 @@
         :url="clip.url"
       />
     </v-col>
+  </v-row>
+  <v-row v-else justify="center">
+    <div>
+      <v-img :src="require('~/assets/firedman.png')" />
+      <h1>No Clips Here</h1>
+    </div>
   </v-row>
 </template>
 
