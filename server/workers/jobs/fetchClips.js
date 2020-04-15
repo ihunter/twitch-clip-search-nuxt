@@ -5,7 +5,6 @@ const moment = require('moment')
 const { Broadcaster, Clip, Log } = require('../../models')
 const { API } = require('../../utils/twitch-api')
 const { addGames } = require('./addGames')
-const { addCreators } = require('./addCreators')
 const { getAuthToken } = require('./getAuthToken')
 
 const OLDEST_START_DATE = '2016-04-01T00:00:00Z'
