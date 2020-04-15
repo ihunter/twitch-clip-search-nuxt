@@ -4,7 +4,7 @@
     label="Creator Name"
     clearable
     @change="updateQuery({ creator })"
-    @click:clear="updateQuery({ creator: undefined})"
+    @click:clear="updateQuery({ creator: undefined })"
   />
 </template>
 
@@ -12,6 +12,11 @@
 import queryMixin from '~/mixins/queryMixin'
 
 export default {
-  mixins: [queryMixin]
+  mixins: [queryMixin],
+  data () {
+    return {
+      creator: this.$route.query.creator
+    }
+  }
 }
 </script>
