@@ -1,13 +1,8 @@
 <template>
-  <v-autocomplete
+  <v-text-field
     v-model="creator"
-    label="Broadcaster"
-    :items="allCreators"
-    item-text="display_name"
-    item-value="id"
+    label="Creator Name"
     clearable
-    :loading="$apollo.loading"
-    :disabled="$apollo.loading"
     @change="updateQuery({ creator })"
     @click:clear="updateQuery({ creator: undefined})"
   />

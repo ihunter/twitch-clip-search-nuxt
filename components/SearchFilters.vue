@@ -15,6 +15,8 @@
         <StartDateFilter />
 
         <EndDateFilter />
+
+        <CreatorFilter />
       </v-card-text>
     </v-card>
   </v-menu>
@@ -25,13 +27,15 @@ import BroadcasterFilter from '~/components/BroadcasterFilter'
 import GameFilter from '~/components/GameFilter'
 import StartDateFilter from '~/components/StartDateFilter'
 import EndDateFilter from '~/components/EndDateFilter'
+import CreatorFilter from '~/components/CreatorFilter'
 
 export default {
   components: {
     BroadcasterFilter,
     GameFilter,
     StartDateFilter,
-    EndDateFilter
+    EndDateFilter,
+    CreatorFilter
   },
   data () {
     return {

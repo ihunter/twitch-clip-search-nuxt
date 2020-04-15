@@ -32,6 +32,7 @@ export default {
         $limit: Int
         $page: Int
         $sort: Int
+        $creator: String
       ) {
         allClips(query:{
           title: $title
@@ -42,6 +43,7 @@ export default {
           limit: $limit
           page: $page
           sort: $sort
+          creator: $creator
         }) {
           clips {
             title
@@ -68,7 +70,8 @@ export default {
           endDate: this.$route.query.endDate,
           limit: +this.$route.query.limit,
           page: +this.$route.query.page,
-          sort: +this.$route.query.sort
+          sort: +this.$route.query.sort,
+          creator: this.$route.query.creator
         }
       }
     }
