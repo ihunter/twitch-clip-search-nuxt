@@ -7,6 +7,8 @@ const graphqlHTTP = require('express-graphql')
 
 const app = express()
 
+const { addCreators } = require('./workers/jobs/addCreators')
+
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
@@ -38,6 +40,8 @@ async function start () {
   } catch (error) {
     consola.error(error)
   }
+
+  addCreators()
 
   // GraphQL
   app.use('/graphql', graphqlHTTP({

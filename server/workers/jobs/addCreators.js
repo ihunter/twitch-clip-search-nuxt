@@ -1,48 +1,49 @@
 require('dotenv').config()
 const consola = require('consola')
+const rateLimit = require('axios-rate-limit')
 
-const { Clip, Game } = require('../../models')
+const { Clip, Creator } = require('../../models')
 
 const { API } = require('../../utils/twitch-api')
 
-async function addGames () {
+async function addCreators () {
   try {
-    consola.log('Adding games')
-    const api = await API()
-    let games = await Clip.distinct('game_id')
+    consola.log('Adding Creators')
+    const api = rateLimit(await API(), { maxRPS: 13 })
+    let creators = await Clip.distinct('creator_id')
 
     // Filter non games
-    games = games.filter(game => game !== '')
+    creators = creators.filter(creator => creator !== '')
 
-    // Breakup games into batches of 100 IDs
-    const gameBatches = []
+    // Breakup creators into batches of 100 IDs
+    const creatorBatches = []
     const chunkSize = 100
-    for (let i = 0; i < games.length; i += chunkSize) {
-      gameBatches.push(games.slice(i, i + chunkSize).join('&id='))
+    for (let i = 0; i < creators.length; i += chunkSize) {
+      creatorBatches.push(creators.slice(i, i + chunkSize).join('&id='))
     }
 
-    const gamesPromises = gameBatches.map(async (gameIDs) => {
-      const res = await api.get(`games?id=${gameIDs}`)
+    const creatorPromises = creatorBatches.map(async (creatorIDs) => {
+      const res = await api.get(`users?id=${creatorIDs}`)
       return res.data.data
     })
 
-    const gamesDataArray = await Promise.all(gamesPromises)
+    const creatorsDataArray = await Promise.all(creatorPromises)
 
-    const gamesData = gamesDataArray.flat()
+    const creatorsData = creatorsDataArray.flat()
 
-    await Game.bulkWrite(gamesData.map((game) => {
+    await Creator.bulkWrite(creatorsData.map((creator) => {
       return {
         updateOne: {
-          filter: { id: game.id },
-          update: game,
+          filter: { id: creator.id },
+          update: creator,
           upsert: true
         }
       }
     }))
 
-    consola.success('Finished adding games')
+    consola.success('Finished adding creators')
   } catch (error) {
-    consola.error('Failed to fetch games data')
+    consola.error('Failed to fetch creators data')
 
     if (error.response) {
       /*
@@ -67,5 +68,5 @@ async function addGames () {
 }
 
 module.exports = {
-  addGames
+  addCreators
 }

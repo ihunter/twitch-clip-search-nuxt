@@ -1,4 +1,5 @@
 const moment = require('moment')
+const consola = require('consola')
 
 const { Log } = require('../models')
 
@@ -33,8 +34,8 @@ async function init () {
 
     await Promise.all(jobQueue)
   } catch (error) {
-    console.error('Failed to init jobs')
-    console.log(error)
+    consola.error('Failed to init jobs')
+    consola.error(error)
   }
 }
 
