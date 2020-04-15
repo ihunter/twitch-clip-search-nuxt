@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const mongoose = require('mongoose')
@@ -38,6 +39,8 @@ async function start () {
   } catch (error) {
     consola.error(error)
   }
+
+  app.use(cors())
 
   // GraphQL
   app.use('/graphql', graphqlHTTP({
