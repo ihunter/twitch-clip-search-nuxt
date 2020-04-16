@@ -53,7 +53,9 @@ async function start () {
   app.use(nuxt.render)
 
   // Start workers
-  require('./workers')
+  if (process.env.NODE_ENV === 'production') {
+    require('./workers')
+  }
 
   // Listen the server
   app.listen(port, host)

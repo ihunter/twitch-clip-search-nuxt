@@ -21,6 +21,9 @@ export default {
     ClipPagination,
     ScrollToTopFab
   },
+  beforeUpdate () {
+    window.scrollTo(0, 0)
+  },
   apollo: {
     allClips: {
       query: gql`query allClips(
