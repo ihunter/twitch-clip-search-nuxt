@@ -9,6 +9,8 @@
       bottom
       right
       color="primary"
+      style="bottom: 80px"
+      title="Scroll to top"
       @click="$vuetify.goTo(0)"
     >
       <v-icon>mdi-chevron-up</v-icon>
