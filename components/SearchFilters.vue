@@ -1,12 +1,22 @@
 <template>
   <v-menu v-model="filterMenu" :close-on-content-click="false">
     <template v-slot:activator="{ on }">
-      <v-btn icon :ripple="{ center: true }" v-on="on">
+      <v-btn title="Filter" icon :ripple="{ center: true }" v-on="on">
         <v-icon>mdi-filter-variant</v-icon>
       </v-btn>
     </template>
 
     <v-card>
+      <v-card-title>
+        Search Filters
+        <v-spacer />
+        <v-btn
+          icon
+          @click="filterMenu = false"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-card-title>
       <v-card-text>
         <BroadcasterFilter />
 

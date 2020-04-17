@@ -3,6 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn
         icon
+        title="Sort"
         :ripple="{ center: true }"
         v-on="on"
       >
