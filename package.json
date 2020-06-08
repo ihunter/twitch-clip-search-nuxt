@@ -13,8 +13,8 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
-    "@nuxtjs/apollo": "^4.0.0-rc19",
-    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/apollo": "^4.0.0-rc9",
+    "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/dotenv": "^1.4.0",
     "axios-rate-limit": "^1.2.1",
     "cors": "^2.8.5",
@@ -22,19 +22,19 @@
     "express": "^4.16.4",
     "express-graphql": "^0.9.0",
     "graphql-tag": "^2.10.3",
-    "moment": "^2.24.0",
-    "mongoose": "^5.9.9",
+    "moment": "^2.26.0",
+    "mongoose": "^5.9.18",
     "mongoose-findorcreate": "^3.0.0",
     "nuxt": "^2.0.0"
   },
   "devDependencies": {
-    "@nuxt/typescript-build": "^0.6.5",
+    "@nuxt/typescript-build": "^0.6.6",
     "@nuxtjs/eslint-config-typescript": "^1.0.0",
-    "@nuxtjs/eslint-module": "^1.0.0",
-    "@nuxtjs/vuetify": "^1.0.0",
+    "@nuxtjs/eslint-module": "^1.2.0",
+    "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.1.0",
-    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-nuxt": "^1.0.0",
     "nodemon": "^1.18.9"
   }
 }
