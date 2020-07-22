@@ -24,16 +24,16 @@ module.exports = {
 
     if (query.startDate && query.endDate) {
       mongoQuery.created_at = {
-        $lt: moment.utc(query.endDate).endOf('day').toISOString(),
-        $gt: moment.utc(query.startDate).startOf('day').toISOString()
+        $lt: moment(query.endDate).endOf('day').toISOString(),
+        $gt: moment(query.startDate).startOf('day').toISOString()
       }
     } else if (query.startDate) {
       mongoQuery.created_at = {
-        $gt: moment.utc(query.startDate).startOf('day').toISOString()
+        $gt: moment(query.startDate).startOf('day').toISOString()
       }
     } else if (query.endDate) {
       mongoQuery.created_at = {
-        $lt: moment.utc(query.endDate).endOf('day').toISOString()
+        $lt: moment(query.endDate).endOf('day').toISOString()
       }
     }
 
