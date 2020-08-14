@@ -57,7 +57,7 @@ module.exports = {
         order = { view_count: -1 }
     }
 
-    const limit = query.limit > 0 ? query.limit : 18
+    const limit = query.limit > 0 ? query.limit : 24
     const page = query.page > 0 ? query.page : 1
     const skip = (page - 1) * limit
     const count = await Clip.find(mongoQuery).countDocuments()
