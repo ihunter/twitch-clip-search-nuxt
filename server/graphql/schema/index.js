@@ -46,7 +46,7 @@ module.exports = buildSchema(`
     title: String,
     creator: String,
     broadcaster: String
-    game: String
+    game: [String]
     startDate: String
     endDate: String
     sort: Int

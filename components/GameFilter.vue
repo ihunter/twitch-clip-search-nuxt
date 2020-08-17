@@ -5,9 +5,11 @@
     :items="allGames"
     item-text="name"
     item-value="id"
-    clearable
     :loading="$apollo.loading"
     :disabled="$apollo.loading"
+    chips
+    deletable-chips
+    multiple
     @change="updateQuery({ game })"
     @click:clear="updateQuery({ game: undefined })"
   />
@@ -22,7 +24,7 @@ export default {
   mixins: [queryMixin],
   data () {
     return {
-      game: this.$route.query.game
+      game: this.$route.query.game,
     }
   },
   apollo: {
