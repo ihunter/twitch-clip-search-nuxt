@@ -1,6 +1,6 @@
 <template>
   <v-card tag="article">
-    <a :href="url" target="_blank">
+    <a :href="url" target="_blank" rel="noopener noreferrer nofollow">
       <v-img
         min-height="200"
         :src="thumbnailUrl"
