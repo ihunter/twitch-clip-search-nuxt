@@ -14,7 +14,7 @@ module.exports = {
       mongoQuery.creator_name = { $regex: new RegExp(query.creator, 'i') }
     }
 
-    if (query.game) {
+    if (query.game && query.game.length > 0) {
       mongoQuery.game_id = query.game
     }
 
@@ -60,13 +60,14 @@ module.exports = {
     const limit = query.limit > 0 ? query.limit : 24
     const page = query.page > 0 ? query.page : 1
     const skip = (page - 1) * limit
-    const count = await Clip.find(mongoQuery).countDocuments()
+    const count = await Clip.find(mongoQuery).countDocuments().exec()
     const clips = await Clip.find(mongoQuery)
       .sort(order)
       .skip(skip)
       .limit(limit)
       .populate('game')
       .populate('broadcaster')
+      .exec()
 
     return { clips, count }
   },
@@ -74,12 +75,12 @@ module.exports = {
     if (broadcasterID) {
       // Find all unique game IDs for a broadcaster
       const gameIDs = await Clip.find({ broadcaster_id: broadcasterID }).distinct('game_id')
-      return await Game.find({ id: { $in: gameIDs } })
+      return await Game.find({ id: { $in: gameIDs } }).exec()
     }
 
-    return await Game.find()
+    return await Game.find().exec()
   },
   async allBroadcasters () {
-    return await Broadcaster.find()
+    return await Broadcaster.find().exec()
   }
 }

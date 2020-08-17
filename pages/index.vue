@@ -28,8 +28,8 @@ export default {
     allClips: {
       query: gql`query allClips(
         $title: String
-        $game: String
         $broadcaster: String
+        $game: [String]
         $startDate: String
         $endDate: String
         $limit: Int
@@ -39,8 +39,8 @@ export default {
       ) {
         allClips(query:{
           title: $title
-          game: $game
           broadcaster: $broadcaster
+          game: $game
           startDate: $startDate
           endDate: $endDate
           limit: $limit
