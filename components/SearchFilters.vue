@@ -1,5 +1,10 @@
 <template>
-  <v-menu v-model="filterMenu" :close-on-content-click="false">
+  <v-menu
+   v-model="filterMenu"
+   offsetY
+   eager
+   :close-on-content-click="false"
+  >
     <template v-slot:activator="{ on }">
       <v-btn title="Filter" icon :ripple="{ center: true }" v-on="on">
         <v-icon>mdi-filter-variant</v-icon>

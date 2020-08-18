@@ -1,14 +1,15 @@
 <template>
   <v-autocomplete
     v-model="game"
+    :search-input.sync="search"
     label="Game"
     :items="allGames"
     item-text="name"
     item-value="id"
     :loading="$apollo.loading"
-    :disabled="$apollo.loading"
     chips
     deletable-chips
+    cache-items
     multiple
     @change="updateQuery({ game })"
     @click:clear="updateQuery({ game: undefined })"
@@ -24,22 +25,50 @@ export default {
   mixins: [queryMixin],
   data () {
     return {
-      game: this.$route.query.game,
+      search: null,
+      gameQuery: this.$route.query.game
+    }
+  },
+  computed: {
+    game: {
+      get () {
+        if (!this.gameQuery) return null
+
+        if (Array.isArray(this.gameQuery)) {
+          return this.gameQuery
+        }
+
+        return [this.gameQuery]
+      },
+      set (val) {
+        this.gameQuery = val
+      }
     }
   },
   apollo: {
     allGames: {
-      query: gql`query allGames($broadcaster: String) {
-        allGames (broadcasterID: $broadcaster) {
-          id
-          name
-        }
+      query: gql`query allGames(
+        $broadcaster: String
+        $name: String
+        $game: [String]
+        ) {
+          allGames (query: {
+            broadcasterID: $broadcaster
+            name: $name
+            gameID: $game
+          }) {
+            id
+            name
+          }
       }`,
       variables () {
         return {
-          broadcaster: this.$route.query.broadcaster
+          broadcaster: this.$route.query.broadcaster,
+          name: this.search,
+          game: this.game
         }
-      }
+      },
+      debounce: 300
     }
   }
 }

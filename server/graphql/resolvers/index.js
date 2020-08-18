@@ -71,14 +71,25 @@ module.exports = {
 
     return { clips, count }
   },
-  async allGames ({ broadcasterID }) {
-    if (broadcasterID) {
+  async allGames ({ query }) {
+    if (!query.name && (!query.gameID || query.gameID.length <= 0)) return []
+
+    const mongoQuery = {}
+
+    if (query.broadcasterID) {
       // Find all unique game IDs for a broadcaster
-      const gameIDs = await Clip.find({ broadcaster_id: broadcasterID }).distinct('game_id')
-      return await Game.find({ id: { $in: gameIDs } }).exec()
+      mongoQuery.id = await Clip.find({ broadcaster_id: query.broadcasterID }).distinct('game_id').exec()
     }
 
-    return await Game.find().exec()
+    if (query.name) {
+      mongoQuery.$text = { $search: query.name }
+    }
+
+    if (query.gameID && query.gameID.length > 0) {
+      mongoQuery.id = query.gameID
+    }
+
+    return await Game.find(mongoQuery).exec()
   },
   async allBroadcasters () {
     return await Broadcaster.find().exec()

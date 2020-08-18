@@ -1,5 +1,5 @@
 <template>
-  <v-menu>
+  <v-menu offsetY>
     <template v-slot:activator="{ on }">
       <v-btn
         icon

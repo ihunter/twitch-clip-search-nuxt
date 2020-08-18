@@ -23,5 +23,6 @@ gameSchema.virtual('clips', {
 })
 
 gameSchema.index({ id: 1 })
+gameSchema.index({ name: 'text' })
 
 module.exports.Game = mongoose.model('Game', gameSchema)

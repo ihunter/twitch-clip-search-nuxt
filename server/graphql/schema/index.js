@@ -54,9 +54,15 @@ module.exports = buildSchema(`
     limit: Int
   }
 
+  input GameInput {
+    broadcasterID: String
+    name: String
+    gameID: [String]
+  }
+
   type RootQuery {
     allClips(query: ClipInput): Clips!
-    allGames(broadcasterID: String): [Game]!
+    allGames(query: GameInput): [Game]!
     allBroadcasters: [Broadcaster]!
   }
 
