@@ -7,6 +7,7 @@
     item-text="name"
     item-value="id"
     :loading="$apollo.loading"
+    :no-data-text="noDataText"
     cache-items
     multiple
     chips
@@ -29,7 +30,8 @@ export default {
   data () {
     return {
       search: null,
-      gameQuery: this.$route.query.game
+      gameQuery: this.$route.query.game,
+      noDataText: 'Search for a game by title'
     }
   },
   computed: {
