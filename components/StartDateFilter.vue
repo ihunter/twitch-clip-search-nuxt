@@ -11,9 +11,11 @@
       <v-text-field
         v-model="startDate"
         label="Start Date"
-        prepend-icon="mdi-calendar-today"
+        prepend-inner-icon="mdi-calendar-today"
         clearable
         readonly
+        outlined
+        filled
         v-on="on"
         @click:clear="updateQuery({ startDate: undefined })"
       />

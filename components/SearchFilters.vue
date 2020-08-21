@@ -1,40 +1,44 @@
 <template>
-  <v-menu
-   v-model="filterMenu"
-   offsetY
-   eager
-   :close-on-content-click="false"
-  >
+  <v-dialog v-model="filterMenu" fullscreen hide-overlay transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
       <v-btn title="Filter" icon :ripple="{ center: true }" v-on="on">
         <v-icon>mdi-filter-variant</v-icon>
       </v-btn>
     </template>
-
     <v-card>
-      <v-card-title>
-        Search Filters
-        <v-spacer />
-        <v-btn
-          icon
-          @click="filterMenu = false"
-        >
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </v-card-title>
-      <v-card-text>
-        <BroadcasterFilter />
+      <v-toolbar color="primary">
+        <v-toolbar-title>Search Filters</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn dark text @click="filterMenu = false">Close</v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
 
-        <GameFilter />
-
-        <StartDateFilter />
-
-        <EndDateFilter />
-
-        <CreatorFilter />
-      </v-card-text>
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="12" md="10" xl="8">
+            <v-row>
+              <v-col cols="12">
+                <BroadcasterFilter />
+              </v-col>
+              <v-col cols="12">  
+                <GameFilter />
+              </v-col>  
+              <v-col cols="12" md="6">  
+                <StartDateFilter />
+              </v-col>
+              <v-col cols="12" md="6">  
+                <EndDateFilter />
+              </v-col>
+              <v-col cols="12">  
+                <CreatorFilter />
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-card>
-  </v-menu>
+  </v-dialog>
 </template>
 
 <script>

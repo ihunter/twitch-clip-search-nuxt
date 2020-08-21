@@ -83,9 +83,7 @@ module.exports = {
 
     if (query.name) {
       mongoQuery.$text = { $search: query.name }
-    }
-
-    if (query.gameID && query.gameID.length > 0) {
+    } else if (query.gameID && query.gameID.length > 0) {
       mongoQuery.id = query.gameID
     }
 

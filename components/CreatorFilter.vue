@@ -3,6 +3,8 @@
     v-model="creator"
     label="Creator Name"
     clearable
+    outlined
+    filled
     @change="updateQuery({ creator })"
     @click:clear="updateQuery({ creator: undefined })"
   />

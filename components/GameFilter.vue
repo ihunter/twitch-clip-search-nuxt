@@ -7,10 +7,13 @@
     item-text="name"
     item-value="id"
     :loading="$apollo.loading"
-    chips
-    deletable-chips
     cache-items
     multiple
+    chips
+    deletable-chips
+    clearable
+    outlined
+    filled
     @change="updateQuery({ game })"
     @click:clear="updateQuery({ game: undefined })"
   />
