@@ -4,7 +4,7 @@ const cors = require('cors')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const mongoose = require('mongoose')
-const graphqlHTTP = require('express-graphql')
+const { graphqlHTTP } = require('express-graphql')
 
 const app = express()
 
@@ -65,3 +65,4 @@ async function start () {
   })
 }
 start()
+  .catch(err => console.log(err))
