@@ -19,12 +19,12 @@
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
-    <v-content>
+    <v-main>
       <v-container>
         <!-- If using vue-router -->
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
 
     <v-footer app>
       <!-- -->
