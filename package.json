@@ -28,7 +28,8 @@
     "moment": "^2.27.0",
     "mongoose": "^5.10.0",
     "mongoose-findorcreate": "^3.0.0",
-    "nuxt": "^2.14.3"
+    "nuxt": "^2.14.3",
+    "throng": "^5.0.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-module": "^2.0.0",

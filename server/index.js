@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const throng = require('throng')
 const cors = require('cors')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
@@ -64,5 +65,5 @@ async function start () {
     badge: true
   })
 }
-start()
+throng(start)
   .catch(err => console.log(err))
