@@ -65,10 +65,11 @@ async function start () {
     badge: true
   })
 }
+
 throng({
   worker: start,
   count: process.env.WEB_CONCURRENCY || 1,
   lifetime: Infinity,
   signals: ['SIGTERM', 'SIGINT']
-}, start)
+})
   .catch(err => console.log(err))
