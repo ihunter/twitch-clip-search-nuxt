@@ -51,17 +51,17 @@ module.exports = {
         order = { created_at: -1 }
         break
       case 4:
-        mongoQuery.title ? order = { score: { $meta: 'textScore' } } : order = { view_count: -1 }
+        order = { score: { $meta: 'textScore' }, view_count: -1 }
         break
       default:
-        order = { view_count: -1 }
+        order = { score: { $meta: 'textScore' }, view_count: -1 }
     }
 
     const limit = query.limit > 0 ? query.limit : 24
     const page = query.page > 0 ? query.page : 1
     const skip = (page - 1) * limit
     const count = await Clip.find(mongoQuery).countDocuments().exec()
-    const clips = await Clip.find(mongoQuery)
+    const clips = await Clip.find(mongoQuery, { score: { $meta: 'textScore' } })
       .sort(order)
       .skip(skip)
       .limit(limit)
