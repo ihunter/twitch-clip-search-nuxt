@@ -8,7 +8,7 @@
         class="hover-effect grey darken-1"
       >
         <div class="clip-info view-count">
-          {{ viewCount }} views
+          <v-icon left>mdi-eye-outline</v-icon> {{ formattedViewCount }} views
         </div>
         <div class="clip-info time-ago">
           {{ createdAtTimeAgo }}
@@ -103,6 +103,9 @@ export default {
     }
   },
   computed: {
+    formattedViewCount () {
+      return parseInt(this.viewCount).toLocaleString()
+    },
     createdAtTimeAgo () {
       return moment(+this.createdAt).fromNow()
     },
