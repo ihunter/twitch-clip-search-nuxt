@@ -2,16 +2,16 @@
   <v-dialog v-model="filterMenu" fullscreen hide-overlay transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
       <v-btn
-        icon
-        title="Filter"
-        :ripple="{ center: true }"
+        value="Filter By"
+        title="Filter By"
         v-on="on"
       >
         <v-icon>mdi-filter-variant</v-icon>
+        <span class="hidden-sm-and-down">Filter By</span>
       </v-btn>
     </template>
     <v-card>
-      <v-toolbar color="primary" :src="require('~/assets/banner.png')">
+      <v-toolbar :src="require('~/assets/banner.png')">
         <v-toolbar-title>Search Filters</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>

@@ -6,12 +6,11 @@
       app
       prominent
       shrink-on-scroll
-      color="primary"
       :src="require('~/assets/banner.png')"
     >
       <v-spacer class="hidden-md-and-down" />
       <Search />
-      <v-btn-toggle color="primary" class="ml-2">
+      <v-btn-toggle class="ml-2">
         <SearchFilters />
         <SearchSort />
       </v-btn-toggle>

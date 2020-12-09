@@ -2,12 +2,12 @@
   <v-menu offsetY>
     <template v-slot:activator="{ on }">
       <v-btn
-        icon
-        title="Sort"
-        :ripple="{ center: true }"
+        value="Sort By"
+        title="Sort By"
         v-on="on"
       >
         <v-icon>mdi-sort-variant</v-icon>
+        <span class="hidden-sm-and-down">Sort By</span>
       </v-btn>
     </template>
 
