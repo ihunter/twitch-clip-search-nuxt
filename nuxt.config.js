@@ -76,8 +76,8 @@ module.exports = {
       },
       themes: {
         dark: {
-          primary: '#0afc9e',
-          secondary: '#ec407a'
+          primary: '#00BFA5',
+          secondary: '#EC407A'
         }
       }
     }

@@ -1,7 +1,12 @@
 <template>
   <v-dialog v-model="filterMenu" fullscreen hide-overlay transition="dialog-bottom-transition">
     <template v-slot:activator="{ on }">
-      <v-btn title="Filter" icon :ripple="{ center: true }" v-on="on">
+      <v-btn
+        icon
+        title="Filter"
+        :ripple="{ center: true }"
+        v-on="on"
+      >
         <v-icon>mdi-filter-variant</v-icon>
       </v-btn>
     </template>
