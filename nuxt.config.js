@@ -7,11 +7,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'Twitch Clip Search',
+    title: 'Jerma Clip Search',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Search for twitch clips by title, broadcaster, game, and date' }
+      { hid: 'description', name: 'description', content: 'Search for twitch clips of Jerma by title, broadcaster, game, and date' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -76,7 +76,8 @@ module.exports = {
       },
       themes: {
         dark: {
-          primary: '#9146FF'
+          primary: '#0afc9e',
+          secondary: '#ec407a'
         }
       }
     }

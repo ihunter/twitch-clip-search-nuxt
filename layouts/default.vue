@@ -2,12 +2,14 @@
   <!-- App.vue -->
 
   <v-app>
-    <v-app-bar app color="primary">
+    <v-app-bar
+      app
+      color="primary"
+      prominent
+      shrink-on-scroll
+      :src="require('~/assets/banner.png')"
+    >      
       <v-spacer class="hidden-md-and-down" />
-
-      <v-toolbar-title class="hidden-sm-and-down mr-3">
-        Twitch Clip Search
-      </v-toolbar-title>
 
       <Search />
 

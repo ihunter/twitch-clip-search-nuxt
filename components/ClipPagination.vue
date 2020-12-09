@@ -1,6 +1,7 @@
 <template>
   <v-pagination
     v-model="page"
+    color="secondary"
     :length="paginationLength"
     total-visible="10"
   />

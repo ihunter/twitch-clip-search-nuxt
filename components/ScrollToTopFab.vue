@@ -8,7 +8,7 @@
       fixed
       bottom
       right
-      color="primary"
+      color="secondary"
       style="bottom: 80px"
       title="Scroll to top"
       @click="$vuetify.goTo(0)"
