@@ -11,7 +11,7 @@ module.exports = {
 
     // Match creator name
     if (query.creator) {
-      mongoQuery.creator_name = { $regex: new RegExp(query.creator, 'i') }
+      mongoQuery.creator_name = { $regex: new RegExp(`^${query.creator}$`, 'i') }
     }
 
     if (query.game && query.game.length > 0) {
