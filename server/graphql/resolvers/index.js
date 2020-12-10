@@ -57,21 +57,23 @@ module.exports = {
         order = { score: { $meta: 'textScore' }, view_count: -1 }
     }
 
-    const limit = query.limit > 0 ? query.limit : 24
-    const page = query.page > 0 ? query.page : 1
-    const skip = (page - 1) * limit
-    const count = await Clip.find(mongoQuery).countDocuments().exec()
-    const clips = await Clip.find(mongoQuery, { score: { $meta: 'textScore' } })
-      .sort(order)
-      .skip(skip)
-      .limit(limit)
-      .populate('game')
-      .populate('broadcaster')
-      .exec()
+    const { clips, count } = await Clip.paginate(mongoQuery, {
+      sort: order,
+      populate: 'game',
+      projection: { score: { $meta: 'textScore' } },
+      lean: true,
+      page: query.page > 0 ? query.page : 1,
+      limit: query.limit > 0 ? query.limit : 24,
+      customLabels: {
+        docs: 'clips',
+        totalDocs: 'count'
+      }
+    })
 
-    return { clips, count }
+    return { clips , count }
   },
   async allGames ({ query }) {
+    console.time('allGames')
     if (!query.name && (!query.gameID || query.gameID.length <= 0)) return []
 
     const mongoQuery = {}
@@ -86,7 +88,7 @@ module.exports = {
     } else if (query.gameID && query.gameID.length > 0) {
       mongoQuery.id = query.gameID
     }
-
+    console.timeEnd('allGames')
     return await Game.find(mongoQuery).exec()
   },
   async allBroadcasters () {

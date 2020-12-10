@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 const Schema = mongoose.Schema
 
 const clipSchema = new Schema({
@@ -70,5 +71,7 @@ clipSchema.virtual('game', {
   foreignField: 'id',
   justOne: true
 })
+
+clipSchema.plugin(mongoosePaginate)
 
 module.exports.Clip = mongoose.model('Clip', clipSchema)
