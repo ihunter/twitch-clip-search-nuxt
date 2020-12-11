@@ -1,8 +1,19 @@
 const moment = require('moment')
+const {
+  parseResolveInfo,
+  simplifyParsedResolveInfoFragmentWithType 
+} = require('graphql-parse-resolve-info')
 const { Broadcaster, Clip, Game } = require('../../models')
 
 module.exports = {
-  async allClips ({ query }) {
+  async allClips ({ query }, _, info) {
+    const parsedResolveInfoFragment = parseResolveInfo(info)
+    const { fields } = simplifyParsedResolveInfoFragmentWithType(
+      parsedResolveInfoFragment,
+      info.returnType
+    )
+    const selectedFields = Object.keys(fields.clips.fieldsByTypeName.Clip).join(' ')
+
     const mongoQuery = {}
 
     if (query.title) {
@@ -64,8 +75,9 @@ module.exports = {
           order = { view_count: -1 }
         }
     }
-
+    console.time()
     const { clips, count } = await Clip.paginate(mongoQuery, {
+      select: `${selectedFields} game_id`,
       sort: order,
       populate: 'game',
       projection: { score: { $meta: 'textScore' } },
@@ -77,6 +89,7 @@ module.exports = {
         totalDocs: 'count'
       }
     })
+    console.timeEnd()
 
     return { clips , count }
   },
