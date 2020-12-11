@@ -5,6 +5,7 @@
     solo
     clearable
     autofocus
+    autocomplete="off"
     hide-details
     placeholder=""
     prepend-inner-icon="mdi-magnify"
