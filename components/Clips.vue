@@ -1,5 +1,5 @@
 <template>
-  <v-row v-if="clips.length > 0">
+  <v-row v-if="clips.length > 0" justify="center">
     <v-col
       v-for="clip in clips"
       :key="clip.id"
