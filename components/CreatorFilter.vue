@@ -2,6 +2,7 @@
   <v-text-field
     v-model="creator"
     label="Creator Name"
+    autocomplete="off"
     clearable
     outlined
     filled
