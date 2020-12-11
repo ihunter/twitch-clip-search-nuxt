@@ -51,10 +51,18 @@ module.exports = {
         order = { created_at: -1 }
         break
       case 4:
-        order = { score: { $meta: 'textScore' }, view_count: -1 }
+        if (query.title) {
+          order = { score: { $meta: 'textScore' }, view_count: -1 }
+        } else {
+          order = { view_count: -1 }
+        }
         break
       default:
-        order = { score: { $meta: 'textScore' }, view_count: -1 }
+        if (query.title) {
+          order = { score: { $meta: 'textScore' }, view_count: -1 }
+        } else {
+          order = { view_count: -1 }
+        }
     }
 
     const { clips, count } = await Clip.paginate(mongoQuery, {
