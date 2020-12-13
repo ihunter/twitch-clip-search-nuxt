@@ -75,7 +75,7 @@ module.exports = {
           order = { view_count: -1 }
         }
     }
-    console.time()
+
     const { clips, count } = await Clip.paginate(mongoQuery, {
       select: `${selectedFields} game_id`,
       sort: order,
@@ -89,7 +89,6 @@ module.exports = {
         totalDocs: 'count'
       }
     })
-    console.timeEnd()
 
     return { clips , count }
   },
