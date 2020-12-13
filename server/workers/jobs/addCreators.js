@@ -8,7 +8,6 @@ const { API } = require('../../utils/twitch-api')
 
 async function addCreators () {
   try {
-    consola.log('Adding Creators')
     const api = rateLimit(await API(), { maxRPS: 13 })
     let creators = await Clip.distinct('creator_id')
 
@@ -40,8 +39,6 @@ async function addCreators () {
         }
       }
     }))
-
-    consola.success('Finished adding creators')
   } catch (error) {
     consola.error('Failed to fetch creators data')
 

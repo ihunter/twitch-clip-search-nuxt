@@ -7,7 +7,6 @@ const { API } = require('../../utils/twitch-api')
 
 async function addGames () {
   try {
-    consola.log('Adding games')
     const api = await API()
     let games = await Clip.distinct('game_id')
 
@@ -39,8 +38,6 @@ async function addGames () {
         }
       }
     }))
-
-    consola.success('Finished adding games')
   } catch (error) {
     consola.error('Failed to fetch games data')
 

@@ -54,8 +54,6 @@ exports.fetchClips = async (type) => {
       })).doc
       startedAt = log.started_at
       endedAt = log.ended_at
-
-      consola.log(`Fetching ${type}s clips from ${startedAt.slice(0, 10)} for ${broadcaster.display_name}`)
     } catch (error) {
       consola.error(error)
     }
@@ -130,14 +128,12 @@ exports.fetchClips = async (type) => {
         ended_at: endedAt
       })
         .catch((error) => {
-          consola.log('Error saving log')
-          consola.log(error)
+          consola.error('Error saving log')
+          consola.error(error)
         })
     }
 
     try {
-      consola.success(`Finished fetching ${type}s clips at ${endedAt.slice(0, 10)} for ${broadcaster.display_name}`)
-      consola.success(`Matched: ${matchedCount}, Updated: ${modifiedCount}, Inserted: ${insertedCount}, Upserted: ${upsertedCount}\n`)
       startedAt = startingDate
       endedAt = moment.utc(startingDate).endOf('day').toISOString()
       await Log.updateOne({ broadcaster_id: broadcaster.id, type }, {
