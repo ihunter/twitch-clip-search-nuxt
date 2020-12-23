@@ -6,7 +6,7 @@
       app
       prominent
       shrink-on-scroll
-      :src="require('~/assets/banner.png')"
+      :src="require('~/assets/banner.webp')"
     >
       <v-spacer class="hidden-md-and-down" />
       <Search />

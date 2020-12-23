@@ -11,7 +11,7 @@
       </v-btn>
     </template>
     <v-card>
-      <v-toolbar :src="require('~/assets/banner.png')">
+      <v-toolbar :src="require('~/assets/banner.webp')">
         <v-toolbar-title>Search Filters</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
