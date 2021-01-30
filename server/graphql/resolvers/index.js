@@ -47,7 +47,7 @@ module.exports = {
         $lt: moment(query.endDate).endOf('day').toISOString()
       }
     }
-
+    
     // Determine order based on query
     let order
 
@@ -75,22 +75,26 @@ module.exports = {
           order = { view_count: -1 }
         }
     }
+    console.log(selectedFields)
+    try {
+      const { clips, count } = await Clip.paginate(mongoQuery, {
+        select: `${selectedFields} game_id`,
+        sort: order,
+        populate: 'game',
+        // projection: { score: { $meta: 'textScore' } }, Breaks search when no title is given???
+        lean: true,
+        page: query.page > 0 ? query.page : 1,
+        limit: query.limit > 0 ? query.limit : 24,
+        customLabels: {
+          docs: 'clips',
+          totalDocs: 'count'
+        }
+      })
 
-    const { clips, count } = await Clip.paginate(mongoQuery, {
-      select: `${selectedFields} game_id`,
-      sort: order,
-      populate: 'game',
-      projection: { score: { $meta: 'textScore' } },
-      lean: true,
-      page: query.page > 0 ? query.page : 1,
-      limit: query.limit > 0 ? query.limit : 24,
-      customLabels: {
-        docs: 'clips',
-        totalDocs: 'count'
-      }
-    })
-
-    return { clips , count }
+      return { clips , count }
+    } catch (error) {
+      console.error('Error fetching clips:', error) 
+    }
   },
   async allGames ({ query }) {
     console.time('allGames')
