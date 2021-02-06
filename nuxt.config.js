@@ -18,6 +18,13 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { 
+        src: 'https://static.cloudflareinsights.com/beacon.min.js',
+        'data-cf-beacon': '{"token": "8a624e372b2b42baa0649413c7246f5e"}',
+        body: true
+      }
     ]
   },
   /*
