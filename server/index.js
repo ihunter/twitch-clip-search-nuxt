@@ -72,4 +72,4 @@ throng({
   lifetime: Infinity,
   signals: ['SIGTERM', 'SIGINT']
 })
-  .catch(err => console.log(err))
+  .catch(err => console.error(err))

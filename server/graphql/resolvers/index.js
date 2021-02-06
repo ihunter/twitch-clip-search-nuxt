@@ -75,7 +75,7 @@ module.exports = {
           order = { view_count: -1 }
         }
     }
-    console.log(selectedFields)
+
     try {
       const { clips, count } = await Clip.paginate(mongoQuery, {
         select: `${selectedFields} game_id`,
