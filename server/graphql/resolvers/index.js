@@ -84,7 +84,7 @@ module.exports = {
         // projection: { score: { $meta: 'textScore' } }, Breaks search when no title is given???
         lean: true,
         page: query.page > 0 ? query.page : 1,
-        limit: query.limit > 0 ? query.limit : 24,
+        limit: query.limit > 0 ? query.limit : 12,
         customLabels: {
           docs: 'clips',
           totalDocs: 'count'
