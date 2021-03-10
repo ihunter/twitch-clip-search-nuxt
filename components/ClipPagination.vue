@@ -4,6 +4,7 @@
     color="secondary"
     :length="paginationLength"
     total-visible="10"
+    class="ma-8"
   />
 </template>
 
