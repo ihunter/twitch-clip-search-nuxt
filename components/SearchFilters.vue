@@ -1,10 +1,10 @@
 <template>
   <v-dialog
     v-model="filterMenu"
-    :fullscreen="$vuetify.breakpoint.mobile"
-    hide-overlay
+    :fullscreen="$vuetify.breakpoint.smAndDown"
     :transition="transition"
     max-width="800"
+    overlay-color="#5ED6E0"
   >
     <template v-slot:activator="{ on }">
       <v-btn value="Filter By" title="Filter By" v-on="on">
@@ -70,7 +70,7 @@ export default {
   },
   computed: {
     transition() {
-      return this.$vuetify.breakpoint.mobile
+      return this.$vuetify.breakpoint.smAndDown
         ? "dialog-bottom-transition"
         : "scale-transition";
     }
