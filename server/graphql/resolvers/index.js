@@ -97,7 +97,6 @@ module.exports = {
     }
   },
   async allGames ({ query }) {
-    console.time('allGames')
     if (!query.name && (!query.gameID || query.gameID.length <= 0)) return []
 
     const mongoQuery = {}
@@ -112,7 +111,7 @@ module.exports = {
     } else if (query.gameID && query.gameID.length > 0) {
       mongoQuery.id = query.gameID
     }
-    console.timeEnd('allGames')
+
     return await Game.find(mongoQuery).exec()
   },
   async allBroadcasters () {
