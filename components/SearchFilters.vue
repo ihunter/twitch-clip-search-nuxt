@@ -1,11 +1,13 @@
 <template>
-  <v-dialog v-model="filterMenu" fullscreen hide-overlay transition="dialog-bottom-transition">
+  <v-dialog
+    v-model="filterMenu"
+    :fullscreen="$vuetify.breakpoint.mobile"
+    hide-overlay
+    :transition="transition"
+    max-width="800"
+  >
     <template v-slot:activator="{ on }">
-      <v-btn
-        value="Filter By"
-        title="Filter By"
-        v-on="on"
-      >
+      <v-btn value="Filter By" title="Filter By" v-on="on">
         <v-icon>mdi-filter-variant</v-icon>
         <span class="hidden-sm-and-down">Filter By</span>
       </v-btn>
@@ -26,16 +28,16 @@
               <v-col cols="12">
                 <BroadcasterFilter />
               </v-col>
-              <v-col cols="12">  
+              <v-col cols="12">
                 <GameFilter />
-              </v-col>  
-              <v-col cols="12" md="6">  
+              </v-col>
+              <v-col cols="12" md="6">
                 <StartDateFilter />
               </v-col>
-              <v-col cols="12" md="6">  
+              <v-col cols="12" md="6">
                 <EndDateFilter />
               </v-col>
-              <v-col cols="12">  
+              <v-col cols="12">
                 <CreatorFilter />
               </v-col>
             </v-row>
@@ -47,11 +49,11 @@
 </template>
 
 <script>
-import BroadcasterFilter from '~/components/BroadcasterFilter'
-import GameFilter from '~/components/GameFilter'
-import StartDateFilter from '~/components/StartDateFilter'
-import EndDateFilter from '~/components/EndDateFilter'
-import CreatorFilter from '~/components/CreatorFilter'
+import BroadcasterFilter from "~/components/BroadcasterFilter";
+import GameFilter from "~/components/GameFilter";
+import StartDateFilter from "~/components/StartDateFilter";
+import EndDateFilter from "~/components/EndDateFilter";
+import CreatorFilter from "~/components/CreatorFilter";
 
 export default {
   components: {
@@ -61,13 +63,19 @@ export default {
     EndDateFilter,
     CreatorFilter
   },
-  data () {
+  data() {
     return {
       filterMenu: false
+    };
+  },
+  computed: {
+    transition() {
+      return this.$vuetify.breakpoint.mobile
+        ? "dialog-bottom-transition"
+        : "scale-transition";
     }
   }
-}
+};
 </script>
 
-<style>
-</style>
+<style></style>
