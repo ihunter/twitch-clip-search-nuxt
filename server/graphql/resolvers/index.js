@@ -33,6 +33,8 @@ module.exports = {
       mongoQuery.broadcaster_id = query.broadcaster
     }
 
+    console.log(query.startDate)
+
     if (query.startDate && query.endDate) {
       mongoQuery.created_at = {
         $lt: moment(query.endDate).endOf('day').toISOString(),
