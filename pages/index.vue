@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import gql from 'graphql-tag'
 import Clips from '~/components/Clips'
 import ClipsLoader from '~/components/ClipsLoader'
@@ -69,8 +70,8 @@ export default {
           title: this.$route.query.title,
           game: this.$route.query.game,
           broadcaster: this.$route.query.broadcaster,
-          startDate: this.$route.query.startDate,
-          endDate: this.$route.query.endDate,
+          startDate: moment(this.$route.query.startDate).toISOString(),
+          endDate: moment(this.$route.query.endDate).toISOString(),
           limit: +this.$route.query.limit,
           page: +this.$route.query.page,
           sort: +this.$route.query.sort,
