@@ -48,10 +48,10 @@
             {{ broadcasterName }}
           </div>
           <div
-            :title="clippedByInfo"
+            :title="`Clipped by ${creatorName} on ${createdAtCalendar}`"
             class="text-truncate"
           >
-            {{ clippedByInfo }}
+            Clipped by {{creatorName}} on {{createdAtCalendar}}
           </div>
         </div>
       </div>
@@ -97,11 +97,9 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      gameBoxArtLoading: true
-    }
-  },
+  data: () => ({
+    gameBoxArtLoading: true
+  }),
   computed: {
     formattedViewCount () {
       return parseInt(this.viewCount).toLocaleString()
@@ -110,19 +108,14 @@ export default {
       return moment(+this.createdAt).fromNow()
     },
     createdAtCalendar () {
-      return moment(+this.createdAt).calendar()
+      return moment(+this.createdAt).format('M/D/YYYY')
     },
     sizedGameBoxArtUrl () {
       return this.game ? this.game.box_art_url.replace(/{width}x{height}/, '52x72') : 'https://static-cdn.jtvnw.net/ttv-static/404_boxart-52x72.jpg'
     },
     gameName () {
       return this.game ? this.game.name : ''
-    },
-    clippedByInfo () {
-      return `Clipped by ${this.creatorName} on ${this.createdAtCalendar}`
     }
-  },
-  methods: {
   }
 }
 </script>
