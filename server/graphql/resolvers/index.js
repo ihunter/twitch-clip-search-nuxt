@@ -35,16 +35,16 @@ module.exports = {
 
     if (query.startDate && query.endDate) {
       mongoQuery.created_at = {
-        $lt: moment(query.endDate).endOf('day').toISOString(),
-        $gt: moment(query.startDate).startOf('day').toISOString()
+        $lt: query.endDate,
+        $gt: query.startDate
       }
     } else if (query.startDate) {
       mongoQuery.created_at = {
-        $gt: moment(query.startDate).startOf('day').toISOString()
+        $gt: query.startDate
       }
     } else if (query.endDate) {
       mongoQuery.created_at = {
-        $lt: moment(query.endDate).endOf('day').toISOString()
+        $lt: query.endDate
       }
     }
     
