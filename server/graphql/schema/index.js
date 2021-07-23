@@ -23,6 +23,7 @@ module.exports = buildSchema(`
     video_id: String!
     game_id: String!
     game: Game
+    language: String
     title: String!
     view_count: Int!
     created_at: String!
@@ -47,6 +48,7 @@ module.exports = buildSchema(`
     creator: String,
     broadcaster: String
     game: [String]
+    language: String
     startDate: String
     endDate: String
     sort: Int

@@ -29,6 +29,10 @@ module.exports = {
       mongoQuery.game_id = query.game
     }
 
+    if (query.language) {
+      mongoQuery.language = query.language
+    }
+
     if (query.broadcaster) {
       mongoQuery.broadcaster_id = query.broadcaster
     }
