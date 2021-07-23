@@ -18,22 +18,22 @@ async function init () {
     try {
       const weekLog = (await Log.findOrCreate({ type: 'week', broadcaster_id: broadcaster.id }, {
         started_at: moment.utc().startOf('day').subtract(1, 'week').toISOString(),
-        ended_at: moment.utc().toISOString()
+        ended_at: moment.utc().endOf('day').subtract(1, 'week').toISOString()
       })).doc
 
       const monthLog = (await Log.findOrCreate({ type: 'month', broadcaster_id: broadcaster.id }, {
         started_at: moment.utc().startOf('day').subtract(1, 'month').toISOString(),
-        ended_at: moment.utc().toISOString()
+        ended_at: moment.utc().endOf('day').subtract(1, 'month').toISOString()
       })).doc
 
       const yearLog = (await Log.findOrCreate({ type: 'year', broadcaster_id: broadcaster.id }, {
         started_at: moment.utc().startOf('day').subtract(1, 'year').toISOString(),
-        ended_at: moment.utc().toISOString()
+        ended_at: moment.utc().endOf('day').subtract(1, 'year').toISOString()
       })).doc
 
       const allLog = (await Log.findOrCreate({ type: 'all', broadcaster_id: broadcaster.id }, {
         started_at: moment.utc().startOf('day').subtract(1, 'all').toISOString(),
-        ended_at: moment.utc().toISOString()
+        ended_at: moment.utc().endOf('day').subtract(1, 'all').toISOString()
       })).doc
   
       const diffInMinutes = moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes')
