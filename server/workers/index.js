@@ -32,8 +32,8 @@ async function init () {
       })).doc
 
       const allLog = (await Log.findOrCreate({ type: 'all', broadcaster_id: broadcaster.id }, {
-        started_at: moment.utc().startOf('day').subtract(1, 'all').toISOString(),
-        ended_at: moment.utc().endOf('day').subtract(1, 'all').toISOString()
+        started_at: moment.utc("2016-04-01T00:00:00Z").startOf('day').toISOString(),
+        ended_at: moment.utc("2016-04-01T00:00:00Z").endOf('day').toISOString()
       })).doc
   
       const diffInMinutes = moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes')
