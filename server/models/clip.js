@@ -35,6 +35,10 @@ const clipSchema = new Schema({
     type: String,
     required: true
   },
+  language: {
+    type: String,
+    required: false
+  },
   title: {
     type: String,
     required: true
