@@ -7,7 +7,7 @@ const { API } = require('../../utils/twitch-api')
 const { addGames } = require('./addGames')
 const { getAuthToken } = require('./getAuthToken')
 
-const OLDEST_START_DATE = moment('2016-04-01T00:00:00Z')
+const OLDEST_START_DATE = '2016-04-01T00:00:00Z'
 
 exports.fetchClips = async (type) => {
   try {
@@ -23,17 +23,17 @@ exports.fetchClips = async (type) => {
       startingDate = OLDEST_START_DATE
       break
     case 'week':
-      startingDate = moment.utc().startOf('day').subtract(1, 'week')
+      startingDate = moment.utc().startOf('day').subtract(1, 'week').toISOString()
       break
     case 'month':
-      startingDate = moment.utc().startOf('day').subtract(1, 'month')
+      startingDate = moment.utc().startOf('day').subtract(1, 'month').toISOString()
       break
     case 'year':
-      startingDate = moment.utc().startOf('day').subtract(1, 'year')
+      startingDate = moment.utc().startOf('day').subtract(1, 'year').toISOString()
       break
     default:
       type = 'week'
-      startingDate = moment.utc().startOf('day').subtract(1, 'week')
+      startingDate = moment.utc().startOf('day').subtract(1, 'week').toISOString()
       break
   }
 
@@ -47,9 +47,9 @@ exports.fetchClips = async (type) => {
     const first = 100
     let log
     try {
-      log = (await Log.findOrCreate({ broadcaster_id: broadcaster.id, type }, {
+      log = (await Log.findOrCreate({ type, broadcaster_id: broadcaster.id }, {
         started_at: startingDate,
-        ended_at: moment.utc(startingDate).endOf('day'),
+        ended_at: moment.utc(startingDate).endOf('day').toISOString(),
         type
       })).doc
       startedAt = log.started_at
@@ -120,10 +120,10 @@ exports.fetchClips = async (type) => {
       }
 
       cursor = ''
-      startedAt = moment.utc(startedAt).add(1, 'day')
-      endedAt = moment.utc(startedAt).endOf('day')
+      startedAt = moment.utc(startedAt).add(1, 'day').toISOString()
+      endedAt = moment.utc(startedAt).endOf('day').toISOString()
 
-      await Log.updateOne({ broadcaster_id: broadcaster.id, type }, {
+      await Log.updateOne({ type, broadcaster_id: broadcaster.id }, {
         started_at: startedAt,
         ended_at: endedAt
       })
@@ -135,8 +135,8 @@ exports.fetchClips = async (type) => {
 
     try {
       startedAt = startingDate
-      endedAt = moment.utc(startingDate).endOf('day')
-      await Log.updateOne({ broadcaster_id: broadcaster.id, type }, {
+      endedAt = moment.utc(startingDate).endOf('day').toISOString()
+      await Log.updateOne({ type, broadcaster_id: broadcaster.id }, {
         started_at: startedAt,
         ended_at: endedAt
       })

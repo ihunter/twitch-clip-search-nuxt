@@ -47,14 +47,14 @@ async function start () {
   app.use('/graphql', graphqlHTTP({
     schema: graphqlSchema,
     rootValue: graphqlResolvers,
-    graphiql: process.env.NODE_ENV !== 'production'
+    graphiql: config.dev
   }))
 
   // Give nuxt middleware to express
   app.use(nuxt.render)
 
   // Start workers
-  if (process.env.NODE_ENV === 'production') {
+  if (!config.dev) {
     require('./workers')
   }
 
