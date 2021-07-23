@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 
 const logSchema = new Schema({
   started_at: {
-    type: String,
+    type: Date,
     required: true
   },
   ended_at: {
-    type: String,
+    type: Date,
     required: true
   },
   broadcaster_id: {
