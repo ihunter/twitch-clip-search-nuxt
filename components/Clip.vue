@@ -48,10 +48,10 @@
             {{ broadcasterName }}
           </div>
           <div
-            :title="`Clipped by ${creatorName} on ${createdAtCalendar}`"
+            :title="`Clipped by ${creatorName} on ${createdAtCalendar} at ${createdAtTime}`"
             class="text-truncate"
           >
-            Clipped by {{creatorName}} on {{createdAtCalendar}}
+            Clipped by {{creatorName}} on {{createdAtCalendar}} at {{createdAtTime}}
           </div>
         </div>
       </div>
@@ -109,6 +109,9 @@ export default {
     },
     createdAtCalendar () {
       return moment(+this.createdAt).format('M/D/YYYY')
+    },
+    createdAtTime () {
+      return moment(+this.createdAt).format('h:m a')
     },
     sizedGameBoxArtUrl () {
       return this.game ? this.game.box_art_url.replace(/{width}x{height}/, '52x72') : 'https://static-cdn.jtvnw.net/ttv-static/404_boxart-52x72.jpg'
