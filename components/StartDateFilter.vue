@@ -31,23 +31,26 @@
 </template>
 
 <script>
-import queryMixin from '~/mixins/queryMixin'
+import moment from "moment";
+import queryMixin from "~/mixins/queryMixin";
 
 export default {
   mixins: [queryMixin],
-  data () {
+  data() {
     return {
       startDateMenu: false,
-      currentDate: new Date().toISOString().substr(0, 10),
-      oldestDate: new Date('2016-01-01').toISOString().substr(0, 10),
-      startDate: this.$route.query.startDate,
-      endDate: this.$route.query.endDate
-    }
+      currentDate: moment().format("YYYY-MM-DD"),
+      oldestDate: "2016-01-01",
+      startDate: this.$route.query.startDate
+    };
   },
   computed: {
-    startDateMax () {
-      return this.endDate ? this.endDate : this.currentDate
+    startDateMax() {
+      return this.endDate ? this.endDate : this.currentDate;
+    },
+    endDate() {
+      return this.$route.query.endDate;
     }
   }
-}
+};
 </script>
