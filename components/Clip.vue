@@ -4,7 +4,6 @@
       <v-img
         min-height="200"
         :src="thumbnailUrl"
-
         class="hover-effect grey darken-1"
       >
         <div class="clip-info view-count">
@@ -34,24 +33,21 @@
       </div>
 
       <div class="clip-meta-container">
-        <div
-          :title="title"
-          class="clip-title text-truncate"
-        >
+        <div :title="title" class="clip-title text-truncate">
           {{ title }}
         </div>
         <div class="clip-meta-info">
-          <div
-            :title="broadcasterName"
-            class="text-truncate"
-          >
+          <div :title="broadcasterName" class="text-truncate">
             {{ broadcasterName }}
           </div>
           <div
-            :title="`Clipped by ${creatorName} on ${createdAtCalendar} at ${createdAtTime}`"
+            :title="
+              `Clipped by ${creatorName} on ${createdAtCalendar} at ${createdAtTime}`
+            "
             class="text-truncate"
           >
-            Clipped by {{creatorName}} on {{createdAtCalendar}} at {{createdAtTime}}
+            Clipped by {{ creatorName }} on {{ createdAtCalendar }} at
+            {{ createdAtTime }}
           </div>
         </div>
       </div>
@@ -60,7 +56,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import moment from "moment";
 
 export default {
   props: {
@@ -90,7 +86,7 @@ export default {
     },
     thumbnailUrl: {
       type: String,
-      default: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg'
+      default: "https://cdn.vuetifyjs.com/images/cards/docks.jpg"
     },
     url: {
       type: String,
@@ -101,26 +97,28 @@ export default {
     gameBoxArtLoading: true
   }),
   computed: {
-    formattedViewCount () {
-      return parseInt(this.viewCount).toLocaleString()
+    formattedViewCount() {
+      return parseInt(this.viewCount).toLocaleString();
     },
-    createdAtTimeAgo () {
-      return moment(+this.createdAt).fromNow()
+    createdAtTimeAgo() {
+      return moment(+this.createdAt).fromNow();
     },
-    createdAtCalendar () {
-      return moment(+this.createdAt).format('M/D/YYYY')
+    createdAtCalendar() {
+      return moment(+this.createdAt).format("M/D/YYYY");
     },
-    createdAtTime () {
-      return moment(+this.createdAt).format('h:m a')
+    createdAtTime() {
+      return moment(+this.createdAt).format("h:mm a");
     },
-    sizedGameBoxArtUrl () {
-      return this.game ? this.game.box_art_url.replace(/{width}x{height}/, '52x72') : 'https://static-cdn.jtvnw.net/ttv-static/404_boxart-52x72.jpg'
+    sizedGameBoxArtUrl() {
+      return this.game
+        ? this.game.box_art_url.replace(/{width}x{height}/, "52x72")
+        : "https://static-cdn.jtvnw.net/ttv-static/404_boxart-52x72.jpg";
     },
-    gameName () {
-      return this.game ? this.game.name : ''
+    gameName() {
+      return this.game ? this.game.name : "";
     }
   }
-}
+};
 </script>
 
 <style>
@@ -164,9 +162,9 @@ export default {
 }
 
 .hover-effect::before {
-  content: '';
+  content: "";
   position: absolute;
-  background-color: var(--v-primary-base);;
+  background-color: var(--v-primary-base);
   width: 0;
   height: calc(100% + 1px);
   top: 0;
@@ -182,9 +180,9 @@ export default {
 }
 
 .hover-effect::after {
-  content: '';
+  content: "";
   position: absolute;
-  background-color: var(--v-primary-base);;
+  background-color: var(--v-primary-base);
   width: 100%;
   height: 0;
   bottom: 0;
@@ -193,7 +191,7 @@ export default {
   transform: skewX(-45deg);
 }
 
- .hover-effect:hover::after {
+.hover-effect:hover::after {
   height: 5px;
   bottom: -5px;
   left: -2px;
