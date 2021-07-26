@@ -22,13 +22,16 @@
             outlined
             v-bind="attrs"
             v-on="on"
+            @click:clear="updateQuery({ startTime: undefined })"
           ></v-text-field>
         </template>
         <v-time-picker
           v-if="startTimeMenu"
           v-model="startTime"
+          :max="endTime"
           full-width
           @click:minute="$refs.startTimeMenu.save(startTime)"
+          @change="updateQuery({ startTime })"
         ></v-time-picker>
       </v-menu>
     </v-col>
@@ -54,13 +57,16 @@
             outlined
             v-bind="attrs"
             v-on="on"
+            @click:clear="updateQuery({ endTime: undefined })"
           ></v-text-field>
         </template>
         <v-time-picker
           v-if="endTimeMenu"
           v-model="endTime"
+          :min="startTime"
           full-width
           @click:minute="$refs.endTimeMenu.save(endTime)"
+          @change="updateQuery({ endTime })"
         ></v-time-picker>
       </v-menu>
     </v-col>
@@ -68,13 +74,16 @@
 </template>
 
 <script>
+import queryMixin from "~/mixins/queryMixin";
+
 export default {
+  mixins: [queryMixin],
   data() {
     return {
       startTimeMenu: false,
       endTimeMenu: false,
-      startTime: null,
-      endTime: null
+      startTime: this.$route.query.startTime,
+      endTime: this.$route.query.endTime
     };
   }
 };
