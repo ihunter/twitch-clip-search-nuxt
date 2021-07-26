@@ -3,6 +3,7 @@
     v-model="game"
     :search-input.sync="search"
     label="Game"
+    prepend-inner-icon="mdi-controller-classic"
     :items="allGames"
     item-text="name"
     item-value="id"
@@ -12,69 +13,82 @@
     multiple
     chips
     deletable-chips
+    small-chips
     clearable
     outlined
-    filled
     @change="updateQuery({ game })"
     @click:clear="updateQuery({ game: undefined })"
-  />
+  >
+    <template v-slot:item="data">
+      <template>
+        <v-list-item-avatar tile left width="60" height="80">
+          <img :src="boxArtURL(data.item.box_art_url)" />
+        </v-list-item-avatar>
+        <v-list-item-content>
+          <v-list-item-title v-html="data.item.name"></v-list-item-title>
+        </v-list-item-content>
+      </template>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import gql from "graphql-tag";
 
-import queryMixin from '~/mixins/queryMixin'
+import queryMixin from "~/mixins/queryMixin";
 
 export default {
   mixins: [queryMixin],
-  data () {
+  data() {
     return {
       search: null,
       gameQuery: this.$route.query.game,
-      noDataText: 'Search for a game by title'
-    }
+      noDataText: "Search for a game by title"
+    };
   },
   computed: {
     game: {
-      get () {
-        if (!this.gameQuery) return null
+      get() {
+        if (!this.gameQuery) return null;
 
         if (Array.isArray(this.gameQuery)) {
-          return this.gameQuery
+          return this.gameQuery;
         }
 
-        return [this.gameQuery]
+        return [this.gameQuery];
       },
-      set (val) {
-        this.gameQuery = val
+      set(val) {
+        this.gameQuery = val;
       }
+    }
+  },
+  methods: {
+    boxArtURL(url) {
+      return url.replace("{width}x{height}", "150x200");
     }
   },
   apollo: {
     allGames: {
-      query: gql`query allGames(
-        $broadcaster: String
-        $name: String
-        $game: [String]
-        ) {
-          allGames (query: {
-            broadcasterID: $broadcaster
-            name: $name
-            gameID: $game
-          }) {
+      query: gql`
+        query allGames($broadcaster: String, $name: String, $game: [String]) {
+          allGames(
+            query: { broadcasterID: $broadcaster, name: $name, gameID: $game }
+          ) {
             id
             name
+            box_art_url
           }
-      }`,
-      variables () {
+        }
+      `,
+      variables() {
         return {
           broadcaster: this.$route.query.broadcaster,
           name: this.search,
           game: this.game
-        }
+        };
       },
       debounce: 300
     }
   }
-}
+};
 </script>

@@ -15,7 +15,6 @@
         clearable
         readonly
         outlined
-        filled
         v-on="on"
         @click:clear="updateQuery({ endDate: undefined })"
       />
