@@ -3,13 +3,9 @@ const findOrCreate = require('mongoose-findorcreate')
 const Schema = mongoose.Schema
 
 const logSchema = new Schema({
-  started_at: {
-    type: String,
-    required: true
-  },
-  ended_at: {
-    type: String,
-    required: true
+  date_cursor: {
+    type: Date,
+    default: Date.now
   },
   broadcaster_id: {
     type: String,
@@ -17,9 +13,16 @@ const logSchema = new Schema({
   },
   type: {
     type: String
+  },
+  progress: {
+    type: String,
+    enum: ['in-progress', 'completed'],
+    default: 'completed'
+  },
+  updated_at: {
+    type: Date,
+    default: Date.now
   }
-}, {
-  timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 })
 
 logSchema.virtual('broadcaster', {

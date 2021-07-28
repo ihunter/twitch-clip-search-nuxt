@@ -17,46 +17,36 @@ async function init() {
   broadcasters.forEach(async broadcaster => {
     try {
       const weekLog = (await Log.findOrCreate({ type: 'week', broadcaster_id: broadcaster.id }, {
-        started_at: moment.utc().startOf('day').subtract(1, 'week').toISOString(),
-        ended_at: moment.utc().endOf('day').subtract(1, 'week').toISOString()
+        updated_at: moment.utc().subtract(1, 'year')
       })).doc
 
       const monthLog = (await Log.findOrCreate({ type: 'month', broadcaster_id: broadcaster.id }, {
-        started_at: moment.utc().startOf('day').subtract(1, 'month').toISOString(),
-        ended_at: moment.utc().endOf('day').subtract(1, 'month').toISOString()
+        updated_at: moment.utc().subtract(1, 'year')
       })).doc
 
       const yearLog = (await Log.findOrCreate({ type: 'year', broadcaster_id: broadcaster.id }, {
-        started_at: moment.utc().startOf('day').subtract(1, 'year').toISOString(),
-        ended_at: moment.utc().endOf('day').subtract(1, 'year').toISOString()
+        updated_at: moment.utc().subtract(1, 'year')
       })).doc
 
       const allLog = (await Log.findOrCreate({ type: 'all', broadcaster_id: broadcaster.id }, {
-        started_at: moment.utc("2016-04-01T00:00:00Z").startOf('day').toISOString(),
-        ended_at: moment.utc("2016-04-01T00:00:00Z").endOf('day').toISOString()
+        updated_at: moment.utc().subtract(1, 'year')
       })).doc
-
-      const diffInMinutes = moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes')
-      const diffInDays = moment.utc().diff(moment.utc(monthLog.updated_at), 'days')
-      const diffInWeeks = moment.utc().diff(moment.utc(yearLog.updated_at), 'weeks')
-      const diffInMonths = moment.utc().diff(moment.utc(allLog.updated_at), 'months')
 
       const jobQueue = []
 
-      if (diffInMinutes >= 5) {
-        console.log('Fetching weeks clips')
+      if (moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes') >= 1) {
         jobQueue.push(fetchClips('week', broadcaster))
       }
-      if (diffInDays >= 1) {
-        console.log('Fetching months clips')
+
+      if (moment.utc().diff(moment.utc(monthLog.updated_at), 'hours') >= 1) {
         jobQueue.push(fetchClips('month', broadcaster))
       }
-      if (diffInWeeks >= 1) {
-        console.log('Fetching years clips')
+
+      if (moment.utc().diff(moment.utc(yearLog.updated_at), 'hours') >= 12) {
         jobQueue.push(fetchClips('year', broadcaster))
       }
-      if (diffInMonths >= 1) {
-        console.log('Fetching all clips')
+
+      if (moment.utc().diff(moment.utc(allLog.updated_at), 'day') >= 1) {
         jobQueue.push(fetchClips('all', broadcaster))
       }
 
@@ -68,4 +58,5 @@ async function init() {
   })
 }
 
-setInterval(init, 10000)
+init()
+setInterval(init, 2000)

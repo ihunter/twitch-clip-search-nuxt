@@ -2,7 +2,7 @@ require('dotenv').config()
 const consola = require('consola')
 const moment = require('moment')
 
-const { Broadcaster, Clip, Log } = require('../../models')
+const { Clip, Log } = require('../../models')
 const { API } = require('../../utils/twitch-api')
 const { addGames } = require('./addGames')
 const { getAuthToken } = require('./getAuthToken')
@@ -10,6 +10,7 @@ const { getAuthToken } = require('./getAuthToken')
 const OLDEST_START_DATE = '2016-04-01T00:00:00Z'
 
 exports.fetchClips = async (type, broadcaster) => {
+  console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name}`)
   try {
     await getAuthToken()
   } catch (error) {
@@ -22,35 +23,26 @@ exports.fetchClips = async (type, broadcaster) => {
       startingDate = OLDEST_START_DATE
       break
     case 'week':
-      startingDate = moment.utc().startOf('day').subtract(1, 'week').toISOString()
+      startingDate = moment.utc().startOf('day').subtract(1, 'week')
       break
     case 'month':
-      startingDate = moment.utc().startOf('day').subtract(1, 'month').toISOString()
+      startingDate = moment.utc().startOf('day').subtract(1, 'month')
       break
     case 'year':
-      startingDate = moment.utc().startOf('day').subtract(1, 'year').toISOString()
+      startingDate = moment.utc().startOf('day').subtract(1, 'year')
       break
     default:
       type = 'week'
-      startingDate = moment.utc().startOf('day').subtract(1, 'week').toISOString()
+      startingDate = moment.utc().startOf('day').subtract(1, 'week')
       break
   }
 
   const api = await API()
 
-  let startedAt
-  let endedAt
-
   const first = 100
   let log
   try {
-    log = (await Log.findOrCreate({ type, broadcaster_id: broadcaster.id }, {
-      started_at: startingDate,
-      ended_at: moment.utc(startingDate).endOf('day').toISOString(),
-      type
-    })).doc
-    startedAt = log.started_at
-    endedAt = log.ended_at
+    log = (await Log.findOneAndUpdate({ type, broadcaster_id: broadcaster.id }, { progress: 'in-progress', updated_at: Date.now() }))
   } catch (error) {
     consola.error('Error fetching log:', error)
   }
@@ -61,11 +53,13 @@ exports.fetchClips = async (type, broadcaster) => {
   let insertedCount = 0
   let upsertedCount = 0
 
-  while (moment.utc(endedAt).isSameOrBefore(moment.utc().endOf('day'))) {
+  while (moment.utc(startingDate).endOf('day').isSameOrBefore(moment.utc().endOf('day'))) {
     let clips = []
     do {
       try {
-        const res = await api.get(`clips?broadcaster_id=${broadcaster.id}&started_at=${startedAt}&ended_at=${endedAt}&first=${first}&after=${cursor}`)
+        const startDate = moment.utc(startingDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
+        const endDate = moment.utc(startingDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
+        const res = await api.get(`clips?broadcaster_id=${broadcaster.id}&started_at=${startDate}&ended_at=${endDate}&first=${first}&after=${cursor}`)
 
         clips = clips.concat(res.data.data)
         cursor = res.data.pagination.cursor
@@ -123,12 +117,11 @@ exports.fetchClips = async (type, broadcaster) => {
     }
 
     cursor = ''
-    startedAt = moment.utc(startedAt).add(1, 'day').toISOString()
-    endedAt = moment.utc(startedAt).endOf('day').toISOString()
+    startingDate = moment.utc(startingDate).add(1, 'day')
 
     await Log.updateOne({ type, broadcaster_id: broadcaster.id }, {
-      started_at: startedAt,
-      ended_at: endedAt
+      date_cursor: startingDate,
+      updated_at: Date.now()
     })
       .catch((error) => {
         consola.error('Error saving log:', error)
@@ -136,11 +129,9 @@ exports.fetchClips = async (type, broadcaster) => {
   }
 
   try {
-    startedAt = startingDate
-    endedAt = moment.utc(startingDate).endOf('day').toISOString()
     await Log.updateOne({ type, broadcaster_id: broadcaster.id }, {
-      started_at: startedAt,
-      ended_at: endedAt
+      progress: 'completed',
+      updated_at: Date.now()
     })
   } catch (error) {
     consola.error('Error updating log:', error)
