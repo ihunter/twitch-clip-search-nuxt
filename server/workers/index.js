@@ -1,11 +1,11 @@
 const moment = require('moment')
 const consola = require('consola')
 
-const {Broadcaster, Log } = require('../models')
+const { Broadcaster, Log } = require('../models')
 
 const { fetchClips } = require('./jobs/fetchClips')
 
-async function init () {
+async function init() {
   let broadcasters
   try {
     broadcasters = await Broadcaster.find()
@@ -35,31 +35,31 @@ async function init () {
         started_at: moment.utc("2016-04-01T00:00:00Z").startOf('day').toISOString(),
         ended_at: moment.utc("2016-04-01T00:00:00Z").endOf('day').toISOString()
       })).doc
-  
+
       const diffInMinutes = moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes')
       const diffInDays = moment.utc().diff(moment.utc(monthLog.updated_at), 'days')
       const diffInWeeks = moment.utc().diff(moment.utc(yearLog.updated_at), 'weeks')
       const diffInMonths = moment.utc().diff(moment.utc(allLog.updated_at), 'months')
-  
+
       const jobQueue = []
-  
+
       if (diffInMinutes >= 5) {
         console.log('Fetching weeks clips')
-        jobQueue.push(fetchClips('week'))
+        jobQueue.push(fetchClips('week', broadcaster))
       }
       if (diffInDays >= 1) {
         console.log('Fetching months clips')
-        jobQueue.push(fetchClips('month'))
+        jobQueue.push(fetchClips('month', broadcaster))
       }
       if (diffInWeeks >= 1) {
         console.log('Fetching years clips')
-        jobQueue.push(fetchClips('year'))
+        jobQueue.push(fetchClips('year', broadcaster))
       }
       if (diffInMonths >= 1) {
         console.log('Fetching all clips')
-        jobQueue.push(fetchClips('all'))
+        jobQueue.push(fetchClips('all', broadcaster))
       }
-  
+
       await Promise.all(jobQueue)
     } catch (error) {
       consola.error('Failed to init jobs')

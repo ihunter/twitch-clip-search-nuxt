@@ -16,7 +16,7 @@ config.dev = process.env.NODE_ENV !== 'production'
 const graphqlSchema = require('./graphql/schema')
 const graphqlResolvers = require('./graphql/resolvers')
 
-async function start () {
+async function start() {
   // Init Nuxt.js
   const nuxt = new Nuxt(config)
 
