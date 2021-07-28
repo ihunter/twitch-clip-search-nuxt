@@ -99,14 +99,15 @@ exports.fetchClips = async (type) => {
       if (clips.length > 0) {
         const result = await Clip.bulkWrite(clips.map((clip) => {
           // eslint-disable-next-line camelcase
-          const { view_count, language } = clip
+          const { view_count, language, title } = clip
           delete clip.view_count
           delete clip.language
+          delete clip.title
           return {
             updateOne: {
               filter: { id: clip.id },
               update: {
-                $set: { view_count, language },
+                $set: { view_count, language, title },
                 $setOnInsert: clip
               },
               upsert: true
