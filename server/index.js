@@ -54,7 +54,7 @@ async function start() {
   app.use(nuxt.render)
 
   // Start workers
-  if (!config.dev) {
+  if (config.dev) {
     require('./workers')
   }
 

@@ -9,8 +9,11 @@ const { getAuthToken } = require('./getAuthToken')
 
 const OLDEST_START_DATE = '2016-04-01T00:00:00Z'
 
-exports.fetchClips = async (type, broadcaster) => {
+exports.fetchClips = async (type, broadcaster, stateManager) => {
   console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name}`)
+
+  stateManager[type] = true
+
   try {
     await getAuthToken()
   } catch (error) {
@@ -43,6 +46,12 @@ exports.fetchClips = async (type, broadcaster) => {
   let log
   try {
     log = (await Log.findOneAndUpdate({ type, broadcaster_id: broadcaster.id }, { progress: 'in-progress', updated_at: Date.now() }))
+    if (log.progress === 'in-progress') {
+      console.log('Resuming from last know date')
+      startingDate = log.date_cursor
+    } else {
+      console.log('Starting new')
+    }
   } catch (error) {
     consola.error('Error fetching log:', error)
   }
@@ -133,6 +142,7 @@ exports.fetchClips = async (type, broadcaster) => {
       progress: 'completed',
       updated_at: Date.now()
     })
+    stateManager[type] = false
   } catch (error) {
     consola.error('Error updating log:', error)
   }

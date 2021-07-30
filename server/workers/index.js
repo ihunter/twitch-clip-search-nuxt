@@ -5,8 +5,16 @@ const { Broadcaster, Log } = require('../models')
 
 const { fetchClips } = require('./jobs/fetchClips')
 
+const stateManager = {
+  week: false,
+  month: false,
+  year: false,
+  all: false
+}
+
 async function init() {
   let broadcasters
+  console.log(stateManager)
   try {
     broadcasters = await Broadcaster.find()
   } catch (error) {
@@ -34,20 +42,20 @@ async function init() {
 
       const jobQueue = []
 
-      if (moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes') >= 1) {
-        jobQueue.push(fetchClips('week', broadcaster))
+      if (((moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes') >= 0) || weekLog.progress === 'in-progress') && !stateManager.week) {
+        jobQueue.push(fetchClips('week', broadcaster, stateManager))
       }
 
-      if (moment.utc().diff(moment.utc(monthLog.updated_at), 'hours') >= 1) {
-        jobQueue.push(fetchClips('month', broadcaster))
+      if (((moment.utc().diff(moment.utc(monthLog.updated_at), 'hours') >= 0) || weekLog.progress === 'in-progress') && !stateManager.month) {
+        jobQueue.push(fetchClips('month', broadcaster, stateManager))
       }
 
-      if (moment.utc().diff(moment.utc(yearLog.updated_at), 'hours') >= 12) {
-        jobQueue.push(fetchClips('year', broadcaster))
+      if (((moment.utc().diff(moment.utc(yearLog.updated_at), 'hours') >= 0) || weekLog.progress === 'in-progress') && !stateManager.year) {
+        jobQueue.push(fetchClips('year', broadcaster, stateManager))
       }
 
-      if (moment.utc().diff(moment.utc(allLog.updated_at), 'day') >= 1) {
-        jobQueue.push(fetchClips('all', broadcaster))
+      if (((moment.utc().diff(moment.utc(allLog.updated_at), 'day') >= 0) || weekLog.progress === 'in-progress') && !stateManager.all) {
+        jobQueue.push(fetchClips('all', broadcaster, stateManager))
       }
 
       await Promise.all(jobQueue)
