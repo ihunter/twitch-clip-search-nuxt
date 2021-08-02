@@ -8,13 +8,17 @@
       shrink-on-scroll
       :src="require('~/assets/banner.webp')"
     >
-      <v-spacer class="hidden-md-and-down" />
-      <Search />
-      <v-btn-toggle class="ml-2">
-        <SearchFilters />
-        <SearchSort />
-      </v-btn-toggle>
-      <v-spacer class="hidden-md-and-down" />
+      <v-container>
+        <v-row justify="center">
+          <v-col sm="12" md="10" lg="8" xl="6" class="d-flex">
+            <Search />
+            <v-btn-toggle class="ml-2">
+              <SearchFilters />
+              <SearchSort />
+            </v-btn-toggle>
+          </v-col>
+        </v-row>
+      </v-container>
     </v-app-bar>
 
     <!-- Sizes your content based upon application components -->
@@ -32,9 +36,9 @@
 </template>
 
 <script>
-import Search from '~/components/Search'
-import SearchFilters from '~/components/SearchFilters'
-import SearchSort from '~/components/SearchSort'
+import Search from "~/components/Search";
+import SearchFilters from "~/components/SearchFilters";
+import SearchSort from "~/components/SearchSort";
 
 export default {
   components: {
@@ -42,5 +46,5 @@ export default {
     SearchFilters,
     SearchSort
   }
-}
+};
 </script>
