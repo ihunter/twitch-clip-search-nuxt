@@ -11,7 +11,6 @@ const OLDEST_START_DATE = '2016-04-01T00:00:00Z'
 
 exports.fetchClips = async (type, broadcaster, stateManager) => {
   console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name}`)
-
   stateManager[type] = true
 
   try {
@@ -47,10 +46,7 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
   try {
     log = (await Log.findOneAndUpdate({ type, broadcaster_id: broadcaster.id }, { progress: 'in-progress', updated_at: Date.now() }))
     if (log.progress === 'in-progress') {
-      console.log('Resuming from last know date')
       startingDate = log.date_cursor
-    } else {
-      console.log('Starting new')
     }
   } catch (error) {
     consola.error('Error fetching log:', error)

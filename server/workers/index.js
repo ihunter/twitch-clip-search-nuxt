@@ -5,6 +5,8 @@ const { Broadcaster, Log } = require('../models')
 
 const { fetchClips } = require('./jobs/fetchClips')
 
+const THIRTY_SECONDS = 30 * 1000
+
 const stateManager = {
   week: false,
   month: false,
@@ -14,7 +16,6 @@ const stateManager = {
 
 async function init() {
   let broadcasters
-  console.log(stateManager)
   try {
     broadcasters = await Broadcaster.find()
   } catch (error) {
@@ -42,19 +43,19 @@ async function init() {
 
       const jobQueue = []
 
-      if (((moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes') >= 0) || weekLog.progress === 'in-progress') && !stateManager.week) {
+      if (((moment.utc().diff(moment.utc(weekLog.updated_at), 'minutes') >= 2) || weekLog.progress === 'in-progress') && !stateManager.week) {
         jobQueue.push(fetchClips('week', broadcaster, stateManager))
       }
 
-      if (((moment.utc().diff(moment.utc(monthLog.updated_at), 'hours') >= 0) || weekLog.progress === 'in-progress') && !stateManager.month) {
+      if (((moment.utc().diff(moment.utc(monthLog.updated_at), 'hours') >= 1) || weekLog.progress === 'in-progress') && !stateManager.month) {
         jobQueue.push(fetchClips('month', broadcaster, stateManager))
       }
 
-      if (((moment.utc().diff(moment.utc(yearLog.updated_at), 'hours') >= 0) || weekLog.progress === 'in-progress') && !stateManager.year) {
+      if (((moment.utc().diff(moment.utc(yearLog.updated_at), 'hours') >= 3) || weekLog.progress === 'in-progress') && !stateManager.year) {
         jobQueue.push(fetchClips('year', broadcaster, stateManager))
       }
 
-      if (((moment.utc().diff(moment.utc(allLog.updated_at), 'day') >= 0) || weekLog.progress === 'in-progress') && !stateManager.all) {
+      if (((moment.utc().diff(moment.utc(allLog.updated_at), 'day') >= 6) || weekLog.progress === 'in-progress') && !stateManager.all) {
         jobQueue.push(fetchClips('all', broadcaster, stateManager))
       }
 
@@ -67,4 +68,4 @@ async function init() {
 }
 
 init()
-setInterval(init, 2000)
+setInterval(init, THIRTY_SECONDS)
