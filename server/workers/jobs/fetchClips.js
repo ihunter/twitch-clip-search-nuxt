@@ -46,9 +46,9 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
     log = (await Log.findOneAndUpdate({ type, broadcaster_id: broadcaster.id }, { progress: 'in-progress', updated_at: Date.now() }))
     if (log.progress === 'in-progress') {
       startingDate = log.date_cursor
-      console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name} from cursor`)
+      console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name} from cursor\n`)
     } else {
-      console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name} from scratch`)
+      console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name} from scratch\n`)
     }
   } catch (error) {
     consola.error('Error fetching log:', error)
