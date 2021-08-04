@@ -128,6 +128,10 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
 
     await Log.updateOne({ type, broadcaster_id: broadcaster.id }, {
       date_cursor: startingDate,
+      matched: matchedCount,
+      modified: modifiedCount,
+      inserted: insertedCount,
+      upserted: upsertedCount,
       updated_at: Date.now()
     })
       .catch((error) => {
@@ -138,6 +142,10 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
   try {
     await Log.updateOne({ type, broadcaster_id: broadcaster.id }, {
       progress: 'completed',
+      matched: matchedCount,
+      modified: modifiedCount,
+      inserted: insertedCount,
+      upserted: upsertedCount,
       updated_at: Date.now()
     })
     stateManager[type] = false

@@ -19,6 +19,18 @@ const logSchema = new Schema({
     enum: ['in-progress', 'completed'],
     default: 'completed'
   },
+  matched: {
+    type: Number
+  },
+  modified: {
+    type: Number
+  },
+  inserted: {
+    type: Number
+  },
+  upserted: {
+    type: Number
+  },
   updated_at: {
     type: Date,
     default: Date.now
