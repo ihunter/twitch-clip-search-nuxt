@@ -47,15 +47,15 @@ async function init() {
         jobQueue.push(fetchClips('week', broadcaster, stateManager))
       }
 
-      if (((moment.utc().diff(moment.utc(monthLog.updated_at), 'hours') >= 1) || weekLog.progress === 'in-progress') && !stateManager.month) {
+      if (((moment.utc().diff(moment.utc(monthLog.updated_at), 'hours') >= 1) || monthLog.progress === 'in-progress') && !stateManager.month) {
         jobQueue.push(fetchClips('month', broadcaster, stateManager))
       }
 
-      if (((moment.utc().diff(moment.utc(yearLog.updated_at), 'hours') >= 3) || weekLog.progress === 'in-progress') && !stateManager.year) {
+      if (((moment.utc().diff(moment.utc(yearLog.updated_at), 'hours') >= 3) || yearLog.progress === 'in-progress') && !stateManager.year) {
         jobQueue.push(fetchClips('year', broadcaster, stateManager))
       }
 
-      if (((moment.utc().diff(moment.utc(allLog.updated_at), 'day') >= 6) || weekLog.progress === 'in-progress') && !stateManager.all) {
+      if (((moment.utc().diff(moment.utc(allLog.updated_at), 'day') >= 6) || allLog.progress === 'in-progress') && !stateManager.all) {
         jobQueue.push(fetchClips('all', broadcaster, stateManager))
       }
 
