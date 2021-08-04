@@ -54,7 +54,7 @@ async function start() {
   app.use(nuxt.render)
 
   // Start workers
-  require('./workers')
+  // require('./workers')
 
   // Listen the server
   app.listen(port, host)

@@ -16,6 +16,7 @@ import ClipPagination from "~/components/ClipPagination";
 import ScrollToTopFab from "~/components/ScrollToTopFab";
 
 export default {
+  layout: "search",
   components: {
     Clips,
     ClipsLoader,
