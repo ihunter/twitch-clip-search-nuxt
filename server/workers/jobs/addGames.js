@@ -5,7 +5,7 @@ const { Clip, Game } = require('../../models')
 
 const { API } = require('../../utils/twitch-api')
 
-async function addGames () {
+async function addGames() {
   try {
     const api = await API()
     let games = await Clip.distinct('game_id')

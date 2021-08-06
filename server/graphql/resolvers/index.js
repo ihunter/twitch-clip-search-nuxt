@@ -3,7 +3,7 @@ const {
   parseResolveInfo,
   simplifyParsedResolveInfoFragmentWithType
 } = require('graphql-parse-resolve-info')
-const { Broadcaster, Clip, Game } = require('../../models')
+const { Broadcaster, Clip, Game, Search } = require('../../models')
 
 module.exports = {
   async allClips({ query }, _, info) {
@@ -94,6 +94,19 @@ module.exports = {
           totalDocs: 'count'
         }
       })
+
+      const search = {
+        broadcaster_id: query.broadcaster,
+        creator_id: query.creator,
+        game_id: query.game,
+        title: query.title,
+        startDate: query.startDate,
+        endDate: query.endDate
+      }
+
+      console.log(search)
+
+      await Search.create(search)
 
       return { clips, count }
     } catch (error) {
