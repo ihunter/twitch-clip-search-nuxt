@@ -97,16 +97,16 @@ module.exports = {
 
       const search = {
         broadcaster_id: query.broadcaster,
-        creator_id: query.creator,
+        creator_name: query.creator,
         game_id: query.game,
         title: query.title,
         startDate: query.startDate,
         endDate: query.endDate
       }
 
-      console.log(search)
-
-      await Search.create(search)
+      if (search.title || search.startDate || search.endDate || search.game_id || search.creator_name) {
+        await Search.create(search)
+      }
 
       return { clips, count }
     } catch (error) {
