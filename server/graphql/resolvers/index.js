@@ -81,14 +81,17 @@ module.exports = {
     }
 
     try {
+      const page = query.page || 1
+      const limit = query.limit || 12
+
       const { clips, count } = await Clip.paginate(mongoQuery, {
         select: `${selectedFields} game_id`,
         sort: order,
         populate: 'game',
         // projection: { score: { $meta: 'textScore' } }, Breaks search when no title is given???
         lean: true,
-        page: query.page || 1,
-        limit: query.limit || 12,
+        page: page,
+        limit: limit,
         customLabels: {
           docs: 'clips',
           totalDocs: 'count'
@@ -104,7 +107,7 @@ module.exports = {
         endDate: query.endDate
       }
 
-      if (search.title || search.startDate || search.endDate || search.game_id || search.creator_name) {
+      if (page === 1 && (search.title || search.startDate || search.endDate || search.game_id || search.creator_name)) {
         await Search.create(search)
       }
 
