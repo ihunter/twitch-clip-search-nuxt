@@ -60,10 +60,13 @@ async function start() {
   console.log(`Server listening on http://${host}:${port}`)
 }
 
-throng({
-  worker: start,
-  count: process.env.WEB_CONCURRENCY || 1,
-  lifetime: Infinity,
-  signals: ['SIGTERM', 'SIGINT']
-})
+start()
   .catch(err => console.error(err))
+
+// throng({
+//   worker: start,
+//   count: process.env.WEB_CONCURRENCY || 1,
+//   lifetime: Infinity,
+//   signals: ['SIGTERM', 'SIGINT']
+// })
+//   .catch(err => console.error(err))
