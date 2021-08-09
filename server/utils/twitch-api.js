@@ -7,7 +7,7 @@ const twitchApi = rateLimit(axios.create({
   headers: {
     'Client-ID': process.env.TWITCH_CLIENT_ID
   }
-}), { maxRPS: process.env.MAX_RPS || 13 })
+}), { maxRPS: +process.env.MAX_RPS || 13 })
 
 
 // Add a response interceptor
