@@ -31,7 +31,7 @@ exports.addClips = async (type, broadcaster, stateManager) => {
       break
   }
 
-  const first = 100
+  const first = 1
   let log
   try {
     log = (await Log.findOneAndUpdate({ type, broadcaster_id: broadcaster.id }, { progress: 'in-progress', updated_at: Date.now() }))
