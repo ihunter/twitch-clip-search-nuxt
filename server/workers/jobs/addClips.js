@@ -58,7 +58,7 @@ exports.addClips = async (type, broadcaster, stateManager) => {
         const startDate = moment.utc(startingDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
         const endDate = moment.utc(startingDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
         const res = await http.get(`clips?broadcaster_id=${broadcaster.id}&started_at=${startDate}&ended_at=${endDate}&first=${first}&after=${cursor}`)
-
+        console.log('ratelimit-remaining:', res.headers['ratelimit-remaining'])
         clips = clips.concat(res.data.data)
         cursor = res.data.pagination.cursor
       } catch (error) {
