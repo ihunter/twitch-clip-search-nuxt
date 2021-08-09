@@ -8,7 +8,7 @@ const { addGames } = require('./addGames')
 
 const OLDEST_START_DATE = '2016-04-01T00:00:00Z'
 
-exports.fetchClips = async (type, broadcaster, stateManager) => {
+exports.addClips = async (type, broadcaster, stateManager) => {
   stateManager[type] = true
 
   let startingDate
