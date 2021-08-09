@@ -2,7 +2,6 @@ require('dotenv').config()
 const express = require('express')
 const throng = require('throng')
 const cors = require('cors')
-const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const mongoose = require('mongoose')
 const { graphqlHTTP } = require('express-graphql')
@@ -38,7 +37,7 @@ async function start() {
       useUnifiedTopology: true
     })
   } catch (error) {
-    consola.error(error)
+    console.error(error)
   }
 
   app.use(cors())
@@ -58,10 +57,7 @@ async function start() {
 
   // Listen the server
   app.listen(port, host)
-  consola.ready({
-    message: `Server listening on http://${host}:${port}`,
-    badge: true
-  })
+  console.log(`Server listening on http://${host}:${port}`)
 }
 
 throng({

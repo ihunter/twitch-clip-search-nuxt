@@ -1,22 +1,15 @@
 require('dotenv').config()
-const consola = require('consola')
 const moment = require('moment')
 
 const { Clip, Log } = require('../../models')
-const { API } = require('../../utils/twitch-api')
+const { http } = require('../../utils/twitch-api')
+const errorHandler = require('../../utils/axios-error-handling')
 const { addGames } = require('./addGames')
-const { getAuthToken } = require('./getAuthToken')
 
 const OLDEST_START_DATE = '2016-04-01T00:00:00Z'
 
 exports.fetchClips = async (type, broadcaster, stateManager) => {
   stateManager[type] = true
-
-  try {
-    await getAuthToken()
-  } catch (error) {
-    consola.error('Error getting Auth Token:', error)
-  }
 
   let startingDate
   switch (type) {
@@ -38,8 +31,6 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
       break
   }
 
-  const api = await API()
-
   const first = 100
   let log
   try {
@@ -51,7 +42,7 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
       console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name} from scratch\n`)
     }
   } catch (error) {
-    consola.error('Error fetching log:', error)
+    console.error('Error fetching log:', error)
   }
 
   let cursor = ''
@@ -66,31 +57,13 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
       try {
         const startDate = moment.utc(startingDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
         const endDate = moment.utc(startingDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss[Z]')
-        const res = await api.get(`clips?broadcaster_id=${broadcaster.id}&started_at=${startDate}&ended_at=${endDate}&first=${first}&after=${cursor}`)
+        const res = await http.get(`clips?broadcaster_id=${broadcaster.id}&started_at=${startDate}&ended_at=${endDate}&first=${first}&after=${cursor}`)
 
         clips = clips.concat(res.data.data)
         cursor = res.data.pagination.cursor
       } catch (error) {
-        consola.error('Error fetching clips')
-        if (error.response) {
-          /*
-           * The request was made and the server responded with a
-           * status code that falls out of the range of 2xx
-           */
-          consola.error(error.response.data)
-          consola.error(error.response.status)
-          consola.error(error.response.headers)
-        } else if (error.request) {
-          /*
-           * The request was made but no response was received, `error.request`
-           * is an instance of XMLHttpRequest in the browser and an instance
-           * of http.ClientRequest in Node.js
-           */
-          consola.error(error.request)
-        } else {
-          // Something happened in setting up the request and triggered an Error
-          consola.error('Error', error.message)
-        }
+        console.error('Error fetching clips')
+        errorHandler(error)
       }
     } while (cursor)
 
@@ -119,7 +92,7 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
         insertedCount += result.insertedCount
         upsertedCount += result.upsertedCount
       } catch (error) {
-        consola.error('Error bulk writing clips:', error)
+        console.error('Error bulk writing clips:', error)
       }
     }
 
@@ -135,7 +108,7 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
       updated_at: Date.now()
     })
       .catch((error) => {
-        consola.error('Error saving log:', error)
+        console.error('Error saving log:', error)
       })
   }
 
@@ -152,11 +125,11 @@ exports.fetchClips = async (type, broadcaster, stateManager) => {
     console.log(`Completed fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name}`)
     console.log(`matched: ${matchedCount}\nmodified: ${modifiedCount}\ninserted: ${insertedCount}\nupserted: ${upsertedCount}\n`)
   } catch (error) {
-    consola.error('Error updating log:', error)
+    console.error('Error updating log:', error)
   }
 
   await addGames()
     .catch((error) => {
-      consola.error('Error fetching games:', error)
+      console.error('Error fetching games:', error)
     })
 }

@@ -1,5 +1,4 @@
 const moment = require('moment')
-const consola = require('consola')
 
 const { Broadcaster, Log } = require('../models')
 
@@ -19,8 +18,8 @@ async function init() {
   try {
     broadcasters = await Broadcaster.find()
   } catch (error) {
-    consola.error('Failed to get broadcasters')
-    consola.error(error)
+    console.error('Failed to get broadcasters')
+    console.error(error)
   }
 
   broadcasters.forEach(async broadcaster => {
@@ -61,8 +60,8 @@ async function init() {
 
       await Promise.all(jobQueue)
     } catch (error) {
-      consola.error('Failed to init jobs')
-      consola.error(error)
+      console.error('Failed to init jobs')
+      console.error(error)
     }
   })
 }
