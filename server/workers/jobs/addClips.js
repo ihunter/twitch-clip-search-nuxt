@@ -70,18 +70,10 @@ exports.addClips = async (type, broadcaster, stateManager) => {
     if (clips.length > 0) {
       try {
         const result = await Clip.bulkWrite(clips.map((clip) => {
-          // eslint-disable-next-line camelcase
-          const { view_count, language, title } = clip
-          delete clip.view_count
-          delete clip.language
-          delete clip.title
           return {
             updateOne: {
               filter: { id: clip.id },
-              update: {
-                $set: { view_count, language, title },
-                $setOnInsert: clip
-              },
+              update: clip,
               upsert: true
             }
           }
