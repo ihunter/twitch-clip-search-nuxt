@@ -18,7 +18,8 @@ const twitchApi = rateLimit(axios.create({
 twitchApi.interceptors.response.use((response) => {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
-  console.log('ratelimit-remaining:', response.headers['ratelimit-remaining'])
+  twitchApi.setMaxRPS(Math.floor((response.headers['ratelimit-remaining'] / 60)) - 1)
+  console.log('ratelimit-remaining:', response.headers['ratelimit-remaining'], 'MaxRPS:', twitchApi.getMaxRPS())
   return response;
 }, async (error) => {
   console.log(++counter)
