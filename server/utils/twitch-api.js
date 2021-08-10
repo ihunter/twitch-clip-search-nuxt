@@ -2,6 +2,10 @@ require('dotenv').config()
 const axios = require('axios')
 const rateLimit = require('axios-rate-limit')
 
+let isFetchingToken = false
+let failedRequestQueue = []
+let counter = 0
+
 const twitchApi = rateLimit(axios.create({
   baseURL: process.env.TWITCH_API_BASE_URL,
   headers: {
@@ -14,15 +18,39 @@ const twitchApi = rateLimit(axios.create({
 twitchApi.interceptors.response.use((response) => {
   // Any status code that lie within the range of 2xx cause this function to trigger
   // Do something with response data
+  console.log('ratelimit-remaining:', response.headers['ratelimit-remaining'])
   return response;
 }, async (error) => {
+  console.log(++counter)
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
+  const originalRequest = error.config
 
-  if (error.response.status === 401) {
-    const token = await getAuthToken()
-    twitchApi.defaults.headers.common['Authorization'] = `Bearer ${token}`
-    return twitchApi(error.config)
+  if (error.response.status === 401 && !originalRequest._retry) {
+    if (isFetchingToken) {
+      try {
+        await new Promise((resolve, reject) => {
+          failedRequestQueue.push({ resolve, reject })
+        })
+        return twitchApi(originalRequest)
+      } catch (error) {
+        Promise.reject(error)
+      }
+    }
+
+    originalRequest._retry = true
+    isFetchingToken = true
+
+    try {
+      const token = await getAuthToken()
+      twitchApi.defaults.headers.common['Authorization'] = `Bearer ${token}`
+      processQueue(null, token)
+      return twitchApi(originalRequest)
+    } catch (error) {
+      processQueue(error, null)
+    } finally {
+      isFetchingToken = false
+    }
   }
 
   return Promise.reject(error)
@@ -37,6 +65,18 @@ async function getAuthToken() {
   } catch (error) {
     console.error(error.response.data)
   }
+}
+
+function processQueue(error, token = null) {
+  failedRequestQueue.forEach(prom => {
+    if (error) {
+      prom.reject(error)
+    } else {
+      prom.resolve(token)
+    }
+  })
+
+  failedRequestQueue = []
 }
 
 exports.http = twitchApi
