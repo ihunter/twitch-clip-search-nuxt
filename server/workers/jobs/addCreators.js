@@ -1,14 +1,12 @@
 require('dotenv').config()
-const consola = require('consola')
-const rateLimit = require('axios-rate-limit')
 
 const { Clip, Creator } = require('../../models')
 
-const { API } = require('../../utils/twitch-api')
+const { http } = require('../../utils/twitch-api')
+const errorHandler = require('../../utils/axios-error-handling')
 
-async function addCreators () {
+async function addCreators() {
   try {
-    const api = rateLimit(await API(), { maxRPS: 13 })
     let creators = await Clip.distinct('creator_id')
 
     // Filter non games
@@ -22,7 +20,7 @@ async function addCreators () {
     }
 
     const creatorPromises = creatorBatches.map(async (creatorIDs) => {
-      const res = await api.get(`users?id=${creatorIDs}`)
+      const res = await http.get(`users?id=${creatorIDs}`)
       return res.data.data
     })
 
@@ -40,27 +38,8 @@ async function addCreators () {
       }
     }))
   } catch (error) {
-    consola.error('Failed to fetch creators data')
-
-    if (error.response) {
-      /*
-       * The request was made and the server responded with a
-       * status code that falls out of the range of 2xx
-       */
-      consola.error(error.response.data)
-      consola.error(error.response.status)
-      consola.error(error.response.headers)
-    } else if (error.request) {
-      /*
-       * The request was made but no response was received, `error.request`
-       * is an instance of XMLHttpRequest in the browser and an instance
-       * of http.ClientRequest in Node.js
-       */
-      consola.error(error.request)
-    } else {
-      // Something happened in setting up the request and triggered an Error
-      consola.error('Error', error.message)
-    }
+    console.error('Failed to fetch creators data')
+    errorHandler(error)
   }
 }
 

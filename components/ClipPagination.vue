@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import queryMixin from '~/mixins/queryMixin'
+import queryMixin from "~/mixins/queryMixin";
 
 export default {
   mixins: [queryMixin],
@@ -21,17 +21,17 @@ export default {
   },
   computed: {
     page: {
-      get () {
-        return +this.$route.query.page || 1
+      get() {
+        return +this.$route.query.page || 1;
       },
-      set (page) {
-        this.updateQuery({ page })
+      set(page) {
+        this.updateQuery({ page });
       }
     },
-    paginationLength () {
-      const limit = this.$route.query.limit || 24
-      return Math.ceil(this.count / limit)
+    paginationLength() {
+      const limit = this.$route.query.limit || 12;
+      return Math.ceil(this.count / limit);
     }
   }
-}
+};
 </script>

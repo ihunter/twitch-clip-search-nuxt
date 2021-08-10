@@ -20,7 +20,7 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { 
+      {
         src: 'https://static.cloudflareinsights.com/beacon.min.js',
         'data-cf-beacon': '{"token": "8a624e372b2b42baa0649413c7246f5e"}',
         body: true
@@ -96,10 +96,13 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    babel: {
+      plugins: [['@babel/plugin-proposal-private-property-in-object', { loose: true }]],
+    },
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   }
 }

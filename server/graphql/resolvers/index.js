@@ -1,12 +1,12 @@
 const moment = require('moment')
 const {
   parseResolveInfo,
-  simplifyParsedResolveInfoFragmentWithType 
+  simplifyParsedResolveInfoFragmentWithType
 } = require('graphql-parse-resolve-info')
-const { Broadcaster, Clip, Game } = require('../../models')
+const { Broadcaster, Clip, Game, Search } = require('../../models')
 
 module.exports = {
-  async allClips ({ query }, _, info) {
+  async allClips({ query }, _, info) {
     const parsedResolveInfoFragment = parseResolveInfo(info)
     const { fields } = simplifyParsedResolveInfoFragmentWithType(
       parsedResolveInfoFragment,
@@ -51,7 +51,7 @@ module.exports = {
         $lt: query.endDate
       }
     }
-    
+
     // Determine order based on query
     let order
 
@@ -81,26 +81,42 @@ module.exports = {
     }
 
     try {
+      const page = query.page || 1
+      const limit = query.limit || 12
+
       const { clips, count } = await Clip.paginate(mongoQuery, {
         select: `${selectedFields} game_id`,
         sort: order,
         populate: 'game',
         // projection: { score: { $meta: 'textScore' } }, Breaks search when no title is given???
         lean: true,
-        page: query.page > 0 ? query.page : 1,
-        limit: query.limit > 0 ? query.limit : 12,
+        page: page,
+        limit: limit,
         customLabels: {
           docs: 'clips',
           totalDocs: 'count'
         }
       })
 
-      return { clips , count }
+      const search = {
+        broadcaster_id: query.broadcaster,
+        creator_name: query.creator,
+        game_id: query.game,
+        title: query.title,
+        startDate: query.startDate,
+        endDate: query.endDate
+      }
+
+      if (page === 1 && (search.title || search.startDate || search.endDate || search.game_id || search.creator_name)) {
+        await Search.create(search)
+      }
+
+      return { clips, count }
     } catch (error) {
-      console.error('Error fetching clips:', error) 
+      console.error('Error fetching clips:', error)
     }
   },
-  async allGames ({ query }) {
+  async allGames({ query }) {
     if (!query.name && (!query.gameID || query.gameID.length <= 0)) return []
 
     const mongoQuery = {}
@@ -118,7 +134,7 @@ module.exports = {
 
     return await Game.find(mongoQuery).exec()
   },
-  async allBroadcasters () {
+  async allBroadcasters() {
     return await Broadcaster.find().exec()
   }
 }
