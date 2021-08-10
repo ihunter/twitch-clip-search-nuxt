@@ -4,7 +4,6 @@ const rateLimit = require('axios-rate-limit')
 
 let isFetchingToken = false
 let failedRequestQueue = []
-let counter = 0
 
 const twitchApi = rateLimit(axios.create({
   baseURL: process.env.TWITCH_API_BASE_URL,
@@ -22,7 +21,6 @@ twitchApi.interceptors.response.use((response) => {
   console.log('ratelimit-remaining:', response.headers['ratelimit-remaining'], 'MaxRPS:', twitchApi.getMaxRPS())
   return response;
 }, async (error) => {
-  console.log(++counter)
   // Any status codes that falls outside the range of 2xx cause this function to trigger
   // Do something with response error
   const originalRequest = error.config
