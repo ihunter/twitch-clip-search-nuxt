@@ -41,6 +41,9 @@ exports.addClips = async (type, broadcaster, stateManager) => {
     } else {
       console.log(`Fetching ${type === 'all' ? type : type + 's'} clips for ${broadcaster.display_name} from scratch\n`)
     }
+
+    log.date_cursor = startingDate
+    await log.save()
   } catch (error) {
     console.error('Error fetching log:', error)
   }
