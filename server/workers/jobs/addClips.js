@@ -96,8 +96,7 @@ exports.addClips = async (type, broadcaster, stateManager) => {
       matched: matchedCount,
       modified: modifiedCount,
       inserted: insertedCount,
-      upserted: upsertedCount,
-      updated_at: Date.now()
+      upserted: upsertedCount
     })
       .catch((error) => {
         console.error('Error saving log:', error)
