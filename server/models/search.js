@@ -12,10 +12,16 @@ const searchSchema = new Schema({
   game_id: [{ type: String, ref: 'Game' }],
   title: {
     type: String
+  },
+  startDate: {
+    type: Date
+  },
+  endDate: {
+    type: Date
   }
 }, { toJSON: { virtuals: true }, timestamps: true })
 
-searchSchema.virtual('game', {
+searchSchema.virtual('games', {
   ref: 'Game',
   localField: 'game_id',
   foreignField: 'id'

@@ -45,11 +45,14 @@ module.exports = buildSchema(`
 
   type Search {
     _id: ID!
+    games: [Game]
     broadcaster_id: [String]
     creator_name: String
     game_id: [String]
     title: String
     createdAt: String
+    startDate: String
+    endDate: String
   }
 
   type Searches {

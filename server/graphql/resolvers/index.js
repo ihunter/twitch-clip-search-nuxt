@@ -184,7 +184,7 @@ module.exports = {
 
       const { searches, count } = await Search.paginate(mongoQuery, {
         sort: order,
-        populate: 'game',
+        populate: 'games',
         lean: true,
         page: page,
         limit: limit,
