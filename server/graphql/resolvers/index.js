@@ -136,5 +136,67 @@ module.exports = {
   },
   async allBroadcasters() {
     return await Broadcaster.find().exec()
+  },
+  async allSearches({ query }) {
+    const mongoQuery = {}
+
+    // Match creator name
+    if (query.creator) {
+      mongoQuery.creator_name = { $regex: new RegExp(`^${query.creator}$`, 'i') }
+    }
+
+    if (query.game && query.game.length > 0) {
+      mongoQuery.game_id = query.game
+    }
+
+    if (query.startDate && query.endDate) {
+      mongoQuery.createdAt = {
+        $lt: query.endDate,
+        $gt: query.startDate
+      }
+    } else if (query.startDate) {
+      mongoQuery.createdAt = {
+        $gt: query.startDate
+      }
+    } else if (query.endDate) {
+      mongoQuery.createdAt = {
+        $lt: query.endDate
+      }
+    }
+
+    // Determine order based on query
+    let order
+
+    switch (query.sort) {
+      case 1:
+        order = { createdAt: 1 }
+        break
+      case 2:
+        order = { createdAt: -1 }
+        break
+      default:
+        order = { createdAt: -1 }
+    }
+
+    try {
+      const page = query.page || 1
+      const limit = query.limit || 12
+
+      const { searches, count } = await Search.paginate(mongoQuery, {
+        sort: order,
+        populate: 'game',
+        lean: true,
+        page: page,
+        limit: limit,
+        customLabels: {
+          docs: 'searches',
+          totalDocs: 'count'
+        }
+      })
+
+      return { searches, count }
+    } catch (error) {
+      console.error('Error fetching clips:', error)
+    }
   }
 }

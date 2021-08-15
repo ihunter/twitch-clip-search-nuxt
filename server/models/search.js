@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 const Schema = mongoose.Schema
 
 const searchSchema = new Schema({
@@ -11,12 +12,6 @@ const searchSchema = new Schema({
   game_id: [{ type: String, ref: 'Game' }],
   title: {
     type: String
-  },
-  startDate: {
-    type: Date
-  },
-  endDate: {
-    type: Date
   }
 }, { toJSON: { virtuals: true }, timestamps: true })
 
@@ -31,5 +26,7 @@ searchSchema.virtual('broadcaster', {
   localField: 'broadcaster_id',
   foreignField: 'id'
 })
+
+searchSchema.plugin(mongoosePaginate)
 
 module.exports.Search = mongoose.model('Search', searchSchema)

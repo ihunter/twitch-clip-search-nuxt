@@ -43,6 +43,20 @@ module.exports = buildSchema(`
     clip: Clip
   }
 
+  type Search {
+    _id: ID!
+    broadcaster_id: [String]
+    creator_name: String
+    game_id: [String]
+    title: String
+    createdAt: String
+  }
+
+  type Searches {
+    searches: [Search]
+    count: Int
+  }
+
   input ClipInput {
     title: String,
     creator: String,
@@ -62,10 +76,23 @@ module.exports = buildSchema(`
     gameID: [String]
   }
 
+  input SearchInput {
+    title: String,
+    creator: String
+    game: String
+    broadcaster: String
+    startDate: String
+    endDate: String
+    sort: Int
+    page: Int
+    limit: Int
+  }
+
   type RootQuery {
     allClips(query: ClipInput): Clips!
     allGames(query: GameInput): [Game]!
     allBroadcasters: [Broadcaster]!
+    allSearches(query: SearchInput): Searches
   }
 
   schema {
