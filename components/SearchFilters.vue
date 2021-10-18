@@ -23,27 +23,20 @@
 
       <v-container>
         <v-row justify="center">
-          <v-col cols="12" md="10" xl="8">
-            <v-row>
-              <!-- <v-col cols="12">
-                <BroadcasterFilter />
-              </v-col> -->
-              <v-col cols="12">
-                <GameFilter />
-              </v-col>
-              <v-col cols="12" md="6">
-                <StartDateFilter />
-              </v-col>
-              <v-col cols="12" md="6">
-                <EndDateFilter />
-              </v-col>
-              <v-col cols="12">
-                <TimeFilter />
-              </v-col>
-              <v-col cols="12">
-                <CreatorFilter />
-              </v-col>
-            </v-row>
+          <v-col cols="12">
+            <GameFilter />
+          </v-col>
+          <v-col cols="12" md="6">
+            <StartDateFilter />
+          </v-col>
+          <v-col cols="12" md="6">
+            <EndDateFilter />
+          </v-col>
+          <v-col cols="12">
+            <TimeFilter />
+          </v-col>
+          <v-col cols="12">
+            <CreatorFilter />
           </v-col>
         </v-row>
       </v-container>
@@ -52,7 +45,6 @@
 </template>
 
 <script>
-import BroadcasterFilter from "~/components/BroadcasterFilter";
 import GameFilter from "~/components/GameFilter";
 import StartDateFilter from "~/components/StartDateFilter";
 import EndDateFilter from "~/components/EndDateFilter";
@@ -61,16 +53,15 @@ import TimeFilter from "~/components/TimeFilter";
 
 export default {
   components: {
-    BroadcasterFilter,
     GameFilter,
     StartDateFilter,
     EndDateFilter,
     CreatorFilter,
-    TimeFilter
+    TimeFilter,
   },
   data() {
     return {
-      filterMenu: false
+      filterMenu: false,
     };
   },
   computed: {
@@ -78,8 +69,8 @@ export default {
       return this.$vuetify.breakpoint.smAndDown
         ? "dialog-bottom-transition"
         : "scale-transition";
-    }
-  }
+    },
+  },
 };
 </script>
 

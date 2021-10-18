@@ -5,10 +5,10 @@
     <v-app-bar
       app
       prominent
-      shrink-on-scroll
+      :shrink-on-scroll="$vuetify.breakpoint.smAndDown"
       :src="require('~/assets/banner.webp')"
     >
-      <v-row justify="center">
+      <v-row justify="center" align="center" style="height: 100%">
         <v-col sm="12" md="10" lg="8" xl="6" class="d-flex">
           <Search />
           <v-btn-toggle class="ml-2">
