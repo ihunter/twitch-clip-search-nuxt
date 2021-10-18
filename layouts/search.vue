@@ -5,7 +5,7 @@
     <v-app-bar
       app
       prominent
-      :shrink-on-scroll="$vuetify.breakpoint.smAndDown"
+      shrink-on-scroll
       :src="require('~/assets/banner.webp')"
     >
       <v-row justify="center" align="center" style="height: 100%">
