@@ -30,12 +30,7 @@ async function start() {
 
   // Mongoose
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
-      useUnifiedTopology: true
-    })
+    await mongoose.connect(process.env.MONGODB_URI)
   } catch (error) {
     console.error(error)
   }
