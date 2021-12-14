@@ -1,67 +1,66 @@
-require('dotenv').config()
+require("dotenv").config();
+const redirectSSL = require("redirect-ssl");
 // const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
   telemetry: false,
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     htmlAttrs: {
-      lang: 'en'
+      lang: "en"
     },
-    title: 'Jerma Clip Search',
+    title: "Jerma Clip Search",
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Search for twitch clips of Jerma by title, game, and date' }
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        hid: "description",
+        name: "description",
+        content: "Search for twitch clips of Jerma by title, game, and date"
+      }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     script: [
       {
-        src: 'https://static.cloudflareinsights.com/beacon.min.js',
-        'data-cf-beacon': '{"token": "8a624e372b2b42baa0649413c7246f5e"}',
+        src: "https://static.cloudflareinsights.com/beacon.min.js",
+        "data-cf-beacon": '{"token": "8a624e372b2b42baa0649413c7246f5e"}',
         body: true
       }
     ]
   },
   /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#0AFC9E' },
+   ** Customize the progress-bar color
+   */
+  loading: { color: "#0AFC9E" },
   /*
-  ** Global CSS
-  */
-  css: [
-  ],
+   ** Global CSS
+   */
+  css: [],
   /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-  ],
+   ** Plugins to load before mounting the App
+   */
+  plugins: [],
   /*
-  ** Nuxt.js dev-modules
-  */
-  buildModules: [
-    '@nuxtjs/vuetify'
-  ],
+   ** Nuxt.js dev-modules
+   */
+  buildModules: ["@nuxtjs/vuetify"],
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    "@nuxtjs/axios",
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
+    "@nuxtjs/dotenv",
     // Doc: https://github.com/nuxt-community/apollo-module
-    '@nuxtjs/apollo'
+    "@nuxtjs/apollo"
   ],
   /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
+   ** Axios module configuration
+   ** See https://axios.nuxtjs.org/options
+   */
   axios: {
     baseURL: process.env.API_URL,
     browserBaseURL: process.env.API_URL
@@ -74,11 +73,11 @@ module.exports = {
     }
   },
   /*
-  ** vuetify module configuration
-  ** https://github.com/nuxt-community/vuetify-module
-  */
+   ** vuetify module configuration
+   ** https://github.com/nuxt-community/vuetify-module
+   */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ["~/assets/variables.scss"],
     theme: {
       dark: true,
       options: {
@@ -86,23 +85,29 @@ module.exports = {
       },
       themes: {
         dark: {
-          primary: '#0AFC9E',
-          secondary: '#EC407A'
+          primary: "#0AFC9E",
+          secondary: "#EC407A"
         }
       }
     }
   },
+  serverMiddleware: [
+    redirectSSL.create({
+      enabled: process.env.NODE_ENV === "production"
+    })
+  ],
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     babel: {
-      plugins: [['@babel/plugin-proposal-private-property-in-object', { loose: true }]],
+      plugins: [
+        ["@babel/plugin-proposal-private-property-in-object", { loose: true }]
+      ]
     },
     /*
-    ** You can extend webpack config here
-    */
-    extend(config, ctx) {
-    }
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) {}
   }
-}
+};
