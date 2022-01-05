@@ -37,10 +37,10 @@ export default {
   mixins: [queryMixin],
   data() {
     return {
+      endDate: this.$route.query.endDate,
       endDateMenu: false,
       currentDate: moment().format("YYYY-MM-DD"),
-      oldestDate: "2016-01-01",
-      endDate: this.$route.query.endDate
+      oldestDate: "2016-01-01"
     };
   },
   computed: {
@@ -49,6 +49,13 @@ export default {
     },
     startDate() {
       return this.$route.query.startDate;
+    }
+  },
+  watch: {
+    "$route.query.endDate": {
+      handler(val) {
+        this.endDate = val;
+      }
     }
   }
 };

@@ -82,6 +82,7 @@ export default {
               view_count
               created_at
               game {
+                id
                 name
                 box_art_url
               }

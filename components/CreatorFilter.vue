@@ -20,6 +20,13 @@ export default {
     return {
       creator: this.$route.query.creator
     };
+  },
+  watch: {
+    "$route.query.creator": {
+      handler(val) {
+        this.creator = val;
+      }
+    }
   }
 };
 </script>

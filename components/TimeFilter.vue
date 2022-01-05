@@ -80,11 +80,23 @@ export default {
   mixins: [queryMixin],
   data() {
     return {
-      startTimeMenu: false,
-      endTimeMenu: false,
       startTime: this.$route.query.startTime,
-      endTime: this.$route.query.endTime
+      endTime: this.$route.query.endTime,
+      startTimeMenu: false,
+      endTimeMenu: false
     };
+  },
+  watch: {
+    "$route.query.startTime": {
+      handler(val) {
+        this.startTime = val;
+      }
+    },
+    "$route.query.endTime": {
+      handler(val) {
+        this.endTime = val;
+      }
+    }
   }
 };
 </script>

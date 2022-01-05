@@ -16,7 +16,7 @@
     </a>
 
     <div class="d-flex mt-2">
-      <div class="mr-2">
+      <div class="mr-2 pointer" @click="updateQuery({ game: game.id })">
         <v-skeleton-loader
           v-if="gameBoxArtLoading"
           tile
@@ -46,8 +46,30 @@
             "
             class="text-truncate"
           >
-            Clipped by {{ creatorName }} on {{ createdAtCalendar }} at
-            {{ createdAtTime }}
+            Clipped by
+            <span
+              class="pointer"
+              @click="updateQuery({ creator: creatorName })"
+              >{{ creatorName }}</span
+            >
+            on
+            <span
+              class="pointer"
+              @click="
+                updateQuery({ startDate: createdAtURL, endDate: createdAtURL })
+              "
+              >{{ createdAtCalendar }}</span
+            >
+            at
+            <span
+              class="pointer"
+              @click="
+                updateQuery({
+                  startTime: createdAtTimeURL
+                })
+              "
+              >{{ createdAtTime }}</span
+            >
           </div>
         </div>
       </div>
@@ -57,8 +79,10 @@
 
 <script>
 import moment from "moment";
+import queryMixin from "~/mixins/queryMixin";
 
 export default {
+  mixins: [queryMixin],
   props: {
     title: {
       type: String,
@@ -106,8 +130,14 @@ export default {
     createdAtCalendar() {
       return moment(+this.createdAt).format("M/D/YYYY");
     },
+    createdAtURL() {
+      return moment(+this.createdAt).format("YYYY-MM-DD");
+    },
     createdAtTime() {
       return moment(+this.createdAt).format("h:mm a");
+    },
+    createdAtTimeURL() {
+      return moment(+this.createdAt).format("HH:mm");
     },
     sizedGameBoxArtUrl() {
       return this.game
@@ -122,6 +152,10 @@ export default {
 </script>
 
 <style>
+.pointer {
+  cursor: pointer;
+}
+
 .clip-info {
   position: absolute;
   color: white;

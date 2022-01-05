@@ -1,35 +1,37 @@
 <template>
-  <v-autocomplete
-    v-model="game"
-    :search-input.sync="search"
-    label="Game"
-    prepend-inner-icon="mdi-controller-classic"
-    :items="allGames"
-    item-text="name"
-    item-value="id"
-    :loading="$apollo.loading"
-    :no-data-text="noDataText"
-    cache-items
-    multiple
-    chips
-    deletable-chips
-    small-chips
-    clearable
-    outlined
-    @change="updateQuery({ game })"
-    @click:clear="updateQuery({ game: undefined })"
-  >
-    <template v-slot:item="data">
-      <template>
-        <v-list-item-avatar tile left width="60" height="80">
-          <img :src="boxArtURL(data.item.box_art_url)" />
-        </v-list-item-avatar>
-        <v-list-item-content>
-          <v-list-item-title v-html="data.item.name"></v-list-item-title>
-        </v-list-item-content>
+  <div>
+    <v-autocomplete
+      v-model="game"
+      :search-input.sync="search"
+      label="Game"
+      prepend-inner-icon="mdi-controller-classic"
+      :items="allGames"
+      item-text="name"
+      item-value="id"
+      :loading="$apollo.loading"
+      :no-data-text="noDataText"
+      cache-items
+      multiple
+      chips
+      deletable-chips
+      small-chips
+      clearable
+      outlined
+      @change="updateQuery({ game })"
+      @click:clear="updateQuery({ game: undefined })"
+    >
+      <template v-slot:item="data">
+        <template>
+          <v-list-item-avatar tile left width="60" height="80">
+            <img :src="boxArtURL(data.item.box_art_url)" />
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title v-html="data.item.name"></v-list-item-title>
+          </v-list-item-content>
+        </template>
       </template>
-    </template>
-  </v-autocomplete>
+    </v-autocomplete>
+  </div>
 </template>
 
 <script>
@@ -42,23 +44,35 @@ export default {
   data() {
     return {
       search: null,
-      gameQuery: this.$route.query.game,
+      game: this.$route.query.game,
       noDataText: "Search for a game by title"
     };
   },
-  computed: {
-    game: {
-      get() {
-        if (!this.gameQuery) return null;
+  // computed: {
+  //   game: {
+  //     get() {
+  //       if (!this.gameQuery) return null;
 
-        if (Array.isArray(this.gameQuery)) {
-          return this.gameQuery;
+  //       if (Array.isArray(this.gameQuery)) {
+  //         return this.gameQuery;
+  //       }
+
+  //       return [this.gameQuery];
+  //     },
+  //     set(val) {
+  //       this.gameQuery = val;
+  //     }
+  //   }
+  // },
+  watch: {
+    "$route.query.game": {
+      handler(val) {
+        console.log("game query val", val);
+        if (!Array.isArray(val)) {
+          this.game = [val];
+        } else {
+          this.game = val;
         }
-
-        return [this.gameQuery];
-      },
-      set(val) {
-        this.gameQuery = val;
       }
     }
   },
