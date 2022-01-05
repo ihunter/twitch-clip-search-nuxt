@@ -48,26 +48,9 @@ export default {
       noDataText: "Search for a game by title"
     };
   },
-  // computed: {
-  //   game: {
-  //     get() {
-  //       if (!this.gameQuery) return null;
-
-  //       if (Array.isArray(this.gameQuery)) {
-  //         return this.gameQuery;
-  //       }
-
-  //       return [this.gameQuery];
-  //     },
-  //     set(val) {
-  //       this.gameQuery = val;
-  //     }
-  //   }
-  // },
   watch: {
     "$route.query.game": {
       handler(val) {
-        console.log("game query val", val);
         if (!Array.isArray(val)) {
           this.game = [val];
         } else {
