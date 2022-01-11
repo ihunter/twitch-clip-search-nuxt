@@ -36,6 +36,13 @@ export default {
     return {
       title: this.$route.query.title
     };
+  },
+  watch: {
+    "$route.query.title": {
+      handler(val) {
+        this.title = val;
+      }
+    }
   }
 };
 </script>
