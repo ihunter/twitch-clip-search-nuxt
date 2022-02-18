@@ -82,7 +82,7 @@ module.exports = {
 
     try {
       const page = query.page || 1
-      const limit = query.limit || 12
+      const limit = query.limit || 9
 
       const { clips, count } = await Clip.paginate(mongoQuery, {
         select: `${selectedFields} game_id`,

@@ -29,7 +29,7 @@ export default {
       }
     },
     paginationLength() {
-      const limit = this.$route.query.limit || 12;
+      const limit = this.$route.query.limit || 9;
       return Math.ceil(this.count / limit);
     }
   }

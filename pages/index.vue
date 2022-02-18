@@ -4,6 +4,14 @@
     <Clips v-else :clips="allClips.clips" />
     <ClipPagination v-if="!$apollo.loading" :count="allClips.count" />
     <ScrollToTopFab />
+    <a href="https://ko-fi.com/U7U2AMIW3" target="_blank" style="display: block; text-align:center; margin-top: 3rem;"
+      ><img
+        height="36"
+        style="border: 0px; height: 36px;"
+        src="https://cdn.ko-fi.com/cdn/kofi1.png?v=3"
+        border="0"
+        alt="Buy Me a Coffee at ko-fi.com"
+    /></a>
   </div>
 </template>
 
@@ -21,7 +29,7 @@ export default {
     Clips,
     ClipsLoader,
     ClipPagination,
-    ScrollToTopFab
+    ScrollToTopFab,
   },
   computed: {
     startDatetime() {
@@ -43,7 +51,7 @@ export default {
       }
 
       return moment(this.$route.query.endDate, "YYYY-M-D").endOf("day");
-    }
+    },
   },
   beforeUpdate() {
     window.scrollTo(0, 0);
@@ -103,10 +111,10 @@ export default {
           limit: +this.$route.query.limit,
           page: +this.$route.query.page,
           sort: +this.$route.query.sort,
-          creator: this.$route.query.creator
+          creator: this.$route.query.creator,
         };
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
