@@ -4,7 +4,7 @@
     <Clips v-else :clips="allClips.clips" />
     <ClipPagination v-if="!$apollo.loading" :count="allClips.count" />
     <ScrollToTopFab />
-    <!-- <div class="kofi-button">
+    <div class="kofi-button">
       <a href="https://ko-fi.com/U7U2AMIW3" target="_blank"
         ><img
           height="36"
@@ -12,7 +12,7 @@
           border="0"
           alt="Buy Me a Coffee at ko-fi.com"
       /></a>
-    </div> -->
+    </div>
   </div>
 </template>
 
