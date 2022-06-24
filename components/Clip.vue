@@ -1,20 +1,22 @@
 <template>
-  <v-card tag="article">
+  <v-card tag="article" tile>
     <div class="clip-background">
-      <a :href="url" target="_blank" rel="noopener noreferrer nofollow">
-        <v-img
-          min-height="200"
-          :src="thumbnailUrl"
-          class="hover-effect grey darken-1"
-        >
-          <div class="clip-info view-count">
-            <v-icon left>mdi-eye-outline</v-icon> {{ formattedViewCount }} views
-          </div>
-          <div class="clip-info time-ago">
-            {{ createdAtTimeAgo }}
-          </div>
-        </v-img>
-      </a>
+      <div class="hover-effect">
+        <a :href="url" target="_blank" rel="noopener noreferrer nofollow">
+          <v-img
+            min-height="200"
+            :src="thumbnailUrl"
+            class="grey darken-1"
+          >
+            <div class="clip-info view-count">
+              <v-icon left>mdi-eye-outline</v-icon> {{ formattedViewCount }} views
+            </div>
+            <div class="clip-info time-ago">
+              {{ createdAtTimeAgo }}
+            </div>
+          </v-img>
+        </a>
+      </div>
     </div>
 
     <div class="d-flex mt-2">
