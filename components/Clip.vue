@@ -1,19 +1,21 @@
 <template>
   <v-card tag="article">
-    <a :href="url" target="_blank" rel="noopener noreferrer nofollow">
-      <v-img
-        min-height="200"
-        :src="thumbnailUrl"
-        class="hover-effect grey darken-1"
-      >
-        <div class="clip-info view-count">
-          <v-icon left>mdi-eye-outline</v-icon> {{ formattedViewCount }} views
-        </div>
-        <div class="clip-info time-ago">
-          {{ createdAtTimeAgo }}
-        </div>
-      </v-img>
-    </a>
+    <div class="clip-background">
+      <a :href="url" target="_blank" rel="noopener noreferrer nofollow">
+        <v-img
+          min-height="200"
+          :src="thumbnailUrl"
+          class="hover-effect grey darken-1"
+        >
+          <div class="clip-info view-count">
+            <v-icon left>mdi-eye-outline</v-icon> {{ formattedViewCount }} views
+          </div>
+          <div class="clip-info time-ago">
+            {{ createdAtTimeAgo }}
+          </div>
+        </v-img>
+      </a>
+    </div>
 
     <div class="d-flex mt-2">
       <div class="mr-2 pointer" @click="updateQuery({ game: game.id })">
@@ -151,7 +153,11 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+:root {
+  --border-size: 5px;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -186,48 +192,50 @@ export default {
   color: #c3c3c3;
 }
 
+.clip-background {
+  background-color: var(--v-primary-base);
+}
+
 .hover-effect {
   overflow: visible;
-  transition: 300ms transform;
+  transition: transform 300ms ease;
 }
 
 .hover-effect:hover {
-  transform: translate(5px, -5px);
+  transform: translate(var(--border-size), calc(-1 * var(--border-size)));
 }
 
 .hover-effect::before {
   content: "";
   position: absolute;
-  background-color: var(--v-primary-base);
-  width: 0;
-  height: calc(100% + 1px);
   top: 0;
   left: 0;
-  transform: skewY(-45deg);
-  transition: 300ms width, 300ms top, 300ms left;
+  border-top: var(--border-size) solid transparent;
+  border-bottom: var(--border-size) solid transparent;
+  border-right: var(--border-size) solid var(--v-primary-base);
+  transform-origin: left center;
+  transform: translateY(calc(-1 * var(--border-size))) scale(0);
+  transition: transform 300ms ease;
 }
 
 .hover-effect:hover::before {
-  width: 5px;
-  top: 3px;
-  left: -5px;
+  transform: translateX(calc(-1 * var(--border-size))) scale(1);
 }
 
 .hover-effect::after {
   content: "";
   position: absolute;
-  background-color: var(--v-primary-base);
-  width: 100%;
-  height: 0;
   bottom: 0;
-  left: 0;
-  transition: 300ms height, 300ms bottom, 300ms left;
-  transform: skewX(-45deg);
+  right: 0;
+  border-left: var(--border-size) solid transparent;
+  border-right: var(--border-size) solid transparent;
+  border-top: var(--border-size) solid var(--v-primary-base);
+  transform-origin: center bottom;
+  transform: translateX(var(--border-size)) scale(0);
+  transition: transform 300ms ease;
 }
 
 .hover-effect:hover::after {
-  height: 5px;
-  bottom: -5px;
-  left: -2px;
+  transform: translateY(var(--border-size)) scale(1);
 }
 </style>
