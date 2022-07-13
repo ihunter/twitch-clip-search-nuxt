@@ -14,7 +14,7 @@ const gameSchema = new Schema({
     type: String,
     required: true
   }
-}, { toJSON: { virtuals: true }, timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } })
+}, { toJSON: { virtuals: true }, /* timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } */ })
 
 gameSchema.virtual('clips', {
   ref: 'Clip',

@@ -19,26 +19,26 @@ const clipSchema = new Schema({
     type: String,
     required: true
   },
-  creator_id: {
-    type: String,
-    required: true
-  },
+  // creator_id: {
+  //   type: String,
+  //   required: true
+  // },
   creator_name: {
     type: String,
     required: true
   },
-  video_id: {
-    type: String,
-    required: false
-  },
+  // video_id: {
+  //   type: String,
+  //   required: false
+  // },
   game_id: {
     type: String,
     required: true
   },
-  language: {
-    type: String,
-    required: false
-  },
+  // language: {
+  //   type: String,
+  //   required: false
+  // },
   title: {
     type: String,
     required: true
@@ -55,7 +55,7 @@ const clipSchema = new Schema({
     type: String,
     required: true
   }
-}, { toJSON: { virtuals: true }, timestamps: { updatedAt: 'updated_at', createdAt: false } })
+}, { toJSON: { virtuals: true } /*, timestamps: { updatedAt: 'updated_at', createdAt: false }*/ })
 
 clipSchema.index({ title: 'text' })
 clipSchema.index({ id: 1 })
