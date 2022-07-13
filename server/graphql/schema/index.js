@@ -18,12 +18,9 @@ module.exports = buildSchema(`
     url: String!
     broadcaster_id: String!
     broadcaster_name: String!
-    creator_id: String!
     creator_name: String!
-    video_id: String!
     game_id: String!
     game: Game
-    language: String
     title: String!
     view_count: Int!
     created_at: String!
