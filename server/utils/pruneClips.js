@@ -1,4 +1,3 @@
-
 require('dotenv').config()
 const mongoose = require('mongoose')
 const { Clip } = require('../models')
@@ -15,3 +14,9 @@ async function prune() {
 }
 
 prune()
+  .then(() => {
+    console.log('Done')
+  })
+  .catch(errror => {
+    console.error(error)
+  })
