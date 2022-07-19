@@ -71,9 +71,9 @@ exports.addClips = async (type, broadcaster, stateManager) => {
     } while (cursor)
 
     if (clips.length > 0) {
-      // Filter clips with less than 2 views and is older than 1 year
+      // Filter clips with less than 2 views
       clips = clips.filter(clip => {
-        return !(moment().diff(clip.created_at, 'years') > 0) || !(clip.view_count < 2)
+        return clip.view_count >= 2
       })
 
       try {
