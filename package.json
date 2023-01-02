@@ -31,7 +31,7 @@
     "mongoose": "^6.2.2",
     "mongoose-findorcreate": "^3.0.0",
     "mongoose-paginate-v2": "^1.6.2",
-    "nuxt": "^2.15.8",
+    "nuxt": "^3.0.0",
     "redirect-ssl": "^3.0.0",
     "throng": "^5.0.0",
     "vue-gtag": "^1.16.1"
