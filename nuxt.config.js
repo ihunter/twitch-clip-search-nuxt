@@ -1,4 +1,10 @@
 require("dotenv").config();
+
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://clips.jerma.io"
+    : process.env.BASE_URL;
+
 const redirectSSL = require("redirect-ssl");
 // const colors = require('vuetify/es5/util/colors').default
 
@@ -9,7 +15,7 @@ module.exports = {
    */
   head: {
     htmlAttrs: {
-      lang: "en"
+      lang: "en",
     },
     title: "Jerma Clip Search",
     meta: [
@@ -18,17 +24,17 @@ module.exports = {
       {
         hid: "description",
         name: "description",
-        content: "Search for twitch clips of Jerma by title, game, and date"
-      }
+        content: "Search for twitch clips of Jerma by title, game, and date",
+      },
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     script: [
       {
         src: "https://static.cloudflareinsights.com/beacon.min.js",
         "data-cf-beacon": '{"token": "8a624e372b2b42baa0649413c7246f5e"}',
-        body: true
-      }
-    ]
+        body: true,
+      },
+    ],
   },
   /*
    ** Customize the progress-bar color
@@ -43,8 +49,8 @@ module.exports = {
    */
   plugins: [
     {
-      src: '~/plugins/vue-gtag'
-    }
+      src: "~/plugins/vue-gtag",
+    },
   ],
   /*
    ** Nuxt.js dev-modules
@@ -59,22 +65,21 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/dotenv-module
     "@nuxtjs/dotenv",
     // Doc: https://github.com/nuxt-community/apollo-module
-    "@nuxtjs/apollo"
+    "@nuxtjs/apollo",
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.API_URL,
-    browserBaseURL: process.env.API_URL
+    baseURL: BASE_URL,
   },
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: `${process.env.BASE_URL}/graphql`
-      }
-    }
+        httpEndpoint: `${BASE_URL}/graphql`,
+      },
+    },
   },
   /*
    ** vuetify module configuration
@@ -85,20 +90,20 @@ module.exports = {
     theme: {
       dark: true,
       options: {
-        customProperties: true
+        customProperties: true,
       },
       themes: {
         dark: {
           primary: "#0AFC9E",
-          secondary: "#EC407A"
-        }
-      }
-    }
+          secondary: "#EC407A",
+        },
+      },
+    },
   },
   serverMiddleware: [
     redirectSSL.create({
-      enabled: process.env.NODE_ENV === "production"
-    })
+      enabled: process.env.NODE_ENV === "production",
+    }),
   ],
   /*
    ** Build configuration
@@ -106,12 +111,12 @@ module.exports = {
   build: {
     babel: {
       plugins: [
-        ["@babel/plugin-proposal-private-property-in-object", { loose: true }]
-      ]
+        ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
+      ],
     },
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
-  }
+    extend(config, ctx) {},
+  },
 };
