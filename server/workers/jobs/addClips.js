@@ -163,9 +163,13 @@ exports.addClips = async (type, broadcaster, stateManager) => {
         broadcaster.display_name
       }`
     );
-    console.log(
-      `matched: ${matchedCount}\nmodified: ${modifiedCount}\ninserted: ${insertedCount}\nupserted: ${upsertedCount}\n`
-    );
+
+    console.table({
+      matched: matchedCount,
+      modified: modifiedCount,
+      inserted: insertedCount,
+      upserted: upsertedCount,
+    });
   } catch (error) {
     console.error("Error updating log:", error);
   }
