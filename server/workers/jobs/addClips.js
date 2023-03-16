@@ -101,7 +101,7 @@ exports.addClips = async (type, broadcaster, stateManager) => {
       clips.forEach((clip) => {
         sum += sizeof(clip);
       });
-      console.log(`${type} clip array size: ${sum / 1024} MB`);
+      console.log(`${type} clip array size: ${Math.round(sum / 1024)} MB`);
       clips = clips.filter((clip) => {
         return clip.view_count >= 2;
       });
