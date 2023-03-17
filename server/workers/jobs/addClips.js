@@ -87,46 +87,53 @@ exports.addClips = async (type, broadcaster, stateManager) => {
           `clips?broadcaster_id=${broadcaster.id}&started_at=${startDate}&ended_at=${endDate}&first=${first}&after=${cursor}`
         );
 
-        clips = clips.concat(res.data.data);
         cursor = res.data.pagination.cursor;
+
+        clips = clips.concat(res.data.data);
+
+        if (clips.length >= 1000 || !cursor) {
+          // Filter clips with less than 2 views
+          let sum = 0;
+          clips.forEach((clip) => {
+            sum += sizeof(clip);
+          });
+          console.log(
+            `${type} clip array (len: ${clips.length}) size: ${Math.round(
+              sum / 1024
+            )} MB`
+          );
+          clips = clips.filter((clip) => {
+            return clip.view_count >= 2;
+          });
+
+          try {
+            const result = await Clip.bulkWrite(
+              clips.map((clip) => {
+                return {
+                  updateOne: {
+                    filter: { id: clip.id },
+                    update: clip,
+                    upsert: true,
+                  },
+                };
+              })
+            );
+
+            clips.length = 0;
+
+            matchedCount += result.matchedCount;
+            modifiedCount += result.modifiedCount;
+            insertedCount += result.insertedCount;
+            upsertedCount += result.upsertedCount;
+          } catch (error) {
+            console.error("Error bulk writing clips:", error);
+          }
+        }
       } catch (error) {
         console.error("Error fetching clips");
         errorHandler(error);
       }
     } while (cursor);
-
-    if (clips.length > 0) {
-      // Filter clips with less than 2 views
-      let sum = 0;
-      clips.forEach((clip) => {
-        sum += sizeof(clip);
-      });
-      console.log(`${type} clip array size: ${Math.round(sum / 1024)} MB`);
-      clips = clips.filter((clip) => {
-        return clip.view_count >= 2;
-      });
-
-      try {
-        const result = await Clip.bulkWrite(
-          clips.map((clip) => {
-            return {
-              updateOne: {
-                filter: { id: clip.id },
-                update: clip,
-                upsert: true,
-              },
-            };
-          })
-        );
-
-        matchedCount += result.matchedCount;
-        modifiedCount += result.modifiedCount;
-        insertedCount += result.insertedCount;
-        upsertedCount += result.upsertedCount;
-      } catch (error) {
-        console.error("Error bulk writing clips:", error);
-      }
-    }
 
     cursor = "";
     startingDate = moment.utc(startingDate).add(1, "day");
