@@ -28,7 +28,7 @@
     "graphql-parse-resolve-info": "^4.13.0",
     "graphql-tag": "^2.12.6",
     "moment": "^2.29.4",
-    "mongoose": "^6.10.3",
+    "mongoose": "^7.0.2",
     "mongoose-paginate-v2": "^1.7.1",
     "nuxt": "^2.15.8",
     "object-sizeof": "^2.6.1",
