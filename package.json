@@ -28,9 +28,8 @@
     "graphql-parse-resolve-info": "^4.13.0",
     "graphql-tag": "^2.12.6",
     "moment": "^2.29.4",
-    "mongoose": "^6.2.2",
-    "mongoose-findorcreate": "^3.0.0",
-    "mongoose-paginate-v2": "^1.6.2",
+    "mongoose": "^6.10.3",
+    "mongoose-paginate-v2": "^1.7.1",
     "nuxt": "^2.15.8",
     "object-sizeof": "^2.6.1",
     "redirect-ssl": "^3.0.0",
@@ -43,6 +42,6 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^8.9.0",
     "eslint-plugin-nuxt": "^3.1.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.21"
   }
 }

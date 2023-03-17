@@ -1,62 +1,65 @@
-require('dotenv').config()
-const express = require('express')
-const throng = require('throng')
-const cors = require('cors')
-const { Nuxt, Builder } = require('nuxt')
-const mongoose = require('mongoose')
-const { graphqlHTTP } = require('express-graphql')
+require("dotenv").config();
+const express = require("express");
+const throng = require("throng");
+const cors = require("cors");
+const { Nuxt, Builder } = require("nuxt");
+const mongoose = require("mongoose");
+const { graphqlHTTP } = require("express-graphql");
 
-const app = express()
+const app = express();
 
 // Import and Set Nuxt.js options
-const config = require('../nuxt.config.js')
-config.dev = process.env.NODE_ENV !== 'production'
+const config = require("../nuxt.config.js");
+config.dev = process.env.NODE_ENV !== "production";
 
-const graphqlSchema = require('./graphql/schema')
-const graphqlResolvers = require('./graphql/resolvers')
+const graphqlSchema = require("./graphql/schema");
+const graphqlResolvers = require("./graphql/resolvers");
 
 async function start() {
   // Init Nuxt.js
-  const nuxt = new Nuxt(config)
+  const nuxt = new Nuxt(config);
 
-  const { host, port } = nuxt.options.server
+  const { host, port } = nuxt.options.server;
 
-  await nuxt.ready()
+  await nuxt.ready();
   // Build only in dev mode
   if (config.dev) {
-    const builder = new Builder(nuxt)
-    await builder.build()
+    const builder = new Builder(nuxt);
+    await builder.build();
   }
 
   // Mongoose
   try {
-    await mongoose.connect(process.env.MONGODB_URI)
+    mongoose.set("strictQuery", true);
+    await mongoose.connect(process.env.MONGODB_URI);
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 
-  app.use(cors())
+  app.use(cors());
 
   // GraphQL
-  app.use('/graphql', graphqlHTTP({
-    schema: graphqlSchema,
-    rootValue: graphqlResolvers,
-    graphiql: config.dev
-  }))
+  app.use(
+    "/graphql",
+    graphqlHTTP({
+      schema: graphqlSchema,
+      rootValue: graphqlResolvers,
+      graphiql: config.dev,
+    })
+  );
 
   // Give nuxt middleware to express
-  app.use(nuxt.render)
+  app.use(nuxt.render);
 
   // Start workers
-  require('./workers')
+  require("./workers");
 
   // Listen the server
-  app.listen(port, host)
-  console.log(`Server listening on http://${host}:${port}`)
+  app.listen(port, host);
+  console.log(`Server listening on http://${host}:${port}`);
 }
 
-start()
-  .catch(err => console.error(err))
+start().catch((err) => console.error(err));
 
 // throng({
 //   worker: start,
