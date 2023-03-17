@@ -33,7 +33,6 @@
     "nuxt": "^2.16.2",
     "object-sizeof": "^2.6.1",
     "redirect-ssl": "^3.0.0",
-    "throng": "^5.0.0",
     "vue-gtag": "^1.16.1"
   },
   "devDependencies": {

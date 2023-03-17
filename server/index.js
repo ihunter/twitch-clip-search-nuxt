@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const throng = require("throng");
 const cors = require("cors");
 const { Nuxt, Builder } = require("nuxt");
 const mongoose = require("mongoose");
@@ -60,11 +59,3 @@ async function start() {
 }
 
 start().catch((err) => console.error(err));
-
-// throng({
-//   worker: start,
-//   count: process.env.WEB_CONCURRENCY || 1,
-//   lifetime: Infinity,
-//   signals: ['SIGTERM', 'SIGINT']
-// })
-//   .catch(err => console.error(err))
