@@ -41,6 +41,7 @@ async function init() {
         {},
         { upsert: true }
       );
+
       const yearLog = await Log.findOneAndUpdate(
         {
           type: "year",
@@ -49,6 +50,7 @@ async function init() {
         {},
         { upsert: true }
       );
+
       const allLog = await Log.findOneAndUpdate(
         {
           type: "all",
@@ -57,6 +59,7 @@ async function init() {
         {},
         { upsert: true }
       );
+
       const jobQueue = [];
 
       if (

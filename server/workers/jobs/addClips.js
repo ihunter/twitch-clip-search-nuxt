@@ -1,6 +1,5 @@
 require("dotenv").config();
 const moment = require("moment");
-const sizeof = require("object-sizeof");
 
 const { Clip, Log } = require("../../models");
 const { http } = require("../../utils/twitch-api");
@@ -93,15 +92,6 @@ exports.addClips = async (type, broadcaster, stateManager) => {
 
         if (clips.length >= 1000 || !cursor) {
           // Filter clips with less than 2 views
-          let sum = 0;
-          clips.forEach((clip) => {
-            sum += sizeof(clip);
-          });
-          console.log(
-            `${type} clip array (len: ${clips.length}) size: ${Math.round(
-              sum / 1024
-            )} MB`
-          );
           clips = clips.filter((clip) => {
             return clip.view_count >= 2;
           });
