@@ -4,7 +4,7 @@ const { Broadcaster, Log } = require("../models");
 
 const { addClips } = require("./jobs/addClips");
 
-const THIRTY_SECONDS = 30 * 1000;
+const FIVE_MINUTES = 5 * 60 * 1000;
 
 const stateManager = {
   week: false,
@@ -60,14 +60,12 @@ async function init() {
         { upsert: true }
       );
 
-      const jobQueue = [];
-
       if (
         (moment.utc().diff(moment.utc(weekLog.updated_at), "minutes") >= 2 ||
           weekLog.progress === "in-progress") &&
         !stateManager.week
       ) {
-        jobQueue.push(addClips("week", broadcaster, stateManager));
+        addClips("week", broadcaster, stateManager);
       }
 
       if (
@@ -75,7 +73,7 @@ async function init() {
           monthLog.progress === "in-progress") &&
         !stateManager.month
       ) {
-        jobQueue.push(addClips("month", broadcaster, stateManager));
+        addClips("month", broadcaster, stateManager);
       }
 
       if (
@@ -83,7 +81,7 @@ async function init() {
           yearLog.progress === "in-progress") &&
         !stateManager.year
       ) {
-        jobQueue.push(addClips("year", broadcaster, stateManager));
+        addClips("year", broadcaster, stateManager);
       }
 
       if (
@@ -91,10 +89,8 @@ async function init() {
           allLog.progress === "in-progress") &&
         !stateManager.all
       ) {
-        jobQueue.push(addClips("all", broadcaster, stateManager));
+        addClips("all", broadcaster, stateManager);
       }
-
-      await Promise.all(jobQueue);
     } catch (error) {
       console.error("Failed to init jobs");
       console.error(error);
@@ -103,4 +99,4 @@ async function init() {
 }
 
 init();
-setInterval(init, THIRTY_SECONDS);
+setInterval(init, FIVE_MINUTES);
