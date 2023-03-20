@@ -50,9 +50,6 @@ async function start() {
   // Give nuxt middleware to express
   app.use(nuxt.render);
 
-  // Start workers
-  require("./workers");
-
   // Listen the server
   app.listen(port, host);
   console.log(`Server listening on http://${host}:${port}`);
