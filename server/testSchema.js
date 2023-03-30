@@ -1,10 +1,11 @@
-export default `
-type Query {
-  books(id: Int): [Book]
-}
+import gql from "graphql-tag";
+export default gql`
+  type Query {
+    books(id: Int): [Book]
+  }
 
-type Book {
-  id: Int
-  title: String
-}
+  type Book {
+    id: Int
+    title: String
+  }
 `;
