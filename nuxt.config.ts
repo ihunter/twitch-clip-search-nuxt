@@ -3,12 +3,13 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/devtools',
     '@nuxtjs/tailwindcss',
-    'nuxt-graphql-server'
+    'nuxt-graphql-server',
   ],
   graphqlServer: {
     url: '/api/graphql',
+    schema: './server/**/*.graphql',
   },
   runtimeConfig: {
-    mongoURI: process.env.MONGO_URI
+    mongoURI: process.env.MONGO_URI,
   }
 })

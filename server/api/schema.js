@@ -1,3 +1,3 @@
-import { schema } from "#graphql/schema";
+// import { schema } from "#graphql/schema";
 
-export default defineEventHandler(() => JSON.stringify(JSON.parse(schema)));
+// export default defineEventHandler(() => schema);

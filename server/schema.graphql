@@ -93,15 +93,10 @@
 # }
 
 type Query {
-  books: [Book]
+  books(id: Int): [Book]
 }
 
 type Book {
+  id: Int
   title: String
-  author: Author
-}
-
-type Author {
-  name: String
-  books: [Book]
 }
