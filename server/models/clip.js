@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const { Schema } = mongoose;
 
@@ -82,5 +83,7 @@ schema.virtual("game", {
   foreignField: "id",
   justOne: true,
 });
+
+schema.plugin(mongoosePaginate);
 
 export default mongoose.model("Clip", schema);
