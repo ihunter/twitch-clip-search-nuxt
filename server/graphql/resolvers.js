@@ -108,7 +108,6 @@ module.exports = {
     }
   },
   async getGames(_, { query }) {
-    console.log("GET GAMES");
     if (!query) return [];
     if (!query.name && (!query.gameID || query.gameID.length <= 0)) return [];
 
