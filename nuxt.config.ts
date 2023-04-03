@@ -10,6 +10,6 @@ export default defineNuxtConfig({
     schema: './server/**/*.graphql',
   },
   runtimeConfig: {
-    mongoURI: process.env.MONGO_URI,
+    mongoURI: process.env.NUXT_MONGO_URI,
   }
 })
