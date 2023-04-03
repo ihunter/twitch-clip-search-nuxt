@@ -4,7 +4,6 @@ export default defineEventHandler(async (event) => {
 
   try {
     const clipsData = await Clip.find().limit(10);
-    console.log(clipsData);
     return clipsData;
   } catch (error) {
     console.log(error);

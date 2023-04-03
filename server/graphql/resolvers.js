@@ -15,8 +15,6 @@ module.exports = {
       " "
     );
 
-    console.log(selectedFields);
-
     const mongoQuery = {};
 
     if (query.title) {

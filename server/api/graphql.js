@@ -1,5 +1,6 @@
 // wait for fix for error importing schema
 // import { schema } from "#graphql/schema";
+
 import schema from "../graphql/schema";
 import resolvers from "../graphql/resolvers";
 import { ApolloServer } from "@apollo/server";
