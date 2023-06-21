@@ -10,17 +10,19 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.6.1",
-    "@nuxtjs/tailwindcss": "^6.7.2",
-    "nuxt": "^3.5.3"
+    "nuxt": "^3.5.3",
+    "nuxt-quasar-ui": "^2.0.2"
   },
   "dependencies": {
     "@apollo/server": "^4.7.4",
     "@as-integrations/h3": "^1.1.5",
+    "@quasar/extras": "^1.16.4",
     "graphql": "^16.6.0",
     "graphql-parse-resolve-info": "^4.13.0",
     "graphql-tag": "^2.12.6",
     "mongoose": "^7.3.0",
     "mongoose-paginate-v2": "^1.7.1",
-    "nuxt-graphql-server": "^2.0.0"
+    "nuxt-graphql-server": "^2.0.0",
+    "quasar": "^2.12.0"
   }
 }
