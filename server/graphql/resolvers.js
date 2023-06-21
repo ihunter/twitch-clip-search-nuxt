@@ -6,6 +6,7 @@ const { Clip, Game } = require("../models");
 
 module.exports = {
   async getClips(_, { query }, __, info) {
+
     const parsedResolveInfoFragment = parseResolveInfo(info);
     const { fields } = simplifyParsedResolveInfoFragmentWithType(
       parsedResolveInfoFragment,

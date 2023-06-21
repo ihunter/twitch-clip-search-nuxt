@@ -2,8 +2,22 @@
 export default defineNuxtConfig({
   modules: [
     'nuxt-graphql-server',
-    'nuxt-quasar-ui'
+    'nuxt-quasar-ui',
+    '@nuxtjs/apollo',
+    'dayjs-nuxt'
   ],
+
+  dayjs: {
+    plugins: ['customParseFormat']
+  },
+
+  apollo: {
+    clients: {
+      default: {
+        httpEndpoint: `${process.env.BASE_URL}/api/graphql`
+      }
+    },
+  },
 
   graphqlServer: {
     url: '/api/graphql',
@@ -15,6 +29,6 @@ export default defineNuxtConfig({
   },
 
   devtools: {
-    enabled: true
+    enabled: false
   }
 })
