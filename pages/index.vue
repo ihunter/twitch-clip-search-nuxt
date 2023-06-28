@@ -40,7 +40,7 @@ const query = gql`
     $sort: Int
     $creator: String
   ) {
-    getClips(
+    clips(
       query: {
         title: $title
         broadcaster: $broadcaster
@@ -84,16 +84,32 @@ const variables = {
   creator: route.query.creator,
 };
 
-const { data } = await useAsyncQuery(query, variables);
+const {
+  data: { clips },
+} = reactive(await useAsyncQuery(query, variables));
 </script>
 
 <template>
-  <h1>HOME</h1>
-  <ol>
-    <li v-for="clip in data.getClips.clips" :key="clip.id">
-      {{ clip.title }}
-    </li>
-  </ol>
+  <q-page padding>
+    <div class="row q-col-gutter-md">
+      <div
+        v-for="clip in clips.clips"
+        :key="clip.id"
+        class="col-xs-12 col-sm-6 col-md-4"
+      >
+        <ClipCard
+          :title="clip.title"
+          :broadcaster-name="clip.broadcaster_name"
+          :creator-name="clip.creator_name"
+          :view-count="clip.view_count"
+          :created-at="clip.created_at"
+          :game="clip.game"
+          :thumbnail-url="clip.thumbnail_url"
+          :url="clip.url"
+        />
+      </div>
+    </div>
+  </q-page>
 </template>
 
 <style scoped></style>

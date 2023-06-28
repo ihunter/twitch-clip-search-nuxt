@@ -57,6 +57,6 @@ input GameInput {
 }
 
 type Query {
-  getClips(query: ClipInput): Clips!
-  getGames(query: GameInput): [Game]!
+  clips(query: ClipInput): Clips!
+  games(query: GameInput): [Game]!
 }

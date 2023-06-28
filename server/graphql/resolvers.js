@@ -5,7 +5,7 @@ const {
 const { Clip, Game } = require("../models");
 
 module.exports = {
-  async getClips(_, { query }, __, info) {
+  async clips(_, { query }, __, info) {
 
     const parsedResolveInfoFragment = parseResolveInfo(info);
     const { fields } = simplifyParsedResolveInfoFragmentWithType(
@@ -106,7 +106,7 @@ module.exports = {
       console.error("Error fetching clips:", error);
     }
   },
-  async getGames(_, { query }) {
+  async games(_, { query }) {
     if (!query) return [];
     if (!query.name && (!query.gameID || query.gameID.length <= 0)) return [];
 
