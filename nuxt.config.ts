@@ -28,7 +28,13 @@ export default defineNuxtConfig({
     mongoURI: process.env.NUXT_MONGO_URI,
   },
 
+  build: {
+    // https://github.com/nuxt/nuxt/issues/12753
+    // fix issue with tslib when built
+    transpile: ['tslib'],
+  },
+
   devtools: {
-    enabled: false
+    enabled: true
   }
 })

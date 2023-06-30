@@ -72,7 +72,7 @@ const query = gql`
   }
 `;
 
-const variables = {
+const variables = computed(() => ({
   title: route.query.title,
   game: route.query.game,
   broadcaster: route.query.broadcaster,
@@ -82,18 +82,31 @@ const variables = {
   page: +route.query.page,
   sort: +route.query.sort,
   creator: route.query.creator,
-};
+}));
 
-const {
-  data: { clips },
-} = reactive(await useAsyncQuery(query, variables));
+const { result: data, loading } = useQuery(query, variables);
+
+// const { data } = await useAsyncQuery(query, variables.value);
+
+// const clips = computed({
+//   get() {
+//     return data.value.clips.clips;
+//   },
+//   set(value) {
+//     data.value.clips.clips = value;
+//   },
+// });
 </script>
 
 <template>
   <q-page padding>
-    <div class="row q-col-gutter-md">
+    <div class="q-py-md">
+      <SearchInput />
+    </div>
+
+    <div class="row q-col-gutter-md" v-if="!loading">
       <div
-        v-for="clip in clips.clips"
+        v-for="clip in data.clips.clips"
         :key="clip.id"
         class="col-xs-12 col-sm-6 col-md-4"
       >
