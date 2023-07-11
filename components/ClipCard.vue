@@ -33,6 +33,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+const dayjs = useDayjs();
+
+const timeFromNow = computed(() => dayjs(+props.createdAt).fromNow());
 </script>
 
 <template>
@@ -40,9 +44,12 @@ const props = defineProps({
     <q-img :src="thumbnailUrl">
       <div class="absolute-bottom flex justify-between">
         <div>
-          {{ viewCount }}
+          <q-icon name="visibility" left size="1.3rem" />{{
+            viewCount.toLocaleString()
+          }}
+          views
         </div>
-        <div>TIME AGO</div>
+        <div>{{ timeFromNow }}</div>
       </div>
     </q-img>
 

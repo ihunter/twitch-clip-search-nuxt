@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   ],
 
   dayjs: {
-    plugins: ['customParseFormat']
+    plugins: ['customParseFormat', 'relativeTime']
   },
 
   apollo: {
