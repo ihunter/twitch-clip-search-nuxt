@@ -1,6 +1,7 @@
 <script setup>
 const dayjs = useDayjs();
 const route = useRoute();
+const router = useRouter();
 
 const startDateTime = computed(() => {
   const startTime = route.query.startTime;
@@ -86,6 +87,22 @@ const variables = computed(() => ({
 
 const { result: data, loading } = useQuery(query, variables);
 
+function updateQuery(queryParams) {
+  router.replace({
+    query: {
+      ...route.query,
+      ...queryParams,
+    },
+  });
+}
+
+const sortTypes = [
+  { title: "Most views", value: 1 },
+  { title: "Date added (oldest)", value: 2 },
+  { title: "Date added (newest)", value: 3 },
+  { title: "Relevance (title)", value: 4 },
+];
+
 // const { data } = await useAsyncQuery(query, variables.value);
 
 // const clips = computed({
@@ -100,8 +117,31 @@ const { result: data, loading } = useQuery(query, variables);
 
 <template>
   <q-page padding>
-    <div class="q-py-md">
-      <SearchInput />
+    <div class="q-py-md" style="display: flex">
+      <div style="flex-grow: 1">
+        <SearchInput />
+      </div>
+
+      <div class="q-pl-md">
+        <q-btn-group square outline class="full-height">
+          <q-btn square outline label="Filter" icon="filter_list" />
+          <q-btn-dropdown square outline label="Sort by" icon="sort">
+            <q-list separator>
+              <q-item
+                v-for="(type, idx) in sortTypes"
+                :key="idx"
+                clickable
+                v-close-popup
+                @click="updateQuery({ sort: type.value })"
+              >
+                <q-item-section>
+                  <q-item-label>{{ type.title }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+        </q-btn-group>
+      </div>
     </div>
 
     <div class="row q-col-gutter-md" v-if="!loading">

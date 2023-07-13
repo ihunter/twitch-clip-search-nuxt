@@ -17,6 +17,8 @@ function updateQuery(queryParams) {
 <template>
   <q-input
     outlined
+    square
+    clearable
     v-model="title"
     label="Search"
     @keydown.enter="updateQuery({ title })"

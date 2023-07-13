@@ -40,25 +40,27 @@ const timeFromNow = computed(() => dayjs(+props.createdAt).fromNow());
 </script>
 
 <template>
-  <q-card square flat bordered>
-    <q-img :src="thumbnailUrl">
-      <div class="absolute-bottom flex justify-between">
-        <div>
-          <q-icon name="visibility" left size="1.3rem" />{{
-            viewCount.toLocaleString()
-          }}
-          views
+  <a :href="url">
+    <q-card square flat bordered>
+      <q-img :src="thumbnailUrl">
+        <div class="absolute-bottom flex justify-between">
+          <div>
+            <q-icon name="visibility" left size="1.3rem" />{{
+              viewCount.toLocaleString()
+            }}
+            views
+          </div>
+          <div>{{ timeFromNow }}</div>
         </div>
-        <div>{{ timeFromNow }}</div>
-      </div>
-    </q-img>
+      </q-img>
 
-    <q-card-section>
-      <div>{{ title }}</div>
-      <div>{{ broadcasterName }}</div>
-      <div>Clipped by {{ creatorName }} on {{ createdAt }}</div>
-    </q-card-section>
-  </q-card>
+      <q-card-section>
+        <div>{{ title }}</div>
+        <div>{{ broadcasterName }}</div>
+        <div>Clipped by {{ creatorName }} on {{ createdAt }}</div>
+      </q-card-section>
+    </q-card>
+  </a>
 </template>
 
 <style scoped></style>
