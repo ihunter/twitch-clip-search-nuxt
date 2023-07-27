@@ -1,17 +1,9 @@
 <script setup>
 const route = useRoute();
-const router = useRouter();
 
 const title = ref(route.query.title);
 
-function updateQuery(queryParams) {
-  router.replace({
-    query: {
-      ...route.query,
-      ...queryParams,
-    },
-  });
-}
+const { updateQuery } = useRouteQuery();
 </script>
 
 <template>

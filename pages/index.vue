@@ -1,7 +1,7 @@
 <script setup>
 const dayjs = useDayjs();
 const route = useRoute();
-const router = useRouter();
+const { updateQuery } = useRouteQuery();
 
 const startDateTime = computed(() => {
   const startTime = route.query.startTime;
@@ -79,22 +79,13 @@ const variables = computed(() => ({
   broadcaster: route.query.broadcaster,
   startDate: startDateTime.value,
   endDate: endDatetime.value,
-  limit: +route.query.limit,
-  page: +route.query.page,
+  limit: +route.query.limit || 9,
+  page: +route.query.page || 1,
   sort: +route.query.sort,
   creator: route.query.creator,
 }));
 
 const { result: data, loading } = useQuery(query, variables);
-
-function updateQuery(queryParams) {
-  router.replace({
-    query: {
-      ...route.query,
-      ...queryParams,
-    },
-  });
-}
 
 const sortTypes = [
   { title: "Most views", value: 1 },
@@ -103,20 +94,20 @@ const sortTypes = [
   { title: "Relevance (title)", value: 4 },
 ];
 
-// const { data } = await useAsyncQuery(query, variables.value);
+const page = computed({
+  get() {
+    return +route.query.page || 1;
+  },
+  set(pageNumber) {
+    updateQuery({ page: pageNumber });
+  },
+});
 
-// const clips = computed({
-//   get() {
-//     return data.value.clips.clips;
-//   },
-//   set(value) {
-//     data.value.clips.clips = value;
-//   },
-// });
+const openFilterDialog = ref(false);
 </script>
 
 <template>
-  <q-page padding>
+  <q-page padding class="container">
     <div class="q-py-md" style="display: flex">
       <div style="flex-grow: 1">
         <SearchInput />
@@ -124,7 +115,13 @@ const sortTypes = [
 
       <div class="q-pl-md">
         <q-btn-group square outline class="full-height">
-          <q-btn square outline label="Filter" icon="filter_list" />
+          <q-btn
+            square
+            outline
+            label="Filter"
+            icon="filter_list"
+            @click="openFilterDialog = true"
+          />
           <q-btn-dropdown square outline label="Sort by" icon="sort">
             <q-list separator>
               <q-item
@@ -162,7 +159,67 @@ const sortTypes = [
         />
       </div>
     </div>
+
+    <div class="q-py-md flex flex-center" v-if="!loading">
+      <q-pagination
+        v-model="page"
+        :max="data.clips.count"
+        :max-pages="10"
+        direction-links
+      />
+    </div>
+
+    <FilterDialog v-model="openFilterDialog" />
   </q-page>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+$xs-breakpoint: 718px;
+$sm-breakpoint: 1024px;
+$md-breakpoint: 1439px;
+$lg-breakpoint: 1920px;
+
+.container,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// @media (min-width: $xs-breakpoint) {
+//   .container,
+//   .container-sm {
+//     max-width: 540px;
+//   }
+// }
+
+// @media (min-width: $sm-breakpoint) {
+//   .container,
+//   .container-sm,
+//   .container-md {
+//     max-width: 920px;
+//   }
+// }
+
+@media (min-width: $md-breakpoint) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: $lg-breakpoint) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    max-width: 1440px;
+  }
+}
+</style>
