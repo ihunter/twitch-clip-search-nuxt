@@ -1,13 +1,6 @@
 <template>
   <v-row v-if="clips.length > 0" justify="center">
-    <v-col
-      v-for="clip in clips"
-      :key="clip.id"
-      cols="12"
-      sm="6"
-      md="4"
-      xl="3"
-    >
+    <v-col v-for="clip in clips" :key="clip.id" cols="12" sm="6" md="4" xl="3">
       <Clip
         :title="clip.title"
         :broadcaster-name="clip.broadcaster_name"
@@ -29,17 +22,17 @@
 </template>
 
 <script>
-import Clip from '@/components/Clip'
+import Clip from "@/components/Clip";
 
 export default {
   components: {
-    Clip
+    Clip,
   },
   props: {
     clips: {
       type: Array,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+};
 </script>

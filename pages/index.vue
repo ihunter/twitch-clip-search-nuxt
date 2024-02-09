@@ -100,7 +100,7 @@ export default {
           broadcaster: this.$route.query.broadcaster,
           startDate: this.startDatetime,
           endDate: this.endDatetime,
-          limit: +this.$route.query.limit,
+          limit: +this.$route.query.limit || 12,
           page: +this.$route.query.page,
           sort: +this.$route.query.sort,
           creator: this.$route.query.creator,
