@@ -39,6 +39,8 @@
             <CreatorFilter />
           </v-col>
         </v-row>
+
+        <v-btn @click="clearQuery">Clear All</v-btn>
       </v-container>
     </v-card>
   </v-dialog>
@@ -51,7 +53,10 @@ import EndDateFilter from "~/components/EndDateFilter";
 import CreatorFilter from "~/components/CreatorFilter";
 import TimeFilter from "~/components/TimeFilter";
 
+import queryMixin from "~/mixins/queryMixin";
+
 export default {
+  mixins: [queryMixin],
   components: {
     GameFilter,
     StartDateFilter,
