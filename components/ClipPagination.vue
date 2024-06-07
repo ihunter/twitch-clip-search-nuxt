@@ -1,11 +1,5 @@
 <template>
-  <v-pagination
-    v-model="page"
-    color="secondary"
-    :length="paginationLength"
-    total-visible="10"
-    class="ma-8"
-  />
+  <v-pagination v-model="page" color="secondary" :length="paginationLength" total-visible="10" class="ma-8" />
 </template>
 
 <script>
@@ -29,7 +23,7 @@ export default {
       }
     },
     paginationLength() {
-      const limit = this.$route.query.limit || 9;
+      const limit = this.$route.query.limit || 12;
       return Math.ceil(this.count / limit);
     }
   }
