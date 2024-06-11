@@ -81,7 +81,7 @@ module.exports = {
 
     try {
       const page = query.page || 1
-      const limit = query.limit || 9
+      const limit = Math.min(query.limit || 12, 100)
 
       const { clips, count } = await Clip.paginate(mongoQuery, {
         select: `${selectedFields} game_id`,
@@ -128,7 +128,7 @@ module.exports = {
     if (query.name) {
       mongoQuery.$text = { $search: query.name }
     } else if (query.gameID && query.gameID.length > 0) {
-      mongoQuery.id = query.gameID
+      mongoQuery.id = Array.isArray(query.gameID) ? query.gameID.slice(0, 100) : query.gameID
     }
 
     return await Game.find(mongoQuery).exec()
