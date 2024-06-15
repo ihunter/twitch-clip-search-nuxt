@@ -102,11 +102,11 @@ module.exports = {
   //   port: 3000, // default : 3000
   //   host: "0.0.0.0", // do not put localhost (only accessible from the host machine)
   // },
-  // serverMiddleware: [
-  //   redirectSSL.create({
-  //     enabled: process.env.NODE_ENV === "production",
-  //   }),
-  // ],
+  serverMiddleware: [
+    redirectSSL.create({
+      enabled: process.env.NODE_ENV === "production",
+    }),
+  ],
   /*
    ** Build configuration
    */
@@ -119,6 +119,6 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    extend(config, ctx) { },
   },
 };
