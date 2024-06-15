@@ -1,5 +1,5 @@
 <template>
-  <v-pagination v-model="page" color="secondary" :length="paginationLength" total-visible="10" class="ma-8" />
+  <v-pagination v-model="page" color="secondary" :length="paginationLength" total-visible="8" class="ma-8" />
 </template>
 
 <script>

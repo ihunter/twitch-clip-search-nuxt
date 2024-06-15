@@ -3,11 +3,7 @@
     <div class="clip-background">
       <div class="hover-effect">
         <a :href="url" target="_blank" rel="noopener noreferrer nofollow">
-          <v-img
-            min-height="200"
-            :src="thumbnailUrl"
-            class="grey darken-1"
-          >
+          <v-img min-height="200" :src="thumbnailUrl" class="grey darken-1">
             <div class="clip-info view-count">
               <v-icon left>mdi-eye-outline</v-icon> {{ formattedViewCount }} views
             </div>
@@ -21,19 +17,8 @@
 
     <div class="d-flex mt-2">
       <div class="mr-2 pointer" @click="updateQuery({ game: game.id })">
-        <v-skeleton-loader
-          v-if="gameBoxArtLoading"
-          tile
-          width="52"
-          height="72"
-          type="image"
-        />
-        <v-img
-          :title="gameName"
-          :src="sizedGameBoxArtUrl"
-          class="d-block"
-          @load="gameBoxArtLoading = false"
-        />
+        <v-skeleton-loader v-if="gameBoxArtLoading" tile width="52" height="72" type="image" />
+        <v-img :title="gameName" :src="sizedGameBoxArtUrl" class="d-block" @load="gameBoxArtLoading = false" />
       </div>
 
       <div class="clip-meta-container">
@@ -44,36 +29,20 @@
           <div :title="broadcasterName" class="text-truncate">
             {{ broadcasterName }}
           </div>
-          <div
-            :title="
-              `Clipped by ${creatorName} on ${createdAtCalendar} at ${createdAtTime}`
-            "
-            class="text-truncate"
-          >
+          <div :title="`Clipped by ${creatorName} on ${createdAtCalendar} at ${createdAtTime}`
+            " class="text-truncate">
             Clipped by
-            <span
-              class="pointer"
-              @click="updateQuery({ creator: creatorName })"
-              >{{ creatorName }}</span
-            >
+            <span class="pointer" @click="updateQuery({ creator: creatorName })">{{ creatorName }}</span>
             on
-            <span
-              class="pointer"
-              @click="
-                updateQuery({ startDate: createdAtURL, endDate: createdAtURL })
-              "
-              >{{ createdAtCalendar }}</span
-            >
+            <span class="pointer" @click="
+              updateQuery({ startDate: createdAtURL, endDate: createdAtURL })
+              ">{{ createdAtCalendar }}</span>
             at
-            <span
-              class="pointer"
-              @click="
-                updateQuery({
-                  startTime: createdAtTimeURL
-                })
-              "
-              >{{ createdAtTime }}</span
-            >
+            <span class="pointer" @click="
+              updateQuery({
+                startTime: createdAtTimeURL
+              })
+              ">{{ createdAtTime }}</span>
           </div>
         </div>
       </div>
