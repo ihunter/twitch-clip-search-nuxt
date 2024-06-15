@@ -23,7 +23,7 @@
     "graphql": "^16.6.0",
     "graphql-parse-resolve-info": "^4.13.0",
     "graphql-tag": "^2.12.6",
-    "mongoose": "^7.3.0",
+    "mongoose": "^8.4.1",
     "mongoose-paginate-v2": "^1.7.1",
     "nuxt-graphql-server": "^2.0.0",
     "quasar": "^2.12.0"
