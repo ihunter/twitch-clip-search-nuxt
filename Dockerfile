@@ -1,13 +1,12 @@
-FROM node:14.21.3-alpine
+FROM node:14-slim
 
 WORKDIR /app
 
-RUN apk update && apk upgrade
-RUN apk add git
+RUN apt-get update && apt-get upgrade
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
@@ -20,4 +19,4 @@ ENV NPM_CONFIG_PRODUCTION=false
 ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=8080
 
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start" ]
