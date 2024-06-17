@@ -3,7 +3,7 @@ export function useRouteQuery() {
     const router = useRouter();
 
     function updateQuery(queryParams) {
-        router.replace({
+        router.push({
             query: {
                 ...route.query,
                 ...queryParams,
