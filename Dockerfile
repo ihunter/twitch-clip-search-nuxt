@@ -1,18 +1,27 @@
-FROM node:14-slim as build
+FROM node:14-slim as base
+
+ENV NODE_ENV=production
 
 WORKDIR /app
 
-COPY package-lock.json package.json ./
+FROM base as build
 
-RUN npm ci
+COPY --link package.json package-lock.json ./
 
-COPY . .
+RUN npm install --production=false
+
+COPY --link . .
 
 RUN npm run build
+RUN npm prune
+
+FROM base
 
 ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=8080
 
 EXPOSE 8080
+
+COPY --from=build /app /app
 
 CMD [ "npm", "run", "start" ]
