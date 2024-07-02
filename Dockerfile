@@ -1,14 +1,12 @@
 FROM node:14-slim as base
 
-ENV NODE_ENV=production
-
-WORKDIR /app
+WORKDIR /usr/src/app
 
 FROM base as build
 
 COPY --link package.json package-lock.json ./
 
-RUN npm install --production=false
+RUN npm install
 
 COPY --link . .
 
@@ -22,6 +20,6 @@ ENV NUXT_PORT=8080
 
 EXPOSE 8080
 
-COPY --from=build /app /app
+COPY --from=build /usr/src/app /usr/src/app
 
 CMD [ "npm", "run", "start" ]
