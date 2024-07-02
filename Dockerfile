@@ -1,27 +1,19 @@
 FROM node:14-slim as base
 
-# Node.js app lives here
-WORKDIR /usr/src/app
+ENV NODE_ENV=production
 
-# Set production environment
-ENV NODE_ENV="production"
+WORKDIR /app
 
-# Throw-away build stage to reduce size of final image
 FROM base as build
 
-# Install node modules
-COPY --link package-lock.json package.json ./
+COPY --link package.json package-lock.json ./
 
-RUN npm ci --include=dev
+RUN npm install --production=false
 
-# Copy application code
 COPY --link . .
 
-# Build application
 RUN npm run build
-
-# Remove development dependencies
-RUN npm prune --omit=dev
+RUN npm prune
 
 FROM base
 
@@ -30,7 +22,6 @@ ENV NUXT_PORT=8080
 
 EXPOSE 8080
 
-# Copy built application
-COPY --from=build /usr/src/app /usr/src/app
+COPY --from=build /app /app
 
 CMD [ "npm", "run", "start" ]
