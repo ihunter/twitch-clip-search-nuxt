@@ -5,9 +5,6 @@ const BASE_URL =
     ? "https://clips.jerma.io"
     : process.env.BASE_URL;
 
-const redirectSSL = require("redirect-ssl");
-// const colors = require('vuetify/es5/util/colors').default
-
 module.exports = {
   telemetry: false,
   /*
@@ -96,15 +93,6 @@ module.exports = {
       },
     },
   },
-  // server: {
-  //   port: 3000, // default : 3000
-  //   host: "0.0.0.0", // do not put localhost (only accessible from the host machine)
-  // },
-  // serverMiddleware: [
-  //   redirectSSL.create({
-  //     enabled: process.env.NODE_ENV === "production",
-  //   }),
-  // ],
   /*
    ** Build configuration
    */
