@@ -4,10 +4,6 @@
   "description": "Search twitch clips by title, game, and date",
   "author": "Ian Hunter",
   "private": true,
-  "engines": {
-    "node": "14.19.1",
-    "npm": "8.7.0"
-  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
     "build": "nuxt build",
