@@ -1,11 +1,7 @@
 <script setup></script>
 
 <template>
-  <q-layout>
-    <q-page-container>
-      <slot />
-    </q-page-container>
-  </q-layout>
+  <slot />
 </template>
 
 <style scoped></style>
