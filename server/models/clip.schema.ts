@@ -1,8 +1,7 @@
 import mongoosePaginate from 'mongoose-paginate-v2'
 import { defineMongooseModel } from '#nuxt/mongoose'
-import type { Clip } from '~/types'
 
-export const ClipSchema = defineMongooseModel<Clip>({
+export const ClipSchema = defineMongooseModel({
   name: 'Clip',
   schema: {
     id: {

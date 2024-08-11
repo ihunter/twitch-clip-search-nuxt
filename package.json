@@ -19,6 +19,7 @@
     "nuxt": "^3.12.4",
     "nuxt-mongoose": "^1.0.6",
     "vue": "^3.4.37",
-    "vue-router": "^4.4.3"
+    "vue-router": "^4.4.3",
+    "vuetify-nuxt-module": "^0.16.1"
   }
 }

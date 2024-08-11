@@ -1,7 +1,5 @@
-import type { ObjectId } from 'mongoose'
-
 export interface Clip {
-  _id: ObjectId
+  _id: string
   id: string
   url: string
   broadcaster_id: string
@@ -12,10 +10,25 @@ export interface Clip {
   view_count: number
   created_at: string
   thumbnail_url: string
+  game: Game | null
+}
+
+export interface ClipResponse {
+  docs: Clip[]
+  totalDocs: number
+  offset: number
+  limit: number
+  totalPages: number
+  page: number
+  pagingCounter: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+  prevPage: number | null
+  nextPage: number | null
 }
 
 export interface Game {
-  _id: ObjectId
+  _id: string
   id: string
   name: string
   box_art_url: string
