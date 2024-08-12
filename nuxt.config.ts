@@ -7,5 +7,16 @@ export default defineNuxtConfig({
     plugins: ['customParseFormat', 'relativeTime'],
   },
 
+  vuetify: {
+    moduleOptions: {
+
+    },
+    vuetifyOptions: {
+      theme: {
+        defaultTheme: 'dark',
+      },
+    },
+  },
+
   compatibilityDate: '2024-08-08',
 })
