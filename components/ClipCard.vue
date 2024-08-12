@@ -33,12 +33,6 @@ const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
 //   dayjs(+props.createdAt).format('HH:mm'),
 // )
 
-// const sizedGameBoxArtUrl = computed(() =>
-//   props.game
-//     ? props.game.box_art_url.replace(/\{width\}x\{height\}/, '52x72')
-//     : 'https://static-cdn.jtvnw.net/ttv-static/404_boxart-52x72.jpg',
-// )
-
 // const gameName = computed(() => (props.game ? props.game.name : ''))
 
 // const { updateQuery } = useRouteQuery()
@@ -113,10 +107,16 @@ $transition-function: ease-in;
 }
 
 .hover-effect-container {
+  transition: background-color 0s linear calc($transition-duration - 50ms);
+}
+
+.hover-effect-container:hover {
   background-color: $border-color;
+  transition-delay: 100ms;
 }
 
 .hover-effect {
+  will-change: transform;
   transition: transform $transition-duration $transition-function;
 }
 
