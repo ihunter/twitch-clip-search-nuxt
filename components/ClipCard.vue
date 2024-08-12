@@ -43,7 +43,7 @@ const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
     <div class="hover-effect-container">
       <div class="hover-effect">
         <v-img
-          :aspect-ratio="16 / 9"
+          :aspect-ratio="30 / 17"
           :src="thumbnailUrl"
           cover
         >
@@ -63,7 +63,7 @@ const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
             </div>
           </template>
           <template #error>
-            <v-img src="~/assets/images/fireman.png" />
+            <v-img src="~/assets/images/clip_placeholder_404.png" />
           </template>
         </v-img>
       </div>
@@ -107,7 +107,7 @@ $transition-function: ease-in;
 }
 
 .hover-effect-container {
-  transition: background-color 0s linear calc($transition-duration - 50ms);
+  transition: background-color 0s $transition-function calc($transition-duration - 50ms);
 }
 
 .hover-effect-container:hover {
