@@ -66,15 +66,76 @@ function transformClipResponse(data: ClipResponse) {
   return data
 }
 
-const { data } = await useFetch<ClipResponse>('/api/clips', {
+const title = useRouteQuery('title', '', { transform: String })
+const search = ref(title.value)
+
+const page = useRouteQuery('page', '1', { transform: Number })
+const sort = useRouteQuery('sort', 'views', { transform: String })
+const limit = useRouteQuery('limit', '12', { transform: Number })
+
+const { data } = await useFetch<ClipResponse>(`/api/clips`, {
+  query: {
+    title,
+    page,
+    sort,
+    limit,
+  },
   transform: transformClipResponse,
 })
+
+const sortTypes = [
+  { title: 'Most views', value: 'views' },
+  { title: 'Date added (oldest)', value: 'oldest' },
+  { title: 'Date added (newest)', value: 'newest' },
+  { title: 'Relevance (title)', value: 'title' },
+]
 </script>
 
 <template>
   <v-container>
     <v-row>
-      <v-col v-for="clip in data?.docs" :key="clip.id" cols="12" sm="6" md="4" xl="2">
+      <v-col class="d-flex">
+        <v-text-field
+          v-model="search"
+          tile
+          autofocus
+          clearable
+          persistent-clear
+          hide-details
+          variant="solo"
+          prepend-inner-icon="mdi-magnify"
+          placeholder="Search"
+          @keydown.enter="title = search"
+          @click:clear="title = ''"
+        />
+
+        <v-btn-group
+          tile
+          divided
+          variant="elevated"
+          class="h-100 ml-4"
+        >
+          <v-btn icon="mdi-filter-variant" />
+
+          <v-btn id="menu-activator" icon="mdi-sort-variant" />
+
+          <v-menu activator="#menu-activator">
+            <v-list>
+              <v-list-item
+                v-for="(item, index) in sortTypes"
+                :key="index"
+                :value="index"
+                @click="sort = item.value"
+              >
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-btn-group>
+      </v-col>
+    </v-row>
+    <v-row v-if="data">
+      <v-col v-for="clip in data.docs" :key="clip.id" cols="12" sm="6" md="4" xl="2">
         <ClipCard
           :id="clip.id"
           :url="clip.url"
@@ -88,6 +149,11 @@ const { data } = await useFetch<ClipResponse>('/api/clips', {
           :game-box-art-url="clip.game?.box_art_url"
           :created-at="clip.created_at"
         />
+      </v-col>
+    </v-row>
+    <v-row v-if="data">
+      <v-col>
+        <v-pagination v-model="page" :length="data.totalPages" />
       </v-col>
     </v-row>
   </v-container>

@@ -39,11 +39,12 @@ const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
 </script>
 
 <template>
-  <v-card tag="article" tile class="overflow-visible">
+  <v-card tag="article" class="overflow-visible">
     <div class="hover-effect-container">
       <div class="hover-effect">
         <v-img
           :aspect-ratio="30 / 17"
+          lazy-src="~/assets/images/clip_placeholder.png"
           :src="thumbnailUrl"
           cover
         >
