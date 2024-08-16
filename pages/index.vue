@@ -73,7 +73,7 @@ const page = useRouteQuery('page', '1', { transform: Number })
 const sort = useRouteQuery('sort', 'views', { transform: String })
 const limit = useRouteQuery('limit', '12', { transform: Number })
 
-const { data } = await useFetch<ClipResponse>(`/api/clips`, {
+const { data, status, error } = await useFetch<ClipResponse>(`/api/clips`, {
   query: {
     title,
     page,
@@ -81,6 +81,7 @@ const { data } = await useFetch<ClipResponse>(`/api/clips`, {
     limit,
   },
   transform: transformClipResponse,
+  lazy: true,
 })
 
 const sortTypes = [
@@ -134,7 +135,12 @@ const sortTypes = [
         </v-btn-group>
       </v-col>
     </v-row>
-    <v-row v-if="data">
+    <v-row v-if="status === 'pending'">
+      <v-col v-for="(_, index) in limit" :key="index" cols="12" sm="6" md="4" xl="2">
+        <ClipCardSkeleton />
+      </v-col>
+    </v-row>
+    <v-row v-else-if="data">
       <v-col v-for="clip in data.docs" :key="clip.id" cols="12" sm="6" md="4" xl="2">
         <ClipCard
           :id="clip.id"
