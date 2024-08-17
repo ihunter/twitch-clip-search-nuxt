@@ -69,13 +69,18 @@ function transformClipResponse(data: ClipResponse) {
 const title = useRouteQuery('title', '', { transform: String })
 const search = ref(title.value)
 
+const creator = useRouteQuery('creator', '', { transform: String })
+const game = useRouteQuery('game', '', { transform: String })
+
 const page = useRouteQuery('page', '1', { transform: Number })
 const sort = useRouteQuery('sort', 'views', { transform: String })
 const limit = useRouteQuery('limit', '12', { transform: Number })
 
-const { data, status, error } = await useFetch<ClipResponse>(`/api/clips`, {
+const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
   query: {
     title,
+    creator,
+    game,
     page,
     sort,
     limit,
@@ -151,6 +156,7 @@ const sortTypes = [
           :broadcaster-name="clip.broadcaster_name"
           :creator-name="clip.creator_name"
           :thumbnail-url="clip.thumbnail_url"
+          :game-id="clip.game?.id"
           :game-name="clip.game?.name"
           :game-box-art-url="clip.game?.box_art_url"
           :created-at="clip.created_at"

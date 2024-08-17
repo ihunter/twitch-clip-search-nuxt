@@ -1,10 +1,36 @@
-export default defineEventHandler(async (event) => {
-  const { title, page, sort, limit } = getQuery(event)
+export default cachedEventHandler(async (event) => {
+  interface QueryParams {
+    title: string
+    page: string
+    sort: string
+    limit: string
+    creator: string
+    game: string
+  }
 
-  const query = {}
+  const { title, page, sort, limit, creator, game } = getQuery<QueryParams>(event)
+
+  interface MongooseQuery {
+    $text?: { $search: string }
+    creator_name?: { $regex: RegExp }
+    game_id?: string[]
+  }
+
+  const query: MongooseQuery = {
+  }
 
   if (title) {
     query.$text = { $search: title }
+  }
+
+  if (creator) {
+    query.creator_name = {
+      $regex: new RegExp(`^${creator}$`, 'i'),
+    }
+  }
+
+  if (game) {
+    query.game_id = game.split(',')
   }
 
   let order
@@ -43,4 +69,6 @@ export default defineEventHandler(async (event) => {
   catch (error) {
     return error
   }
+}, {
+  maxAge: 60 * 60,
 })

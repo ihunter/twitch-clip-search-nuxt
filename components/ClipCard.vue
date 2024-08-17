@@ -9,6 +9,7 @@ interface Clip {
   viewCount: number
   createdAt: string
   thumbnailUrl: string
+  gameId?: string
   gameName?: string
   gameBoxArtUrl?: string
 }
@@ -29,53 +30,57 @@ const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
 //   dayjs(+props.createdAt).format('YYYY-MM-DD'),
 // )
 
+const creator = useRouteQuery('creator', '', { transform: String })
+const game = useRouteQuery('game', '', { transform: String })
+
 // const createdAtTimeQueryParam = computed(() =>
 //   dayjs(+props.createdAt).format('HH:mm'),
 // )
 
 // const gameName = computed(() => (props.game ? props.game.name : ''))
-
-// const { updateQuery } = useRouteQuery()
 </script>
 
 <template>
   <v-card tag="article" class="overflow-visible">
-    <div class="hover-effect-container">
+    <div class="hover-effect-container" :href="url">
       <div class="hover-effect">
-        <v-img
-          :aspect-ratio="30 / 17"
-          lazy-src="~/assets/images/clip_placeholder.png"
-          :src="thumbnailUrl"
-          cover
-        >
-          <div class="d-flex flex-column justify-end h-100">
-            <div class="pa-2 d-flex justify-space-between">
-              <div class="px-2 bg-opacity">
-                <v-icon icon="mdi-eye-outline" /> {{ viewCount }}
-              </div>
-              <div class="px-2 bg-opacity">
-                {{ timeFromNow }}
+        <NuxtLink :to="url" target="_blank">
+          <v-img
+            :aspect-ratio="30 / 17"
+            lazy-src="~/assets/images/clip_placeholder.png"
+            :src="thumbnailUrl"
+            cover
+          >
+            <div class="d-flex flex-column justify-end h-100">
+              <div class="pa-2 d-flex justify-space-between">
+                <div class="px-2 bg-opacity">
+                  <v-icon icon="mdi-eye-outline" /> {{ viewCount }}
+                </div>
+                <div class="px-2 bg-opacity">
+                  {{ timeFromNow }}
+                </div>
               </div>
             </div>
-          </div>
-          <template #placeholder>
-            <div class="d-flex align-center justify-center fill-height">
-              <v-progress-circular color="grey-lighten-4" indeterminate />
-            </div>
-          </template>
-          <template #error>
-            <v-img src="~/assets/images/clip_placeholder_404.png" />
-          </template>
-        </v-img>
+            <template #placeholder>
+              <div class="d-flex align-center justify-center fill-height">
+                <v-progress-circular color="grey-lighten-4" indeterminate />
+              </div>
+            </template>
+            <template #error>
+              <v-img src="~/assets/images/clip_placeholder_404.png" />
+            </template>
+          </v-img>
+        </NuxtLink>
       </div>
     </div>
     <section class="d-flex">
-      <div>
+      <div class="filter">
         <v-img
           width="52"
           height="72"
           lazy-src="~/assets/images/game_box_art_placeholder.jpg"
           :src="gameBoxArtUrl"
+          @click="game = gameId ?? ''"
         >
           <template #placeholder>
             <v-img src="~/assets/images/game_box_art_placeholder.jpg" cover />
@@ -83,11 +88,13 @@ const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
         </v-img>
       </div>
       <div class="px-2 overflow-hidden">
-        <h4 class="text-truncate">
-          {{ title }}
-        </h4>
+        <NuxtLink :to="url" target="_blank">
+          <h4 class="text-truncate">
+            {{ title }}
+          </h4>
+        </NuxtLink>
         <div class="text-subtitle-2">
-          Clipped by {{ creatorName }}
+          Clipped by <span class="filter" @click="creator = creatorName">{{ creatorName }}</span>
         </div>
         <div class="text-subtitle-2">
           on {{ createdAtCalendar }} at {{ createdAtTime }}
@@ -99,9 +106,27 @@ const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
 
 <style scoped lang="scss">
 $border-size: 5px;
-$border-color: rgb(43, 255, 0);
-$transition-duration: 300ms;
+$border-color: #0AFC9E;
+$transition-duration: 200ms;
 $transition-function: ease-in;
+
+.filter {
+  cursor: pointer;
+}
+
+.filter:hover {
+  color: $border-color;
+  text-decoration: underline;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $border-color;
+}
 
 .bg-opacity {
   background-color: rgba(0, 0, 0, .5);
