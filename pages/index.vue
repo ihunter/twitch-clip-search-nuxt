@@ -67,11 +67,8 @@ function transformClipResponse(data: ClipResponse) {
 }
 
 const title = useRouteQuery('title', '', { transform: String })
-const search = ref(title.value)
-
 const creator = useRouteQuery('creator', '', { transform: String })
 const game = useRouteQuery('game', '', { transform: String })
-
 const page = useRouteQuery('page', '1', { transform: Number })
 const sort = useRouteQuery('sort', 'views', { transform: String })
 const limit = useRouteQuery('limit', '12', { transform: Number })
@@ -88,55 +85,22 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
   transform: transformClipResponse,
   lazy: true,
 })
-
-const sortTypes = [
-  { title: 'Most views', value: 'views' },
-  { title: 'Date added (oldest)', value: 'oldest' },
-  { title: 'Date added (newest)', value: 'newest' },
-  { title: 'Relevance (title)', value: 'title' },
-]
 </script>
 
 <template>
   <v-container>
     <v-row>
       <v-col class="d-flex">
-        <v-text-field
-          v-model="search"
-          tile
-          autofocus
-          clearable
-          persistent-clear
-          hide-details
-          variant="solo"
-          prepend-inner-icon="mdi-magnify"
-          placeholder="Search"
-          @keydown.enter="title = search"
-          @click:clear="title = ''"
-        />
-
+        <SearchInput />
         <v-btn-group
           tile
           divided
           variant="elevated"
           class="h-100 ml-4"
         >
-          <v-btn icon="mdi-filter-variant" />
+          <SearchFilter />
 
-          <v-btn id="menu-activator" icon="mdi-sort-variant" />
-
-          <v-menu activator="#menu-activator">
-            <v-list>
-              <v-list-item
-                v-for="(item, index) in sortTypes"
-                :key="index"
-                :value="index"
-                @click="sort = item.value"
-              >
-                <v-list-item-title>{{ item.title }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+          <SearchSort />
         </v-btn-group>
       </v-col>
     </v-row>

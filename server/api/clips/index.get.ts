@@ -9,18 +9,23 @@ export default defineCachedEventHandler(async (event) => {
     limit: string
     creator: string
     game: string
+    startDate: string
+    endDate: string
   }
-
-  const { title, page, sort, limit, creator, game } = getQuery<QueryParams>(event)
 
   interface MongooseQuery {
     $text?: { $search: string }
     creator_name?: { $regex: RegExp }
     game_id?: string[]
+    created_at?: {
+      $lt?: string
+      $gt?: string
+    }
   }
 
-  const query: MongooseQuery = {
-  }
+  const { title, page, sort, limit, creator, game, startDate, endDate } = getQuery<QueryParams>(event)
+
+  const query: MongooseQuery = {}
 
   if (title) {
     query.$text = { $search: title }
@@ -34,6 +39,23 @@ export default defineCachedEventHandler(async (event) => {
 
   if (game) {
     query.game_id = game.split(',')
+  }
+
+  if (startDate && endDate) {
+    query.created_at = {
+      $lt: endDate,
+      $gt: startDate,
+    }
+  }
+  else if (startDate) {
+    query.created_at = {
+      $gt: startDate,
+    }
+  }
+  else if (endDate) {
+    query.created_at = {
+      $lt: endDate,
+    }
   }
 
   let order
@@ -67,11 +89,16 @@ export default defineCachedEventHandler(async (event) => {
   // Used to register model, otherwise populate won't work
   Game.findOne()
   try {
-    return await Clip.paginate(query, { populate: 'game', page, sort: order, limit })
+    return await Clip.paginate(query, {
+      populate: 'game',
+      page,
+      sort: order,
+      limit,
+    })
   }
   catch (error) {
     return error
   }
 }, {
-  maxAge: 5,
+  maxAge: 1,
 })

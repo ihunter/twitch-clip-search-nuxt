@@ -33,3 +33,10 @@ export interface Game {
   name: string
   box_art_url: string
 }
+
+export interface GameResponse {
+  _id: string
+  id: string
+  box_art_url: string
+  name: string
+}

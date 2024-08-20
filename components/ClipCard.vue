@@ -49,6 +49,8 @@ const game = useRouteQuery('game', '', { transform: String })
             :aspect-ratio="30 / 17"
             lazy-src="~/assets/images/clip_placeholder.png"
             :src="thumbnailUrl"
+            :title="title"
+            :alt="title"
             cover
           >
             <div class="d-flex flex-column justify-end h-100">
@@ -80,24 +82,26 @@ const game = useRouteQuery('game', '', { transform: String })
           height="72"
           lazy-src="~/assets/images/game_box_art_placeholder.jpg"
           :src="gameBoxArtUrl"
+          :title="gameName"
+          :alt="`Game box art for ${gameName}`"
           @click="game = gameId ?? ''"
         >
           <template #placeholder>
-            <v-img src="~/assets/images/game_box_art_placeholder.jpg" cover />
+            <v-img src="~/assets/images/game_box_art_placeholder.jpg" alt="placeholder" cover />
           </template>
         </v-img>
       </div>
       <div class="px-2 overflow-hidden">
         <NuxtLink :to="url" target="_blank">
-          <h4 class="text-truncate">
+          <h4 class="text-truncate filter" :title="title">
             {{ title }}
           </h4>
         </NuxtLink>
-        <div class="text-subtitle-2">
+        <div class="text-subtitle-2" :title="`Clipped by ${creatorName}}`">
           Clipped by <span class="filter" @click="creator = creatorName">{{ creatorName }}</span>
         </div>
-        <div class="text-subtitle-2">
-          on {{ createdAtCalendar }} at {{ createdAtTime }}
+        <div class="text-subtitle-2" :title="`on ${createdAtCalendar} at ${createdAtTime}`">
+          on <span class="filter">{{ createdAtCalendar }}</span> at <span class="filter">{{ createdAtTime }}</span>
         </div>
       </div>
     </section>
@@ -110,6 +114,11 @@ $border-color: #0AFC9E;
 $transition-duration: 200ms;
 $transition-function: ease-in;
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 .filter {
   cursor: pointer;
 }
@@ -117,15 +126,6 @@ $transition-function: ease-in;
 .filter:hover {
   color: $border-color;
   text-decoration: underline;
-}
-
-a {
-  color: white;
-  text-decoration: none;
-}
-
-a:hover {
-  color: $border-color;
 }
 
 .bg-opacity {
