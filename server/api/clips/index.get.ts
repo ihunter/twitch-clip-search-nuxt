@@ -1,4 +1,7 @@
-export default cachedEventHandler(async (event) => {
+import { Game } from '~/server/models/game.model'
+import { Clip } from '~/server/models/clip.model'
+
+export default defineCachedEventHandler(async (event) => {
   interface QueryParams {
     title: string
     page: string
@@ -62,13 +65,13 @@ export default cachedEventHandler(async (event) => {
   }
 
   // Used to register model, otherwise populate won't work
-  GameSchema.findOne()
+  Game.findOne()
   try {
-    return await ClipSchema.paginate(query, { populate: 'game', page, sort: order, limit })
+    return await Clip.paginate(query, { populate: 'game', page, sort: order, limit })
   }
   catch (error) {
     return error
   }
 }, {
-  maxAge: 60 * 60,
+  maxAge: 5,
 })

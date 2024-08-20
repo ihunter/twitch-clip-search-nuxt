@@ -1,7 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['dayjs-nuxt', 'nuxt-mongoose', 'vuetify-nuxt-module', '@vueuse/nuxt'],
+  modules: ['dayjs-nuxt', 'vuetify-nuxt-module', '@vueuse/nuxt'],
+
+  runtimeConfig: {
+    mongodbUri: '',
+  },
 
   dayjs: {
     plugins: ['customParseFormat', 'relativeTime'],
