@@ -19,7 +19,6 @@ export default defineCachedEventHandler(async (event) => {
   query.$text = { $search: search }
 
   try {
-    console.log(query)
     return await Game.find(query)
   }
   catch (error) {
