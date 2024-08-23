@@ -68,7 +68,7 @@ function transformClipResponse(data: ClipResponse) {
 
 const title = useRouteQuery('title', '', { transform: String })
 const creator = useRouteQuery('creator', '', { transform: String })
-const game = useRouteQuery('game', '', { transform: String })
+const game = useRouteQuery('game', [])
 const page = useRouteQuery('page', '1', { transform: Number })
 const sort = useRouteQuery('sort', 'views', { transform: String })
 const limit = useRouteQuery('limit', '12', { transform: Number })

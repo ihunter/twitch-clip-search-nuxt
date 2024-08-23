@@ -24,11 +24,12 @@ function transformGameResponse(data: GameResponse[]) {
 
 const { data: games, status } = await useFetch<GameResponse[]>(`/api/games`, {
   query: {
+    game,
     search: debouncedSearch,
   },
   transform: transformGameResponse,
-  immediate: false,
-  server: false,
+  immediate: true,
+  server: true,
   lazy: true,
   default: () => [],
 })
@@ -37,7 +38,8 @@ const { data: games, status } = await useFetch<GameResponse[]>(`/api/games`, {
 <template>
   <v-autocomplete
     v-model="game"
-    label="Game(s)"
+    label="Search for a game"
+    no-data-text="No games found"
     :items="games"
     :loading="status === 'pending'"
     item-title="name"

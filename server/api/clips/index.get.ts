@@ -16,7 +16,7 @@ export default defineCachedEventHandler(async (event) => {
   interface MongooseQuery {
     $text?: { $search: string }
     creator_name?: { $regex: RegExp }
-    game_id?: string[]
+    game_id?: string | string[]
     created_at?: {
       $lt?: string
       $gt?: string
@@ -38,7 +38,7 @@ export default defineCachedEventHandler(async (event) => {
   }
 
   if (game) {
-    query.game_id = game.split(',')
+    query.game_id = game
   }
 
   if (startDate && endDate) {

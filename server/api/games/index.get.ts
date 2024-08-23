@@ -3,20 +3,20 @@ import { Game } from '~/server/models/game.model'
 export default defineCachedEventHandler(async (event) => {
   interface QueryParams {
     search: string
+    game: string | string[]
   }
 
-  interface MongooseQuery {
-    $text?: { $search: string }
-  }
+  const { search, game } = getQuery<QueryParams>(event)
 
-  const { search } = getQuery<QueryParams>(event)
-
-  const query: MongooseQuery = {}
-
-  if (!search)
+  if (!search && !game)
     return []
 
-  query.$text = { $search: search }
+  const query = {
+    $or: [
+      { id: game },
+      { $text: { $search: search || '' } },
+    ],
+  }
 
   try {
     return await Game.find(query)
@@ -25,5 +25,5 @@ export default defineCachedEventHandler(async (event) => {
     return error
   }
 }, {
-  maxAge: 1,
+  maxAge: 60 * 60,
 })
