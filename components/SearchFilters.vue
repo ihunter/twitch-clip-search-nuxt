@@ -15,6 +15,12 @@ const { smAndDown } = useDisplay()
               <GameFilter />
             </v-col>
           </v-row>
+
+          <v-row>
+            <v-col>
+              <CreatorFilter />
+            </v-col>
+          </v-row>
         </v-container>
       </v-form>
     </v-card>

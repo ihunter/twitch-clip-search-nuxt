@@ -22,5 +22,9 @@ export default defineNuxtConfig({
     },
   },
 
+  typescript: {
+    strict: false,
+  },
+
   compatibilityDate: '2024-08-08',
 })
