@@ -31,23 +31,6 @@
 //   return dayjs(endDate, 'YYYY-M-D').endOf('day')
 // })
 
-// const sortTypes = [
-//   { title: 'Most views', value: 1 },
-//   { title: 'Date added (oldest)', value: 2 },
-//   { title: 'Date added (newest)', value: 3 },
-//   { title: 'Relevance (title)', value: 4 },
-// ]
-
-// const page = computed({
-//   get() {
-//     return +route.query.page || 1
-//   },
-//   set(pageNumber) {
-//     updateQuery({ page: pageNumber })
-//   },
-// })
-
-// const openFilterDialog = ref(false)
 import type { ClipResponse } from '~/types'
 
 function gameBoxArtUrl(url: string) {
@@ -129,7 +112,7 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
     </v-row>
     <v-row v-if="data">
       <v-col>
-        <v-pagination v-model="page" :length="data.totalPages" />
+        <v-pagination v-model="page" :length="data.totalPages" variant="elevated" size="55" />
       </v-col>
     </v-row>
   </v-container>

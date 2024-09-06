@@ -18,6 +18,15 @@ const { smAndDown } = useDisplay()
 
           <v-row>
             <v-col>
+              <StartDateFilter />
+            </v-col>
+            <v-col>
+              <EndDateFilter />
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
               <CreatorFilter />
             </v-col>
           </v-row>
