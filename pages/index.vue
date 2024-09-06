@@ -105,12 +105,12 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
       </v-col>
     </v-row>
     <v-row v-if="status === 'pending'">
-      <v-col v-for="(_, index) in limit" :key="index" cols="12" sm="6" md="4" xl="2">
+      <v-col v-for="(_, index) in limit" :key="index" cols="12" sm="6" md="4" xl="3">
         <ClipCardSkeleton />
       </v-col>
     </v-row>
     <v-row v-else-if="data">
-      <v-col v-for="clip in data.docs" :key="clip.id" cols="12" sm="6" md="4" xl="2">
+      <v-col v-for="clip in data.docs" :key="clip.id" cols="12" sm="6" md="4" xl="3">
         <ClipCard
           :id="clip.id"
           :url="clip.url"
