@@ -29,10 +29,10 @@ const game = useRouteQuery('game', '', { transform: String })
 const startDate = useRouteQuery('startDate', '', { transform: String })
 const endDate = useRouteQuery('endDate', '', { transform: String })
 const startTime = useRouteQuery('startTime', '', { transform: String })
-const endTime = useRouteQuery('endTime', '', { transform: String })
 
 function setDateFilter() {
   startDate.value = dayjs(props.createdAt).format('YYYY-MM-DD')
+  endDate.value = dayjs(props.createdAt).format('YYYY-MM-DD')
 }
 
 function setTimeFilter() {

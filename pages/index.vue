@@ -43,7 +43,7 @@ const startDatetime = computed(() => {
 })
 
 const endDatetime = computed(() => {
-  if (!endTime.value) {
+  if (!endDate.value) {
     return ''
   }
 
@@ -51,7 +51,7 @@ const endDatetime = computed(() => {
     return dayjs(`${endDate.value} ${endTime.value}`, 'YYYY-MM-DD HH:mm').toString()
   }
 
-  return dayjs(endDate.value, 'YYYY-MM-DD').startOf('day')
+  return dayjs(endDate.value, 'YYYY-MM-DD').endOf('day').toString()
 })
 
 const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
@@ -66,7 +66,6 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
     limit,
   },
   transform: transformClipResponse,
-  lazy: true,
 })
 </script>
 

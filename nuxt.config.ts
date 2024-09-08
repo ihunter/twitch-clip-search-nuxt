@@ -33,6 +33,7 @@ export default defineNuxtConfig({
           dark: {
             colors: {
               primary: '#0AFC9E',
+              secondary: '#1D4435',
             },
           },
         },
