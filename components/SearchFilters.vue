@@ -17,10 +17,10 @@ const { smAndDown } = useDisplay()
           </v-row>
 
           <v-row>
-            <v-col>
+            <v-col cols="12" md="6" class="d-flex justify-center">
               <StartDateFilter />
             </v-col>
-            <v-col>
+            <v-col cols="12" md="6" class="d-flex justify-center">
               <EndDateFilter />
             </v-col>
           </v-row>

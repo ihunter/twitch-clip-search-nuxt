@@ -41,18 +41,18 @@ export default defineCachedEventHandler(async (event) => {
     query.game_id = game
   }
 
-  if (startDate !== 'null' && endDate !== 'null') {
+  if (startDate && endDate) {
     query.created_at = {
       $lt: endDate,
       $gt: startDate,
     }
   }
-  else if (startDate !== 'null') {
+  else if (startDate) {
     query.created_at = {
       $gt: startDate,
     }
   }
-  else if (endDate !== 'null') {
+  else if (endDate) {
     query.created_at = {
       $lt: endDate,
     }

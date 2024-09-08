@@ -31,7 +31,11 @@ const sort = useRouteQuery('sort', 'views', { transform: String })
 const limit = useRouteQuery('limit', '12', { transform: Number })
 
 const startDatetime = computed(() => {
-  if (startTime.value && startDate.value) {
+  if (!startDate.value) {
+    return ''
+  }
+
+  if (Boolean(startTime.value) && Boolean(startDate.value)) {
     return dayjs(`${startDate.value} ${startTime.value}`, 'YYYY-MM-DD HH:mm').toString()
   }
 
@@ -39,7 +43,11 @@ const startDatetime = computed(() => {
 })
 
 const endDatetime = computed(() => {
-  if (endTime.value && endDate.value) {
+  if (!endTime.value) {
+    return ''
+  }
+
+  if (Boolean(endTime.value) && Boolean(endDate.value)) {
     return dayjs(`${endDate.value} ${endTime.value}`, 'YYYY-MM-DD HH:mm').toString()
   }
 
@@ -63,7 +71,6 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
 </script>
 
 <template>
-  {{ startDate }}
   <v-container>
     <v-row>
       <v-col class="d-flex">

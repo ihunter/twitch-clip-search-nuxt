@@ -15,7 +15,7 @@ const startDate = computed({
 </script>
 
 <template>
-  <v-date-picker v-model="startDate" />
+  <v-date-picker v-model="startDate" header="Enter Start Date" />
 </template>
 
 <style scoped>

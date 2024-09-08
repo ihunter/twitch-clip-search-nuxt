@@ -15,7 +15,7 @@ const endDate = computed({
 </script>
 
 <template>
-  <v-date-picker v-model="endDate" />
+  <v-date-picker v-model="endDate" header="Select End Date" title="End Date" />
 </template>
 
 <style scoped>
