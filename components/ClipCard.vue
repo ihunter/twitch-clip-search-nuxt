@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface Clip {
+const props = defineProps<{
   id: string
   url: string
   broadcasterId: string
@@ -12,9 +12,7 @@ interface Clip {
   gameId?: string
   gameName?: string
   gameBoxArtUrl?: string
-}
-
-const props = defineProps<Clip>()
+}>()
 
 const dayjs = useDayjs()
 
@@ -26,18 +24,20 @@ const createdAtCalendar = computed(() =>
 
 const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
 
-// const createdAtQueryParam = computed(() =>
-//   dayjs(+props.createdAt).format('YYYY-MM-DD'),
-// )
-
 const creator = useRouteQuery('creator', '', { transform: String })
 const game = useRouteQuery('game', '', { transform: String })
+const startDate = useRouteQuery('startDate', '', { transform: String })
+const endDate = useRouteQuery('endDate', '', { transform: String })
+const startTime = useRouteQuery('startTime', '', { transform: String })
+const endTime = useRouteQuery('endTime', '', { transform: String })
 
-// const createdAtTimeQueryParam = computed(() =>
-//   dayjs(+props.createdAt).format('HH:mm'),
-// )
+function setDateFilter() {
+  startDate.value = dayjs(props.createdAt).format('YYYY-MM-DD')
+}
 
-// const gameName = computed(() => (props.game ? props.game.name : ''))
+function setTimeFilter() {
+  startTime.value = dayjs(props.createdAt).format('HH:mm')
+}
 </script>
 
 <template>
@@ -92,16 +92,14 @@ const game = useRouteQuery('game', '', { transform: String })
         </v-img>
       </div>
       <div class="px-2 overflow-hidden">
-        <NuxtLink :to="url" target="_blank">
-          <h4 class="text-truncate filter" :title="title">
-            {{ title }}
-          </h4>
-        </NuxtLink>
+        <h4 class="text-truncate" :title="title">
+          {{ title }}
+        </h4>
         <div class="text-subtitle-2" :title="`Clipped by ${creatorName}}`">
           Clipped by <span class="filter" @click="creator = creatorName">{{ creatorName }}</span>
         </div>
         <div class="text-subtitle-2" :title="`on ${createdAtCalendar} at ${createdAtTime}`">
-          on <span class="filter">{{ createdAtCalendar }}</span> at <span class="filter">{{ createdAtTime }}</span>
+          on <span class="filter" @click="setDateFilter">{{ createdAtCalendar }}</span> at <span class="filter" @click="setTimeFilter">{{ createdAtTime }}</span>
         </div>
       </div>
     </section>
@@ -110,7 +108,7 @@ const game = useRouteQuery('game', '', { transform: String })
 
 <style scoped lang="scss">
 $border-size: 5px;
-$border-color: #0AFC9E;
+$border-color: rgb(var(--v-theme-primary));
 $transition-duration: 200ms;
 $transition-function: ease-in;
 

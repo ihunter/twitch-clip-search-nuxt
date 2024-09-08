@@ -1,37 +1,7 @@
 <script setup lang="ts">
-// const dayjs = useDayjs()
-// const route = useRoute()
-// const { updateQuery } = useRouteQuery()
-
-// const startDateTime = computed(() => {
-//   const startTime = route.query.startTime
-//   const startDate = route.query.startDate
-
-//   if (startTime === undefined && startDate === undefined)
-//     return undefined
-
-//   if (startTime && startDate) {
-//     return dayjs(`${startDate} ${startTime}`, 'YYYY-M-D HH:mm')
-//   }
-
-//   return dayjs(startDate, 'YYYY-M-D').startOf('day')
-// })
-
-// const endDatetime = computed(() => {
-//   const endTime = route.query.endTime
-//   const endDate = route.query.endDate
-
-//   if (endTime === undefined && endDate === undefined)
-//     return undefined
-
-//   if (endTime && endDate) {
-//     return dayjs(`${endDate} ${endTime}`, 'YYYY-M-D HH:mm')
-//   }
-
-//   return dayjs(endDate, 'YYYY-M-D').endOf('day')
-// })
-
 import type { ClipResponse } from '~/types'
+
+const dayjs = useDayjs()
 
 function gameBoxArtUrl(url: string) {
   // https://static-cdn.jtvnw.net/ttv-boxart/509658-{width}x{height}.jpg
@@ -52,15 +22,37 @@ function transformClipResponse(data: ClipResponse) {
 const title = useRouteQuery('title', '', { transform: String })
 const creator = useRouteQuery('creator', '', { transform: String })
 const game = useRouteQuery('game', [])
+const startDate = useRouteQuery('startDate', '', { transform: String })
+const endDate = useRouteQuery('endDate', '', { transform: String })
+const startTime = useRouteQuery('startTime', '', { transform: String })
+const endTime = useRouteQuery('endTime', '', { transform: String })
 const page = useRouteQuery('page', '1', { transform: Number })
 const sort = useRouteQuery('sort', 'views', { transform: String })
 const limit = useRouteQuery('limit', '12', { transform: Number })
+
+const startDatetime = computed(() => {
+  if (startTime.value && startDate.value) {
+    return dayjs(`${startDate.value} ${startTime.value}`, 'YYYY-MM-DD HH:mm').toString()
+  }
+
+  return dayjs(startDate.value, 'YYYY-MM-DD').startOf('day').toString()
+})
+
+const endDatetime = computed(() => {
+  if (endTime.value && endDate.value) {
+    return dayjs(`${endDate.value} ${endTime.value}`, 'YYYY-MM-DD HH:mm').toString()
+  }
+
+  return dayjs(endDate.value, 'YYYY-MM-DD').startOf('day')
+})
 
 const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
   query: {
     title,
     creator,
     game,
+    startDate: startDatetime,
+    endDate: endDatetime,
     page,
     sort,
     limit,
@@ -71,6 +63,7 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
 </script>
 
 <template>
+  {{ startDate }}
   <v-container>
     <v-row>
       <v-col class="d-flex">

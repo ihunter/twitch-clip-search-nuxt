@@ -3,6 +3,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['dayjs-nuxt', 'vuetify-nuxt-module', '@vueuse/nuxt'],
 
+  app: {
+    head: {
+      title: 'Jerma Clip Search',
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
+    },
+  },
+
   runtimeConfig: {
     mongodbUri: '',
   },
@@ -18,6 +25,13 @@ export default defineNuxtConfig({
     vuetifyOptions: {
       theme: {
         defaultTheme: 'dark',
+        themes: {
+          dark: {
+            colors: {
+              primary: '#0AFC9E',
+            },
+          },
+        },
       },
     },
   },

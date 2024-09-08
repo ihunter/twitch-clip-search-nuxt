@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { model, Schema } from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2'
 
 const ClipSchema = new Schema({

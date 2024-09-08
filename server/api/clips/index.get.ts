@@ -1,5 +1,5 @@
-import { Game } from '~/server/models/game.model'
 import { Clip } from '~/server/models/clip.model'
+import { Game } from '~/server/models/game.model'
 
 export default defineCachedEventHandler(async (event) => {
   interface QueryParams {
@@ -41,18 +41,18 @@ export default defineCachedEventHandler(async (event) => {
     query.game_id = game
   }
 
-  if (startDate && endDate) {
+  if (startDate !== 'null' && endDate !== 'null') {
     query.created_at = {
       $lt: endDate,
       $gt: startDate,
     }
   }
-  else if (startDate) {
+  else if (startDate !== 'null') {
     query.created_at = {
       $gt: startDate,
     }
   }
-  else if (endDate) {
+  else if (endDate !== 'null') {
     query.created_at = {
       $lt: endDate,
     }
@@ -85,6 +85,8 @@ export default defineCachedEventHandler(async (event) => {
         order = { view_count: -1 }
       }
   }
+
+  console.log('query', query)
 
   // Used to register model, otherwise populate won't work
   Game.findOne()
