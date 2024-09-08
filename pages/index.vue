@@ -80,7 +80,7 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
           variant="elevated"
           class="h-100 ml-4"
         >
-          <SearchFilters />
+          <FiltersDialog />
 
           <SearchSort />
         </v-btn-group>
