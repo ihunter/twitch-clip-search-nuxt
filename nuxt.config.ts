@@ -6,7 +6,11 @@ export default defineNuxtConfig({
   app: {
     head: {
       title: 'Jerma Clip Search',
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+        { rel: 'icon', type: 'image/png', href: '/logo.png' },
+      ],
+
     },
   },
 
