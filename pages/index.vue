@@ -67,6 +67,10 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
   },
   transform: transformClipResponse,
 })
+
+const clipsFound = computed(() => {
+  return data.value && data.value.docs.length
+})
 </script>
 
 <template>
@@ -86,12 +90,14 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
         </v-btn-group>
       </v-col>
     </v-row>
+
     <v-row v-if="status === 'pending'">
       <v-col v-for="(_, index) in limit" :key="index" cols="12" sm="6" md="4" xl="3">
         <ClipCardSkeleton />
       </v-col>
     </v-row>
-    <v-row v-else-if="data">
+
+    <v-row v-else-if="clipsFound">
       <v-col v-for="clip in data.docs" :key="clip.id" cols="12" sm="6" md="4" xl="3">
         <ClipCard
           :id="clip.id"
@@ -109,7 +115,20 @@ const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
         />
       </v-col>
     </v-row>
-    <v-row v-if="data">
+
+    <v-row v-else-if="!clipsFound">
+      <v-col class="d-flex flex-column justify-center text-center ga-8">
+        <h1 class="text-h1">
+          No Clips Found
+        </h1>
+        <v-img src="~/assets/images/firedman.png" height="200" />
+        <h3 class="text-h3">
+          No clips found matching this criteria
+        </h3>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="clipsFound">
       <v-col>
         <v-pagination v-model="page" :length="data.totalPages" variant="elevated" size="55" />
       </v-col>
