@@ -2,6 +2,14 @@ import { Clip } from '~/server/models/clip.model'
 import { Game } from '~/server/models/game.model'
 
 export default defineCachedEventHandler(async (event) => {
+  const userAgent = getRequestHeader(event, 'user-agent')
+  const ipAddress = event.node.req.headers['x-forwarded-for'] || event.node.req.socket.remoteAddress
+  const reqHeaders = event.node.req.headers
+
+  console.log('userAgent:', userAgent)
+  console.log('ip:', ipAddress)
+  console.log('reqHeaders:', reqHeaders)
+
   interface QueryParams {
     title: string
     page: string
