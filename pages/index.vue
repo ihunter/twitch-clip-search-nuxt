@@ -130,7 +130,7 @@ const clipsFound = computed(() => {
 
     <v-row v-if="clipsFound">
       <v-col>
-        <v-pagination v-model="page" :length="data.totalPages" variant="elevated" size="55" />
+        <v-pagination v-model="page" :length="data.totalPages" variant="tonal" color="primary" size="small" />
       </v-col>
     </v-row>
   </v-container>
