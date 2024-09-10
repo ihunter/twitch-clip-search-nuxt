@@ -5,7 +5,13 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      htmlAttrs: {
+        lang: 'en',
+      },
       title: 'Jerma Clip Search',
+      meta: [
+        { name: 'description', content: 'Search for twitch clips of Jerma985 by title, game, and date.' },
+      ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
         { rel: 'icon', type: 'image/png', href: '/logo.png' },
@@ -29,9 +35,6 @@ export default defineNuxtConfig({
   },
 
   vuetify: {
-    moduleOptions: {
-
-    },
     vuetifyOptions: {
       theme: {
         defaultTheme: 'dark',

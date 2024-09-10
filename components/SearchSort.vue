@@ -10,9 +10,9 @@ const sort = useRouteQuery('sort', 'views', { transform: String })
 </script>
 
 <template>
-  <v-btn id="menu-activator" icon="mdi-sort-variant" />
+  <v-btn id="sort-menu-activator" aria-label="Sort" icon="mdi-sort-variant" />
 
-  <v-menu activator="#menu-activator">
+  <v-menu activator="#sort-menu-activator">
     <v-list>
       <v-list-item
         v-for="(item, index) in sortTypes"
