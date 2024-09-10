@@ -11,7 +11,7 @@
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^3.4.1",
+    "@antfu/eslint-config": "^3.5.0",
     "@mdi/font": "^7.4.47",
     "@nuxt/devtools": "^1.4.1",
     "@vueuse/core": "^11.0.3",
@@ -23,7 +23,7 @@
     "mongoose-paginate-v2": "^1.8.3",
     "nuxt": "^3.13.1",
     "sass-embedded": "^1.78.0",
-    "typescript": "^5.5.4",
+    "typescript": "^5.6.2",
     "vue": "^3.5.3",
     "vue-router": "^4.4.3",
     "vue-tsc": "^2.1.6",
