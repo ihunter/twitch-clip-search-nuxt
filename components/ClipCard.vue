@@ -99,7 +99,7 @@ function setTimeFilter() {
           Clipped by <span class="filter" @click="creator = creatorName">{{ creatorName }}</span>
         </div>
         <div class="text-subtitle-2" :title="`on ${createdAtCalendar} at ${createdAtTime}`">
-          on <span class="filter" @click="setDateFilter">{{ createdAtCalendar }}</span> at <span class="filter" @click="setTimeFilter">{{ createdAtTime }}</span>
+          on <span class="filter" data-allow-mismatch @click="setDateFilter">{{ createdAtCalendar }}</span> at <span class="filter" data-allow-mismatch @click="setTimeFilter">{{ createdAtTime }}</span>
         </div>
       </div>
     </section>
