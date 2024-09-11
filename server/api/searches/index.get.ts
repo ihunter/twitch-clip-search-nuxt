@@ -1,6 +1,6 @@
 import { Search } from '~/server/models/search.model'
 
-export default defineCachedEventHandler(async (event) => {
+export default defineEventHandler(async (event) => {
   interface QueryParams {
     page: string
     limit: string
@@ -18,6 +18,4 @@ export default defineCachedEventHandler(async (event) => {
   catch (error) {
     return error
   }
-}, {
-  maxAge: 1,
 })
