@@ -54,7 +54,7 @@ const endDatetime = computed(() => {
   return dayjs(endDate.value, 'YYYY-MM-DD').endOf('day').toString()
 })
 
-const { data, status } = await useFetch<ClipResponse>(`/api/clips`, {
+const { data, status } = await useFetch<ClipResponse>('/api/clips', {
   query: {
     title,
     creator,
