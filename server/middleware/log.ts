@@ -1,3 +1,4 @@
+import { Search } from '~/server/models/search.model'
 import { clipsQuery } from '~/server/utils/queryParser'
 
 export default defineEventHandler((event) => {
@@ -13,9 +14,17 @@ export default defineEventHandler((event) => {
 
   const { query, page } = clipsQuery(event)
 
-  if (page === '1') {
-    console.log('userAgent:', userAgent)
-    console.log('ip:', ipAddress)
-    console.log('query:', query)
+  if (page !== '1' || !query.$text?.$search)
+    return
+
+  try {
+    Search.create({
+      ip: ipAddress,
+      userAgent,
+      title: query.$text.$search,
+    })
+  }
+  catch (error) {
+    return error
   }
 })
