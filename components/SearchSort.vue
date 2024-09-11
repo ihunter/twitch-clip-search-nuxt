@@ -6,7 +6,13 @@ const sortTypes = [
   { title: 'Relevance (title)', value: 'title' },
 ]
 
+const page = useRouteQuery('page', '1', { transform: Number })
 const sort = useRouteQuery('sort', 'views', { transform: String })
+
+function setSort(sortType: string) {
+  sort.value = sortType
+  page.value = 1
+}
 </script>
 
 <template>
@@ -18,7 +24,7 @@ const sort = useRouteQuery('sort', 'views', { transform: String })
         v-for="(item, index) in sortTypes"
         :key="index"
         :value="index"
-        @click="sort = item.value"
+        @click="setSort(item.value)"
       >
         <v-list-item-title>{{ item.title }}</v-list-item-title>
       </v-list-item>

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const dayjs = useDayjs()
 const adapter = useDate()
+
+const page = useRouteQuery('page', '1', { transform: Number })
 const startDateQuery = useRouteQuery('startDate', '', { transform: String })
 
 const startDate = computed({
@@ -20,6 +22,7 @@ const startDate = computed({
 
 function clearDate() {
   startDateQuery.value = ''
+  page.value = 1
 }
 </script>
 

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import type { GameResponse } from '~/types'
 
+const page = useRouteQuery('page', '1', { transform: Number })
+
 const search = ref('')
 const debouncedSearch = refDebounced(search, 500)
 const game = useRouteQuery('game', [])
 
 function updateSearch(title: string) {
   search.value = title
+  page.value = 1
 }
 
 function gameBoxArtUrl(url: string) {

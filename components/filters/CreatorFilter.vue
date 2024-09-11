@@ -1,9 +1,11 @@
 <script setup lang="ts">
+const page = useRouteQuery('page', '1', { transform: Number })
 const creator = useRouteQuery('creator', '', { transform: String })
 const debouncedCreator = ref(creator.value)
 
 watchDebounced(debouncedCreator, (value) => {
   creator.value = value
+  page.value = 1
 }, {
   debounce: 500,
 })
