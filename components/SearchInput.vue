@@ -1,6 +1,17 @@
 <script setup>
 const title = useRouteQuery('title', '', { transform: String })
+const page = useRouteQuery('page', '1', { transform: Number })
 const search = ref(title.value)
+
+function searchTitle() {
+  title.value = search.value
+  page.value = '1'
+}
+
+function clearTitle() {
+  title.value = ''
+  page.value = '1'
+}
 </script>
 
 <template>
@@ -14,8 +25,8 @@ const search = ref(title.value)
     variant="solo"
     prepend-inner-icon="mdi-magnify"
     placeholder="Search"
-    @keydown.enter="title = search"
-    @click:clear="title = ''"
+    @keydown.enter="searchTitle"
+    @click:clear="clearTitle"
   />
 </template>
 

@@ -38,6 +38,8 @@ function setDateFilter() {
 function setTimeFilter() {
   startTime.value = dayjs(props.createdAt).format('HH:mm')
 }
+
+const formattedViewCount = computed(() => props.viewCount.toLocaleString())
 </script>
 
 <template>
@@ -56,7 +58,7 @@ function setTimeFilter() {
             <div class="d-flex flex-column justify-end h-100">
               <div class="pa-2 d-flex justify-space-between">
                 <div class="px-2 bg-opacity">
-                  <v-icon icon="mdi-eye-outline" /> {{ viewCount }}
+                  <v-icon icon="mdi-eye-outline" /> {{ formattedViewCount }}
                 </div>
                 <div class="px-2 bg-opacity">
                   {{ timeFromNow }}
