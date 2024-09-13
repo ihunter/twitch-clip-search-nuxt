@@ -38,14 +38,14 @@ const startDatetime = computed(() => {
   if (!startDate.value)
     return ''
 
-  return dayjs.tz(startDate.value, 'YYYY-MM-DD', timezoneStore.userTimezone).startOf('day').format()
+  return dayjs.utc(startDate.value, 'YYYY-MM-DD').startOf('day').format()
 })
 
 const endDatetime = computed(() => {
   if (!endDate.value)
     return ''
 
-  return dayjs.tz(endDate.value, 'YYYY-MM-DD', timezoneStore.userTimezone).endOf('day').format()
+  return dayjs.utc(endDate.value, 'YYYY-MM-DD').endOf('day').format()
 })
 
 const { data, status } = await useFetch<ClipResponse>('/api/clips', {
