@@ -15,14 +15,15 @@ const props = defineProps<{
 }>()
 
 const dayjs = useDayjs()
+const timezoneStore = useTimezoneStore()
 
-const timeFromNow = computed(() => dayjs(props.createdAt).fromNow())
+const timeFromNow = computed(() => dayjs(props.createdAt).tz(timezoneStore.userTimezone).fromNow())
 
 const createdAtCalendar = computed(() =>
-  dayjs(props.createdAt).format('M/D/YYYY'),
+  dayjs(props.createdAt).tz(timezoneStore.userTimezone).format('M/D/YYYY'),
 )
 
-const createdAtTime = computed(() => dayjs(props.createdAt).format('h:mm a'))
+const createdAtTime = computed(() => dayjs(props.createdAt).tz(timezoneStore.userTimezone).format('h:mm a'))
 
 const creator = useRouteQuery('creator', '', { transform: String })
 const game = useRouteQuery('game', '', { transform: String })
@@ -30,8 +31,9 @@ const startDate = useRouteQuery('startDate', '', { transform: String })
 const endDate = useRouteQuery('endDate', '', { transform: String })
 
 function setDateFilter() {
-  startDate.value = dayjs(props.createdAt).format('YYYY-MM-DD')
-  endDate.value = dayjs(props.createdAt).format('YYYY-MM-DD')
+  const tz = timezoneStore.userTimezone
+  startDate.value = dayjs(props.createdAt).tz(tz).format('YYYY-MM-DD')
+  endDate.value = dayjs(props.createdAt).tz(tz).format('YYYY-MM-DD')
 }
 
 const formattedViewCount = computed(() => props.viewCount.toLocaleString())

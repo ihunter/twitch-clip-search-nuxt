@@ -6,7 +6,7 @@ ENV PORT=$PORT
 
 ENV NODE_ENV=production
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 FROM base AS build
 
@@ -22,6 +22,6 @@ FROM base
 
 EXPOSE $PORT
 
-COPY --from=build /app/.output /app/.output
+COPY --from=build /usr/src/app/.output /usr/src/app/.output
 
 CMD [ "node", ".output/server/index.mjs" ]

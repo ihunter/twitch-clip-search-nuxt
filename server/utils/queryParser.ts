@@ -42,8 +42,8 @@ export function clipsQuery(event: H3Event) {
 
   if (startDate && endDate) {
     query.created_at = {
-      $lt: endDate,
       $gt: startDate,
+      $lt: endDate,
     }
   }
   else if (startDate) {

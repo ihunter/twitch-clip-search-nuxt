@@ -31,24 +31,21 @@ const limit = useRouteQuery('limit', '12', { transform: Number })
 const timezoneStore = useTimezoneStore()
 
 onMounted(() => {
-  console.log(dayjs.tz.guess())
   timezoneStore.userTimezone = dayjs.tz.guess()
 })
 
 const startDatetime = computed(() => {
-  if (!startDate.value) {
+  if (!startDate.value)
     return ''
-  }
 
-  return dayjs(startDate.value, 'YYYY-MM-DD').startOf('day').toString()
+  return dayjs.tz(startDate.value, 'YYYY-MM-DD', timezoneStore.userTimezone).startOf('day').format()
 })
 
 const endDatetime = computed(() => {
-  if (!endDate.value) {
+  if (!endDate.value)
     return ''
-  }
 
-  return dayjs(endDate.value, 'YYYY-MM-DD').endOf('day').toString()
+  return dayjs.tz(endDate.value, 'YYYY-MM-DD', timezoneStore.userTimezone).endOf('day').format()
 })
 
 const { data, status } = await useFetch<ClipResponse>('/api/clips', {
