@@ -5,8 +5,6 @@ import { clipsQuery } from '~/server/utils/queryParser'
 export default defineCachedEventHandler(async (event) => {
   const { query, page, order, limit } = clipsQuery(event)
 
-  console.log(query)
-
   // Used to register model, otherwise populate won't work
   Game.findOne()
 
@@ -22,5 +20,5 @@ export default defineCachedEventHandler(async (event) => {
     return error
   }
 }, {
-  maxAge: 1, // 60 * 60,
+  maxAge: 60 * 60,
 })
