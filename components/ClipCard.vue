@@ -28,15 +28,10 @@ const creator = useRouteQuery('creator', '', { transform: String })
 const game = useRouteQuery('game', '', { transform: String })
 const startDate = useRouteQuery('startDate', '', { transform: String })
 const endDate = useRouteQuery('endDate', '', { transform: String })
-const startTime = useRouteQuery('startTime', '', { transform: String })
 
 function setDateFilter() {
   startDate.value = dayjs(props.createdAt).format('YYYY-MM-DD')
   endDate.value = dayjs(props.createdAt).format('YYYY-MM-DD')
-}
-
-function setTimeFilter() {
-  startTime.value = dayjs(props.createdAt).format('HH:mm')
 }
 
 const formattedViewCount = computed(() => props.viewCount.toLocaleString())
@@ -101,7 +96,7 @@ const formattedViewCount = computed(() => props.viewCount.toLocaleString())
           Clipped by <span class="filter" @click="creator = creatorName">{{ creatorName }}</span>
         </div>
         <div class="text-subtitle-2" :title="`on ${createdAtCalendar} at ${createdAtTime}`">
-          on <span class="filter" data-allow-mismatch @click="setDateFilter">{{ createdAtCalendar }}</span> at <span class="filter" data-allow-mismatch @click="setTimeFilter">{{ createdAtTime }}</span>
+          on <span class="filter" data-allow-mismatch @click="setDateFilter">{{ createdAtCalendar }}</span> at <span data-allow-mismatch>{{ createdAtTime }}</span>
         </div>
       </div>
     </section>

@@ -24,19 +24,20 @@ const creator = useRouteQuery('creator', '', { transform: String })
 const game = useRouteQuery('game', [])
 const startDate = useRouteQuery('startDate', '', { transform: String })
 const endDate = useRouteQuery('endDate', '', { transform: String })
-const startTime = useRouteQuery('startTime', '', { transform: String })
-const endTime = useRouteQuery('endTime', '', { transform: String })
 const page = useRouteQuery('page', '1', { transform: Number })
 const sort = useRouteQuery('sort', 'views', { transform: String })
 const limit = useRouteQuery('limit', '12', { transform: Number })
 
+const timezoneStore = useTimezoneStore()
+
+onMounted(() => {
+  console.log(dayjs.tz.guess())
+  timezoneStore.userTimezone = dayjs.tz.guess()
+})
+
 const startDatetime = computed(() => {
   if (!startDate.value) {
     return ''
-  }
-
-  if (Boolean(startTime.value) && Boolean(startDate.value)) {
-    return dayjs(`${startDate.value} ${startTime.value}`, 'YYYY-MM-DD HH:mm').toString()
   }
 
   return dayjs(startDate.value, 'YYYY-MM-DD').startOf('day').toString()
@@ -45,10 +46,6 @@ const startDatetime = computed(() => {
 const endDatetime = computed(() => {
   if (!endDate.value) {
     return ''
-  }
-
-  if (Boolean(endTime.value) && Boolean(endDate.value)) {
-    return dayjs(`${endDate.value} ${endTime.value}`, 'YYYY-MM-DD HH:mm').toString()
   }
 
   return dayjs(endDate.value, 'YYYY-MM-DD').endOf('day').toString()

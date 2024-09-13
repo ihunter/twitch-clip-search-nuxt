@@ -1,7 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['dayjs-nuxt', 'vuetify-nuxt-module', '@vueuse/nuxt'],
+  modules: [
+    'dayjs-nuxt',
+    'vuetify-nuxt-module',
+    '@vueuse/nuxt',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+  ],
+
+  runtimeConfig: {
+    mongodbUri: '',
+  },
 
   app: {
     head: {
@@ -20,18 +30,25 @@ export default defineNuxtConfig({
     },
   },
 
-  components: [{
-    path: '~/components',
-    pathPrefix: false,
-  },
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
   ],
 
-  runtimeConfig: {
-    mongodbUri: '',
+  piniaPluginPersistedstate: {
+    cookieOptions: {
+      maxAge: 60 * 60 * 24 * 400,
+      sameSite: 'none',
+      secure: true,
+      httpOnly: false,
+    },
+    storage: 'cookies',
   },
 
   dayjs: {
-    plugins: ['customParseFormat', 'relativeTime'],
+    plugins: ['customParseFormat', 'utc', 'relativeTime', 'timezone'],
   },
 
   vuetify: {
