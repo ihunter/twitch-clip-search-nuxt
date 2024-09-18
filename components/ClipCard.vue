@@ -56,25 +56,31 @@ const formattedDuration = computed(() => dayjs.duration(props.duration, 'seconds
             cover
           >
             <div class="d-flex flex-column justify-space-between h-100">
-              <div class="pa-2 d-flex justify-space-between">
-                <div v-if="duration" class="d-flex ga-2 px-2 bg-opacity">
-                  <v-icon icon="mdi-timer-outline" /> <div>{{ formattedDuration }}</div>
+              <div class="pa-2 d-flex">
+                <div v-if="duration" class="d-flex ga-1 px-1 align-center bg-opacity">
+                  <v-icon icon="mdi-timer-outline" size="small" />
+                  <div>{{ formattedDuration }}</div>
                 </div>
               </div>
+
               <div class="pa-2 d-flex justify-space-between">
-                <div class="d-flex ga-2 px-2 bg-opacity">
-                  <v-icon icon="mdi-eye-outline" /> <div>{{ formattedViewCount }}</div>
+                <div class="d-flex ga-2 px-2 align-center bg-opacity">
+                  <v-icon icon="mdi-eye-outline" />
+                  <div>{{ formattedViewCount }}</div>
                 </div>
+
                 <div class="px-2 bg-opacity">
                   {{ timeFromNow }}
                 </div>
               </div>
             </div>
+
             <template #placeholder>
               <div class="d-flex align-center justify-center fill-height">
                 <v-progress-circular color="grey-lighten-4" indeterminate />
               </div>
             </template>
+
             <template #error>
               <v-img src="~/assets/images/clip_placeholder_404.png" />
             </template>
