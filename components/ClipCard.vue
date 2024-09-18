@@ -9,6 +9,7 @@ const props = defineProps<{
   viewCount: number
   createdAt: string
   thumbnailUrl: string
+  duration?: number
   gameId?: string
   gameName?: string
   gameBoxArtUrl?: string
@@ -37,6 +38,8 @@ function setDateFilter() {
 }
 
 const formattedViewCount = computed(() => props.viewCount.toLocaleString())
+
+const formattedDuration = computed(() => dayjs.duration(props.duration, 'seconds').format('m:ss'))
 </script>
 
 <template>
@@ -52,10 +55,15 @@ const formattedViewCount = computed(() => props.viewCount.toLocaleString())
             :alt="title"
             cover
           >
-            <div class="d-flex flex-column justify-end h-100">
+            <div class="d-flex flex-column justify-space-between h-100">
               <div class="pa-2 d-flex justify-space-between">
-                <div class="px-2 bg-opacity">
-                  <v-icon icon="mdi-eye-outline" /> {{ formattedViewCount }}
+                <div v-if="duration" class="d-flex ga-2 px-2 bg-opacity">
+                  <v-icon icon="mdi-timer-outline" /> <div>{{ formattedDuration }}</div>
+                </div>
+              </div>
+              <div class="pa-2 d-flex justify-space-between">
+                <div class="d-flex ga-2 px-2 bg-opacity">
+                  <v-icon icon="mdi-eye-outline" /> <div>{{ formattedViewCount }}</div>
                 </div>
                 <div class="px-2 bg-opacity">
                   {{ timeFromNow }}

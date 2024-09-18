@@ -46,6 +46,10 @@ const ClipSchema = new Schema({
     type: String,
     required: true,
   },
+  duraction: {
+    type: Number,
+    required: false,
+  },
 }, {
   toJSON: { virtuals: true },
 })

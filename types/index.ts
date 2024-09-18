@@ -10,6 +10,7 @@ export interface Clip {
   view_count: number
   created_at: string
   thumbnail_url: string
+  duration: number
   game: Game | null
 }
 

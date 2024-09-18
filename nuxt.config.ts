@@ -48,7 +48,7 @@ export default defineNuxtConfig({
   },
 
   dayjs: {
-    plugins: ['customParseFormat', 'utc', 'relativeTime', 'timezone'],
+    plugins: ['customParseFormat', 'utc', 'relativeTime', 'timezone', 'duration'],
   },
 
   vuetify: {

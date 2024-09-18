@@ -63,7 +63,7 @@ const { data, status } = await useFetch<ClipResponse>('/api/clips', {
 })
 
 const clipsFound = computed(() => {
-  return data.value && data.value.docs.length
+  return data.value != null && data.value.docs.length
 })
 </script>
 
@@ -102,6 +102,7 @@ const clipsFound = computed(() => {
           :broadcaster-name="clip.broadcaster_name"
           :creator-name="clip.creator_name"
           :thumbnail-url="clip.thumbnail_url"
+          :duration="clip.duration"
           :game-id="clip.game?.id"
           :game-name="clip.game?.name"
           :game-box-art-url="clip.game?.box_art_url"
@@ -122,7 +123,7 @@ const clipsFound = computed(() => {
       </v-col>
     </v-row>
 
-    <v-row v-if="clipsFound">
+    <v-row>
       <v-col>
         <v-pagination v-model="page" :length="data.totalPages" variant="tonal" color="primary" size="small" />
       </v-col>
