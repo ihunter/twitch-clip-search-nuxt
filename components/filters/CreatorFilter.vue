@@ -21,7 +21,3 @@ watchDebounced(debouncedCreator, (value) => {
     outlined
   />
 </template>
-
-<style scoped>
-
-</style>\

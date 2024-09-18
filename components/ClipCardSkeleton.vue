@@ -1,7 +1,3 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
   <v-card>
     <v-responsive :aspect-ratio="30 / 17">
@@ -13,7 +9,3 @@
     </section>
   </v-card>
 </template>
-
-<style scoped lang="scss">
-
-</style>

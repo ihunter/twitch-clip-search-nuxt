@@ -66,7 +66,3 @@ const { data: games, status } = await useFetch<GameResponse[]>(`/api/games`, {
     </template>
   </v-autocomplete>
 </template>
-
-<style scoped>
-
-</style>

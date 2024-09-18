@@ -31,7 +31,3 @@ function setSort(sortType: string) {
     </v-list>
   </v-menu>
 </template>
-
-<style scoped>
-
-</style>

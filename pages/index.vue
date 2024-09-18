@@ -130,7 +130,3 @@ const clipsFound = computed(() => {
     </v-row>
   </v-container>
 </template>
-
-<style scoped>
-
-</style>

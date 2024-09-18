@@ -29,5 +29,3 @@ function clearTitle() {
     @click:clear="clearTitle"
   />
 </template>
-
-<style scoped></style>

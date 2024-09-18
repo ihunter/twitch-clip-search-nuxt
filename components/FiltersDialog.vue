@@ -42,7 +42,3 @@ const { smAndDown } = useDisplay()
     </v-card>
   </v-dialog>
 </template>
-
-<style scoped>
-
-</style>
