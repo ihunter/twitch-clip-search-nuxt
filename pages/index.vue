@@ -125,7 +125,13 @@ const clipsFound = computed(() => {
 
     <v-row>
       <v-col>
-        <v-pagination v-model="page" :length="data.totalPages" variant="tonal" color="primary" size="small" />
+        <v-pagination v-model="page" :length="data.totalPages" variant="tonal" color="primary" />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <SiteFooter />
       </v-col>
     </v-row>
   </v-container>
