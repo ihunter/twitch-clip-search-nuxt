@@ -13,9 +13,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "*"
-  },
   "devDependencies": {
     "@antfu/eslint-config": "^3.6.2",
     "@mdi/font": "^7.4.47",
