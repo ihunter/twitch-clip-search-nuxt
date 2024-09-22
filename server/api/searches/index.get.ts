@@ -10,8 +10,8 @@ export default defineEventHandler(async (event) => {
 
   try {
     return await Search.paginate({}, {
-      page,
-      limit,
+      page: Number.isNaN(Number.parseInt(page)) ? 1 : Number.parseInt(page),
+      limit: Number.isNaN(Number.parseInt(limit)) ? 12 : Number.parseInt(limit),
       sort: { createdAt: -1 },
     })
   }

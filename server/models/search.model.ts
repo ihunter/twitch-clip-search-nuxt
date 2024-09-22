@@ -1,5 +1,12 @@
+import type { Document, PaginateModel } from 'mongoose'
 import { model, Schema } from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2'
+
+interface ISearch {
+  ip: string
+  userAgent: string
+  title: string
+}
 
 const SearchSchema = new Schema({
   ip: {
@@ -15,4 +22,6 @@ const SearchSchema = new Schema({
 
 SearchSchema.plugin(mongoosePaginate)
 
-export const Search = model('Search', SearchSchema)
+interface SearchDocument extends Document, ISearch {}
+
+export const Search = model<SearchDocument, PaginateModel<SearchDocument>>('Search', SearchSchema)

@@ -1,4 +1,4 @@
-export interface Clip {
+export interface ClipData {
   _id: string
   id: string
   url: string
@@ -15,7 +15,7 @@ export interface Clip {
 }
 
 export interface ClipResponse {
-  docs: Clip[]
+  docs: ClipData[]
   totalDocs: number
   offset: number
   limit: number

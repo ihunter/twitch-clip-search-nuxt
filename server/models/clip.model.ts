@@ -1,5 +1,19 @@
+import type { Document, PaginateModel } from 'mongoose'
 import { model, Schema } from 'mongoose'
 import mongoosePaginate from 'mongoose-paginate-v2'
+
+interface IClip {
+  url: string
+  broadcaster_id: string
+  broadcaster_name: string
+  creator_name: string
+  game_id: string
+  title: string
+  view_count: number
+  created_at: string
+  thumbnail_url: string
+  duration: number
+}
 
 const ClipSchema = new Schema({
   id: {
@@ -63,4 +77,6 @@ ClipSchema.virtual('game', {
 
 ClipSchema.plugin(mongoosePaginate)
 
-export const Clip = model('Clip', ClipSchema)
+interface ClipDocument extends Document, IClip {}
+
+export const Clip = model<ClipDocument, PaginateModel<ClipDocument>>('Clip', ClipSchema)
