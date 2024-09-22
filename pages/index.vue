@@ -19,14 +19,7 @@ function transformClipResponse(data: ClipResponse) {
   return data
 }
 
-const title = useRouteQuery('title', '', { transform: String })
-const creator = useRouteQuery('creator', '', { transform: String })
-const game = useRouteQuery('game', [])
-const startDate = useRouteQuery('startDate', '', { transform: String })
-const endDate = useRouteQuery('endDate', '', { transform: String })
-const page = useRouteQuery('page', '1', { transform: Number })
-const sort = useRouteQuery('sort', 'views', { transform: String })
-const limit = useRouteQuery('limit', '12', { transform: Number })
+const { updateQuery, query } = useQueryBuilder()
 
 const timezoneStore = useTimezoneStore()
 
@@ -34,37 +27,18 @@ onMounted(() => {
   timezoneStore.userTimezone = dayjs.tz.guess()
 })
 
-const startDatetime = computed(() => {
-  if (!startDate.value)
-    return ''
-
-  return dayjs.utc(startDate.value, 'YYYY-MM-DD').startOf('day').format()
-})
-
-const endDatetime = computed(() => {
-  if (!endDate.value)
-    return ''
-
-  return dayjs.utc(endDate.value, 'YYYY-MM-DD').endOf('day').format()
-})
-
 const { data, status } = await useFetch<ClipResponse>('/api/clips', {
-  query: {
-    title,
-    creator,
-    game,
-    startDate: startDatetime,
-    endDate: endDatetime,
-    page,
-    sort,
-    limit,
-  },
+  query,
   transform: transformClipResponse,
 })
 
 const clipsFound = computed(() => {
   return data.value != null && data.value.docs.length
 })
+
+function setPage(page) {
+  updateQuery({ page })
+}
 </script>
 
 <template>
@@ -86,7 +60,7 @@ const clipsFound = computed(() => {
     </v-row>
 
     <v-row v-if="status === 'pending'">
-      <v-col v-for="(_, index) in limit" :key="index" cols="12" sm="6" md="4" xl="3">
+      <v-col v-for="(_, index) in query.limit" :key="index" cols="12" sm="6" md="4" xl="3">
         <ClipCardSkeleton />
       </v-col>
     </v-row>
@@ -125,7 +99,7 @@ const clipsFound = computed(() => {
 
     <v-row>
       <v-col>
-        <v-pagination v-model="page" :length="data.totalPages" variant="tonal" color="primary" />
+        <v-pagination v-model="query.page" :length="data.totalPages" variant="tonal" color="primary" @update:model-value="setPage" />
       </v-col>
     </v-row>
 

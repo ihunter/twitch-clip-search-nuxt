@@ -1,12 +1,8 @@
 <script setup lang="ts">
-const page = useRouteQuery('page', '1', { transform: Number })
-const limit = useRouteQuery('limit', '12', { transform: Number })
+const { query } = useQueryBuilder()
 
 const { data } = await useFetch('/api/searches', {
-  query: {
-    page,
-    limit,
-  },
+  query,
 })
 </script>
 
@@ -36,7 +32,7 @@ const { data } = await useFetch('/api/searches', {
 
     <v-row>
       <v-col>
-        <v-pagination v-model="page" :length="data.totalPages" variant="tonal" color="primary" />
+        <v-pagination v-model="query.page" :length="data.totalPages" variant="tonal" color="primary" />
       </v-col>
     </v-row>
   </v-container>

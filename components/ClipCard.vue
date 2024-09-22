@@ -26,15 +26,14 @@ const createdAtCalendar = computed(() =>
 
 const createdAtTime = computed(() => dayjs(props.createdAt).tz(timezoneStore.userTimezone).format('h:mm a'))
 
-const creator = useRouteQuery('creator', '', { transform: String })
-const game = useRouteQuery('game', '', { transform: String })
-const startDate = useRouteQuery('startDate', '', { transform: String })
-const endDate = useRouteQuery('endDate', '', { transform: String })
+const { updateQuery } = useQueryBuilder()
 
 function setDateFilter() {
   const tz = timezoneStore.userTimezone
-  startDate.value = dayjs(props.createdAt).tz(tz).format('YYYY-MM-DD')
-  endDate.value = dayjs(props.createdAt).tz(tz).format('YYYY-MM-DD')
+  updateQuery({
+    startDate: dayjs(props.createdAt).tz(tz).format('YYYY-MM-DD'),
+    endDate: dayjs(props.createdAt).tz(tz).format('YYYY-MM-DD'),
+  })
 }
 
 const formattedViewCount = computed(() => props.viewCount.toLocaleString())
@@ -97,7 +96,7 @@ const formattedDuration = computed(() => dayjs.duration(props.duration, 'seconds
           :src="gameBoxArtUrl"
           :title="gameName"
           :alt="`Game box art for ${gameName}`"
-          @click="game = gameId ?? ''"
+          @click="updateQuery({ game: [gameId] })"
         >
           <template #placeholder>
             <v-img src="~/assets/images/game_box_art_placeholder.jpg" alt="placeholder" cover />
@@ -109,7 +108,7 @@ const formattedDuration = computed(() => dayjs.duration(props.duration, 'seconds
           {{ title }}
         </h4>
         <div class="text-subtitle-2" :title="`Clipped by ${creatorName}}`">
-          Clipped by <span class="filter" @click="creator = creatorName">{{ creatorName }}</span>
+          Clipped by <span class="filter" @click="updateQuery({ creator: creatorName })">{{ creatorName }}</span>
         </div>
         <div class="text-subtitle-2" :title="`on ${createdAtCalendar} at ${createdAtTime}`">
           on <span class="filter" data-allow-mismatch @click="setDateFilter">{{ createdAtCalendar }}</span> at <span data-allow-mismatch>{{ createdAtTime }}</span>

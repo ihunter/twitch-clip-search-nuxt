@@ -2,27 +2,25 @@
 const dayjs = useDayjs()
 const adapter = useDate()
 
-const page = useRouteQuery('page', '1', { transform: Number })
-const endDateQuery = useRouteQuery('endDate', '', { transform: String })
+const { updateQuery, query } = useQueryBuilder()
 
 const endDate = computed({
   get() {
-    if (!endDateQuery.value)
+    if (!query.value.endDate)
       return null
 
-    return adapter.parseISO(endDateQuery.value)
+    return adapter.parseISO(query.value.endDate)
   },
   set(value: Date) {
     if (!value)
       clearDate()
 
-    endDateQuery.value = dayjs(value).format('YYYY-MM-DD')
+    updateQuery({ endDate: dayjs(value).format('YYYY-MM-DD') })
   },
 })
 
 function clearDate() {
-  endDateQuery.value = ''
-  page.value = 1
+  updateQuery({ endDate: undefined })
 }
 </script>
 

@@ -6,12 +6,10 @@ const sortTypes = [
   { title: 'Relevance (title)', value: 'title' },
 ]
 
-const page = useRouteQuery('page', '1', { transform: Number })
-const sort = useRouteQuery('sort', 'views', { transform: String })
+const { updateQuery } = useQueryBuilder()
 
-function setSort(sortType: string) {
-  sort.value = sortType
-  page.value = 1
+function setSort(sortType) {
+  updateQuery({ sort: sortType })
 }
 </script>
 

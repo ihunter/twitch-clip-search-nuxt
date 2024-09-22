@@ -1,16 +1,14 @@
 <script setup>
-const page = useRouteQuery('page', '1', { transform: Number })
-const title = useRouteQuery('title', '', { transform: String })
-const search = ref(title.value)
+const { updateQuery, query } = useQueryBuilder()
+
+const search = ref(query.value.title)
 
 function searchTitle() {
-  title.value = search.value
-  page.value = 1
+  updateQuery({ title: search.value })
 }
 
 function clearTitle() {
-  title.value = ''
-  page.value = 1
+  updateQuery({ title: undefined })
 }
 </script>
 

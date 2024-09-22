@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import type { GameResponse } from '~/types'
 
-const page = useRouteQuery('page', '1', { transform: Number })
+const { updateQuery, query } = useQueryBuilder()
 
+const game = ref(query.value.game)
 const search = ref('')
 const debouncedSearch = refDebounced(search, 500)
-const game = useRouteQuery('game', [])
 
 function updateSearch(title: string) {
   search.value = title
-  page.value = 1
 }
 
 function gameBoxArtUrl(url: string) {
@@ -27,7 +26,7 @@ function transformGameResponse(data: GameResponse[]) {
 
 const { data: games, status } = await useFetch<GameResponse[]>(`/api/games`, {
   query: {
-    game,
+    game: query.value.game,
     search: debouncedSearch,
   },
   transform: transformGameResponse,
@@ -35,6 +34,11 @@ const { data: games, status } = await useFetch<GameResponse[]>(`/api/games`, {
   server: true,
   lazy: true,
   default: () => [],
+})
+
+watch(game, (value) => {
+  console.log('game', value)
+  updateQuery({ game: value })
 })
 </script>
 
