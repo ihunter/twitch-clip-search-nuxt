@@ -26,6 +26,15 @@ const createdAtCalendar = computed(() =>
 
 const createdAtTime = computed(() => dayjs(props.createdAt).tz(timezoneStore.userTimezone).format('h:mm a'))
 
+const formattedGameBoxArtUrl = computed(() => {
+  // https://static-cdn.jtvnw.net/ttv-boxart/509658-{width}x{height}.jpg
+  return props.gameBoxArtUrl ? props.gameBoxArtUrl.replace('{width}x{height}', '104x144') : null
+})
+
+const formattedViewCount = computed(() => props.viewCount.toLocaleString())
+
+const formattedDuration = computed(() => dayjs.duration(props.duration, 'seconds').format('m:ss'))
+
 const { updateQuery } = useQueryBuilder()
 
 function setDateFilter() {
@@ -35,10 +44,6 @@ function setDateFilter() {
     endDate: dayjs(props.createdAt).tz(tz).format('YYYY-MM-DD'),
   })
 }
-
-const formattedViewCount = computed(() => props.viewCount.toLocaleString())
-
-const formattedDuration = computed(() => dayjs.duration(props.duration, 'seconds').format('m:ss'))
 </script>
 
 <template>
@@ -93,7 +98,7 @@ const formattedDuration = computed(() => dayjs.duration(props.duration, 'seconds
           width="52"
           height="72"
           lazy-src="~/assets/images/game_box_art_placeholder.jpg"
-          :src="gameBoxArtUrl"
+          :src="formattedGameBoxArtUrl"
           :title="gameName"
           :alt="`Game box art for ${gameName}`"
           @click="updateQuery({ game: [gameId] })"

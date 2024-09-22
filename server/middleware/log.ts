@@ -14,7 +14,7 @@ export default defineEventHandler((event) => {
 
   const { query, page } = clipsQuery(event)
 
-  if (page !== '1' || !query.$text?.$search)
+  if (page !== 1 || !query.$text?.$search)
     return
 
   try {

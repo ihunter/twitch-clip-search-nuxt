@@ -1,44 +1,26 @@
 <script setup lang="ts">
 import type { ClipResponse } from '~/types'
 
-const dayjs = useDayjs()
-
-function gameBoxArtUrl(url: string) {
-  // https://static-cdn.jtvnw.net/ttv-boxart/509658-{width}x{height}.jpg
-  return url.replace('{width}x{height}', '104x144')
-}
-
-function transformClipResponse(data: ClipResponse) {
-  data.docs.forEach((doc) => {
-    if (!doc.game)
-      return
-
-    doc.game.box_art_url = gameBoxArtUrl(doc.game.box_art_url)
-  })
-
-  return data
-}
-
 const { updateQuery, query } = useQueryBuilder()
 
-const timezoneStore = useTimezoneStore()
-
-onMounted(() => {
-  timezoneStore.userTimezone = dayjs.tz.guess()
-})
+function setPage(page) {
+  updateQuery({ page })
+}
 
 const { data, status } = await useFetch<ClipResponse>('/api/clips', {
   query,
-  transform: transformClipResponse,
 })
 
 const clipsFound = computed(() => {
   return data.value != null && data.value.docs.length
 })
 
-function setPage(page) {
-  updateQuery({ page })
-}
+const dayjs = useDayjs()
+const timezoneStore = useTimezoneStore()
+
+onMounted(() => {
+  timezoneStore.userTimezone = dayjs.tz.guess()
+})
 </script>
 
 <template>
