@@ -30,6 +30,16 @@ export default defineNuxtConfig({
     },
   },
 
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern-compiler',
+        },
+      },
+    },
+  },
+
   components: [
     {
       path: '~/components',
