@@ -3,7 +3,6 @@ const { updateQuery, query } = useQueryBuilder()
 const debouncedCreator = ref(query.value.creator)
 
 watchDebounced(debouncedCreator, (value) => {
-  console.log(value)
   updateQuery({ creator: value ?? undefined })
 }, {
   debounce: 500,

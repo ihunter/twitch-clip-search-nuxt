@@ -37,7 +37,6 @@ const { data: games, status } = await useFetch<GameResponse[]>(`/api/games`, {
 })
 
 watch(game, (value) => {
-  console.log('game', value)
   updateQuery({ game: value })
 })
 </script>

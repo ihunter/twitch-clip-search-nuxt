@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const { query } = useQueryBuilder()
+const { updateQuery, query } = useQueryBuilder()
+
+function setPage(page: number) {
+  updateQuery({ page })
+}
 
 const { data } = await useFetch('/api/searches', {
   query,
@@ -32,7 +36,7 @@ const { data } = await useFetch('/api/searches', {
 
     <v-row>
       <v-col>
-        <v-pagination v-model="query.page" :length="data.totalPages" variant="tonal" color="primary" />
+        <v-pagination v-model="query.page" :length="data.totalPages" variant="tonal" color="primary" @update:model-value="setPage" />
       </v-col>
     </v-row>
   </v-container>

@@ -3,7 +3,7 @@ import type { ClipResponse } from '~/types'
 
 const { updateQuery, query } = useQueryBuilder()
 
-function setPage(page) {
+function setPage(page: number) {
   updateQuery({ page })
 }
 
