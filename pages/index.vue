@@ -24,7 +24,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-container>
+  <v-container max-width="1600">
     <v-row>
       <v-col class="d-flex">
         <SearchInput />
