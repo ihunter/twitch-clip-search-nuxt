@@ -1,5 +1,7 @@
 import { Search } from '~/server/models/search.model'
 
+const runtimeConfig = useRuntimeConfig()
+
 export default defineEventHandler(async (event) => {
   interface QueryParams {
     page: string
@@ -11,7 +13,7 @@ export default defineEventHandler(async (event) => {
   try {
     return await Search.paginate({}, {
       page: Number.isNaN(Number.parseInt(page)) ? 1 : Number.parseInt(page),
-      limit: Number.isNaN(Number.parseInt(limit)) ? 12 : Number.parseInt(limit),
+      limit: Number.isNaN(Number.parseInt(limit)) ? 12 : Math.min(Number.parseInt(limit), runtimeConfig.public.limit),
       sort: { createdAt: -1 },
     })
   }

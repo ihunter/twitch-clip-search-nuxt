@@ -2,6 +2,8 @@ import { Clip } from '~/server/models/clip.model'
 import { Game } from '~/server/models/game.model'
 import { clipsQuery } from '~/server/utils/queryParser'
 
+const runtimeConfig = useRuntimeConfig()
+
 export default defineCachedEventHandler(async (event) => {
   const { query, page, order, limit } = clipsQuery(event)
 
@@ -13,7 +15,7 @@ export default defineCachedEventHandler(async (event) => {
       populate: 'game',
       page,
       sort: order,
-      limit,
+      limit: Math.min(limit, runtimeConfig.public.limit),
     })
   }
   catch (error) {
