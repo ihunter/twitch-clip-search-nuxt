@@ -24,7 +24,7 @@
     "dayjs-nuxt": "^2.1.11",
     "eslint": "^9.11.1",
     "mongoose": "^8.7.0",
-    "mongoose-paginate-v2": "^1.8.4",
+    "mongoose-paginate-v2": "^1.8.5",
     "nuxt": "^3.13.2",
     "pinia": "^2.2.2",
     "pinia-plugin-persistedstate": "^4.0.2",
