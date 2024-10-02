@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
+    '@nuxtjs/seo',
   ],
 
   runtimeConfig: {
@@ -14,6 +15,17 @@ export default defineNuxtConfig({
     public: {
       limit: 24,
     },
+  },
+
+  site: {
+    url: 'https://clips.jerma.io/',
+    name: 'Jerma Clip Search',
+    description: 'Search for twitch clips of Jerma985 by title, game, and date.',
+    defaultLocale: 'en', // not needed if you have @nuxtjs/i18n installed
+  },
+
+  robots: {
+    disallow: ['/searches'],
   },
 
   app: {

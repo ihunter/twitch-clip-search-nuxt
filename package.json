@@ -17,6 +17,7 @@
     "@antfu/eslint-config": "^3.7.3",
     "@mdi/font": "^7.4.47",
     "@nuxt/devtools": "^1.5.1",
+    "@nuxtjs/seo": "^2.0.0-rc.23",
     "@pinia/nuxt": "^0.5.5",
     "@vueuse/core": "^11.1.0",
     "@vueuse/nuxt": "^11.1.0",
