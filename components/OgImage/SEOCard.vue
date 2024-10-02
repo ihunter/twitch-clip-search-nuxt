@@ -6,8 +6,8 @@ defineProps<{
 </script>
 
 <template>
-  <div class="h-full w-full px-5 pt-20 flex flex-row bg-slate-900 relative">
-    <img src="/logo.png" class="mr-10">
+  <div class="h-full w-full px-5 pt-10 flex flex-row bg-slate-900 relative">
+    <img src="/logo.png" class="mt-10 mr-10 w-50 h-50">
     <div class="flex flex-row">
       <div>
         <div>
