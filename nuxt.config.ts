@@ -8,7 +8,12 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
     '@nuxtjs/seo',
+    'nuxt-gtag',
   ],
+
+  gtag: {
+    id: 'G-4WX9B5T3EK',
+  },
 
   runtimeConfig: {
     mongodbUri: '',
