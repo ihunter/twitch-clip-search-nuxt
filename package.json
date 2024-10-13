@@ -16,7 +16,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^3.7.3",
     "@mdi/font": "^7.4.47",
-    "@nuxt/devtools": "^1.5.2",
+    "@nuxt/devtools": "^1.6.0",
     "@nuxtjs/seo": "^2.0.0-rc.23",
     "@pinia/nuxt": "^0.5.5",
     "@vueuse/core": "^11.1.0",
@@ -30,9 +30,9 @@
     "nuxt-gtag": "^3.0.1",
     "pinia": "^2.2.4",
     "pinia-plugin-persistedstate": "^4.1.1",
-    "sass-embedded": "^1.79.4",
+    "sass-embedded": "^1.79.5",
     "typescript": "^5.6.3",
-    "vue": "^3.5.11",
+    "vue": "^3.5.12",
     "vue-router": "^4.4.5",
     "vue-tsc": "^2.1.6",
     "vuetify-nuxt-module": "^0.18.3"
